@@ -54,7 +54,7 @@ export const HomeButton = () => {
     console.log(pathname)
 
     const buttonClass = classNames("navigation_button", {
-        "active": pathname === '/home'
+        "active": pathname === '/'
     })
 
     return (

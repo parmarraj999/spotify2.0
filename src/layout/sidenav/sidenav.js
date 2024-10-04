@@ -1,9 +1,16 @@
 import React from 'react'
 import './sidenav.css'
+import { useLocation } from 'react-router-dom'
 
 function Sidenav() {
+
+  const location = useLocation();
+  const {pathname} = location;
+
+  console.log(pathname)
+
   return (
-    <div className='sidebar_layout'>
+    <div className='sidebar_layout' style={pathname === "/library" ? {background:"#111111"}:{}}>
       <div className='sidebar_links' >
         <div className='flex_align'>
           <div className='navigation_button_icon' >
