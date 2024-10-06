@@ -1,0 +1,45 @@
+.player_container {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    background: #333842;
+    border-radius: 10px;
+    gap: 1rem;
+    .player_control_container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: .7rem;
+        div {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .player_timing{
+        display: flex;
+        gap: .7rem;
+        align-items: center;
+        .player_liner{
+            width: 250px;
+            height: 4px;
+            background: grey;
+            .liner{
+                width: 50%;
+                height: 100%;
+                background: white;
+            }
+        }
+        h4{
+            font-size: 15px;
+            color: rgb(156, 156, 156);
+        }
+        div{
+            display: flex;
+            align-items: center;
+        }
+    }
+}

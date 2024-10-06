@@ -1,0 +1,45 @@
+.player_container {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background: #333842;
+  border-radius: 10px;
+  gap: 1rem;
+}
+.player_container .player_control_container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.player_container .player_control_container div {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player_container .player_timing {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+.player_container .player_timing .player_liner {
+  width: 250px;
+  height: 4px;
+  background: grey;
+}
+.player_container .player_timing .player_liner .liner {
+  width: 50%;
+  height: 100%;
+  background: white;
+}
+.player_container .player_timing h4 {
+  font-size: 15px;
+  color: rgb(156, 156, 156);
+}
+.player_container .player_timing div {
+  display: flex;
+  align-items: center;
+}/*# sourceMappingURL=player.css.map */

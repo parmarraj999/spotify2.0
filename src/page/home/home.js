@@ -15,7 +15,7 @@ function Home() {
       </div>
       <div className='home_section'>
         <h2>Made For You</h2>
-        <div className=''>
+        <div className='home_albums_container'>
 
         </div>
       </div>
