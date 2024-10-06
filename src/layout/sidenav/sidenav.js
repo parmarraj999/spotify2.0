@@ -7,8 +7,6 @@ function Sidenav() {
   const location = useLocation();
   const {pathname} = location;
 
-  console.log(pathname)
-
   return (
     <div className='sidebar_layout' style={pathname === "/library" ? {background:"#111111"}:{}}>
       <div className='sidebar_links' >

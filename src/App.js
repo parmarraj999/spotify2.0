@@ -9,6 +9,7 @@ import Home from './page/home/home';
 import Discover from './page/discover/discover';
 import Search from './page/search/search';
 import Library from './page/library/library';
+import AsideTabProvider from './provider/AsideTabProvider';
 
 function App() {
 
@@ -25,26 +26,25 @@ function App() {
     // getTrack();
   }, [])
 
-  //  console.log(track)
-
-  console.log(window.innerWidth)
 
   return (
-    <div className="App">
-      <BrowserRouter>
+    <AsideTabProvider>
+      <div className="App">
+        <BrowserRouter>
           <div className='nav_app'>
             <Nav />
           </div>
-        <Routes>
-          <Route path='/' element={<Layout/>} >
-            <Route index path='' element={<Home/>} />
-            <Route path='discover' element={<Discover/>} /> 
-            <Route path='search' element={<Search/>} /> 
-            <Route path='library' element={<Library/>} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+          <Routes>
+            <Route path='/' element={<Layout />} >
+              <Route index path='' element={<Home />} />
+              <Route path='discover' element={<Discover />} />
+              <Route path='search' element={<Search />} />
+              <Route path='library' element={<Library />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </AsideTabProvider>
   );
 }
 

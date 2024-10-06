@@ -3,25 +3,15 @@ import './navButton.css'
 import classNames from 'classnames'
 import { useLocation } from 'react-router-dom'
 
-function NavButton({ text, icon, width }) {
-    const location = useLocation();
-    const { pathname } = location;
-    console.log(pathname)
-
-    const buttonClass = classNames("navigation_button", {
-        "active": pathname === '/home'
-    })
-
-
+function NavButton() {
     return (
-        <div className={buttonClass} style={{ width: `${width}` }} >
-
-
+        <div >
         </div>
     )
 }
-
 export default NavButton
+
+// ----- library button ----- 
 
 export const LibraryButton = () => {
 
@@ -46,6 +36,8 @@ export const LibraryButton = () => {
         </div>
     )
 }
+ 
+// ----- home button ---- 
 
 export const HomeButton = () => {
 
