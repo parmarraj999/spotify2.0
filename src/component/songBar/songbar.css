@@ -1,0 +1,72 @@
+.song_bar_container{
+    width: 100%;
+    height: 65px;
+    min-height: 65px;
+    display: flex;
+}
+.song_number{
+    min-width: 50px;
+    max-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #898989;
+}
+.song_details{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    overflow: hidden;
+}
+.song_details .song_cover_img{
+    min-width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    background: red;
+    overflow: hidden;
+}
+.song_cover_img img{
+    width: 100%;
+    height: 100%;
+}
+.song_names h4{
+    width: 200px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    font-size: 16px;
+    font-weight: 500;
+}
+.song_names h5{
+    font-style: 14px;
+    font-weight: 400;
+    color: #898989;
+    text-wrap: nowrap;
+}
+
+
+.song_type{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.song_type h4{
+    font-size: 14px;
+    color: #898989;
+    font-weight: 400;
+}
+.song_timing{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+.song_timing h4{
+    font-size: 14px;
+    color: #898989;
+    font-weight: 400;
+}

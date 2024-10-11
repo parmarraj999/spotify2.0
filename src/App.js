@@ -10,6 +10,7 @@ import Discover from './page/discover/discover';
 import Search from './page/search/search';
 import Library from './page/library/library';
 import AsideTabProvider from './provider/AsideTabProvider';
+import PlaylistDetail from './page/playlistDetail/playlistDetail';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
               <Route path='discover' element={<Discover />} />
               <Route path='search' element={<Search />} />
               <Route path='library' element={<Library />} />
+              <Route path='playlist' element={<PlaylistDetail />} />
             </Route>
           </Routes>
         </BrowserRouter>

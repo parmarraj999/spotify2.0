@@ -1,0 +1,94 @@
+.playlist_detail_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 1rem 0 1rem;
+}
+.playlist_detail_container .playlist_main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  gap: 2rem;
+}
+.playlist_detail_container .playlist_main::-webkit-scrollbar {
+  display: none;
+}
+.playlist_detail_container .playlist_main .playlist_main_header {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.playlist_detail_container .playlist_main .playlist_main_header h2 {
+  font-size: 45px;
+}
+.playlist_detail_container .playlist_main .playlist_main_header h5 {
+  color: #898989;
+  font-size: 16px;
+  font-weight: 400;
+}
+.playlist_detail_container .playlist_main .playlist_main_header h5 span {
+  color: white;
+}
+.playlist_detail_container .playlist_main .playlist_main_header .circle {
+  width: 5px;
+  height: 5px;
+  background: #898989;
+  border-radius: 50%;
+}
+.playlist_detail_container .playlist_main .playlist_main_header .playlist_functional_icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+.playlist_detail_container .playlist_main .playlist_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.playlist_detail_container .playlist_main .playlist_list_container .playlist_list_header {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid grey;
+  padding-bottom: 0.5rem;
+}
+.playlist_detail_container .playlist_main .playlist_list_container .playlist_list_header h4 {
+  width: 100%;
+  font-size: 15px;
+  color: #898989;
+  font-weight: 400;
+}
+.playlist_detail_container .playlist_main .playlist_list_container .playlist_list_header h4:nth-child(1) {
+  min-width: 50px;
+  max-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.playlist_detail_container .playlist_main .playlist_list_container .song_list_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: auto;
+  max-height: 300px;
+}
+.playlist_detail_container .playlist_sidebar {
+  width: 35%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.playlist_detail_container .playlist_sidebar .playlist_cover_image {
+  width: 300px;
+  height: 300px;
+  background: white;
+  border-radius: 10px;
+}/*# sourceMappingURL=playlistdetail.css.map */

@@ -6,7 +6,7 @@
   padding: 0 1rem;
   background: #333842;
   border-radius: 10px;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 .player_container .player_control_container {
   height: 100%;
@@ -42,4 +42,38 @@
 .player_container .player_timing div {
   display: flex;
   align-items: center;
+}
+.player_container .playing_details {
+  min-width: 300px;
+  display: flex;
+  gap: 0.5rem;
+}
+.player_container .playing_details .playing_cover_img {
+  width: 60px;
+  height: 60px;
+}
+.player_container .playing_details .playing_cover_img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+.player_container .playing_details .playing_names {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.player_container .playing_details .playing_names h4 {
+  font-size: 18px;
+  font-weight: 400;
+}
+.player_container .playing_details .playing_names h6 {
+  font-size: 15px;
+  font-weight: 400;
+  color: #898989;
+}
+.player_container .player_functional_icons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }/*# sourceMappingURL=player.css.map */
