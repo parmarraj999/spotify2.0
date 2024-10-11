@@ -7,6 +7,16 @@ function SongBar({data}) {
 
     const artistName = data.track.artists
 
+    function convertMillisecondsToTimeString(milliseconds) {
+        const seconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds   
+       % 60;
+      
+        const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        return timeString;
+      }
+
     return (
         <div className='song_bar_container' >
             <div className='song_number' >
@@ -17,7 +27,7 @@ function SongBar({data}) {
                     <img src={data.track.album.images[0].url} />
                 </div>
                 <div className='song_names'>
-                    <h4>{data.track.album.name}</h4>
+                    <h4>{data.track.name}</h4>
                     <div style={{width:'200px',display:"flex",gap:'.3rem',overflow:'hidden'}} >
 
                     {
@@ -31,10 +41,10 @@ function SongBar({data}) {
                 </div>
             </div>
             <div className='song_type' >
-                <h4>Random Access Memories</h4>
+                <h4>{data.track.album.name}</h4>
             </div>
             <div className='song_timing' >
-                <h4>4:25</h4>
+                <h4>{convertMillisecondsToTimeString(data.track.duration_ms)}</h4>
                 <div>
 
                     <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">

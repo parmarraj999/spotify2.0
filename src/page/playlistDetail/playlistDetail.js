@@ -20874,6 +20874,7 @@ function PlaylistDetail() {
   console.log(data.tracks.items)
 
   const songData = data.tracks.items;
+  const coverImage = data.images[0].url
 
   return (
     <div className='playlist_detail_container' >
@@ -20883,7 +20884,7 @@ function PlaylistDetail() {
           <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }} >
             <h5>By <span>Spotify</span></h5>
             <div className='circle'></div>
-            <h5>{data.tracks.length} songs</h5>
+            <h5>{data.tracks.items.length} songs</h5>
             <div className='circle'></div>
             <h5>3 hr 30 min</h5>
           </div>
@@ -20960,7 +20961,7 @@ function PlaylistDetail() {
           </div>
           <div className='song_list_container' >
             {
-              songData.map((data)=>{
+              songData.map((data,key)=>{
                 return(
                   <SongBar data={data}/>
                 )
@@ -20971,8 +20972,17 @@ function PlaylistDetail() {
       </div>
       <div className='playlist_sidebar' >
         <div className='playlist_cover_image' >
-
+            <img src={`${coverImage}`} />
         </div>
+        <div className='playlist_details'>
+          {/* <p>{data.description}</p> */}
+          <div>
+            <div>{}</div>
+          </div>
+        </div>
+        <a href={data.external_urls.spotify} className='open_spotify_button' >
+          Open In Spotify
+        </a>
       </div>
     </div>
   )
