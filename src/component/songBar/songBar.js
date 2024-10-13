@@ -1,7 +1,7 @@
 import React from 'react';
 import './songbar.css';
 
-function SongBar({data}) {
+function SongBar({ data, album }) {
 
     console.log(data)
 
@@ -10,12 +10,12 @@ function SongBar({data}) {
     function convertMillisecondsToTimeString(milliseconds) {
         const seconds = Math.floor(milliseconds / 1000);
         const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds   
-       % 60;
-      
+        const remainingSeconds = seconds
+            % 60;
+
         const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
         return timeString;
-      }
+    }
 
     return (
         <div className='song_bar_container' >
@@ -28,21 +28,24 @@ function SongBar({data}) {
                 </div>
                 <div className='song_names'>
                     <h4>{data.track.name}</h4>
-                    <div style={{width:'200px',display:"flex",gap:'.3rem',overflow:'hidden'}} >
+                    <div style={{ width: '200px', display: "flex", gap: '.3rem', overflow: 'hidden' }} >
 
-                    {
-                        artistName.map((data)=>{
-                            return (
-                                <h5>{data.name},</h5>
-                            )
-                        })
-                    }
+                        {
+                            artistName.map((data) => {
+                                return (
+                                    <h5>{data.name},</h5>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
-            <div className='song_type' >
-                <h4>{data.track.album.name}</h4>
-            </div>
+            {
+                album === true ? "" :
+                    <div className='song_type' >
+                        <h4>{data.track.album.name}</h4>
+                    </div>
+            }
             <div className='song_timing' >
                 <h4>{convertMillisecondsToTimeString(data.track.duration_ms)}</h4>
                 <div>

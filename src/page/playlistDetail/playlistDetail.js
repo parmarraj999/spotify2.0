@@ -20961,9 +20961,14 @@ function PlaylistDetail() {
           </div>
           <div className='song_list_container' >
             {
-              songData.map((data,key)=>{
-                return(
-                  <SongBar data={data}/>
+              songData.map((data, key) => {
+                return (
+                  <ul>
+                    <li>
+
+                      <SongBar data={data} />
+                    </li>
+                  </ul>
                 )
               })
             }
@@ -20972,13 +20977,10 @@ function PlaylistDetail() {
       </div>
       <div className='playlist_sidebar' >
         <div className='playlist_cover_image' >
-            <img src={`${coverImage}`} />
+          <img src={`${coverImage}`} />
         </div>
         <div className='playlist_details'>
-          {/* <p>{data.description}</p> */}
-          <div>
-            <div>{}</div>
-          </div>
+          
         </div>
         <a href={data.external_urls.spotify} className='open_spotify_button' >
           Open In Spotify

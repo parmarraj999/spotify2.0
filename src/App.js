@@ -11,6 +11,7 @@ import Search from './page/search/search';
 import Library from './page/library/library';
 import AsideTabProvider from './provider/AsideTabProvider';
 import PlaylistDetail from './page/playlistDetail/playlistDetail';
+import Album from './page/album/album';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
               <Route path='search' element={<Search />} />
               <Route path='library' element={<Library />} />
               <Route path='playlist' element={<PlaylistDetail />} />
+              <Route path='album' element={<Album/>} />
             </Route>
           </Routes>
         </BrowserRouter>
