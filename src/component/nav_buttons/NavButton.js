@@ -17,7 +17,6 @@ export const LibraryButton = () => {
 
     const location = useLocation();
     const { pathname } = location;
-    console.log(pathname)
 
     const buttonClass = classNames("navigation_button", {
         "active": pathname === '/library'
@@ -64,7 +63,6 @@ export const HomeButton = () => {
 
     const location = useLocation();
     const { pathname } = location;
-    console.log(pathname)
 
     const buttonClass = classNames("navigation_button", {
         "active": pathname === '/'
@@ -96,7 +94,6 @@ export const Discover = () => {
 
     const location = useLocation();
     const { pathname } = location;
-    console.log(pathname)
 
     const buttonClass = classNames("navigation_button", {
         "active": pathname === '/discover'

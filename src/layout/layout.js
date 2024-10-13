@@ -12,7 +12,6 @@ function Layout() {
 
   const {pathname} = useLocation();
 
-  console.log(showTab)
 
   return (
     <div className='layout_container'>

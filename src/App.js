@@ -1,7 +1,7 @@
 import axios from 'axios';
 import './App.css';
 import './utility.css'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Nav from './layout/nav/nav';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import Layout from './layout/layout';
@@ -12,43 +12,74 @@ import Library from './page/library/library';
 import AsideTabProvider from './provider/AsideTabProvider';
 import PlaylistDetail from './page/playlistDetail/playlistDetail';
 import Album from './page/album/album';
+import { AccessTokenContext } from './provider/AccessTokenProvider';
 
 function App() {
 
+  const CLIENT_ID = 'f5c193cd77ec4b80983881a119bbe2a2';
+  const CLIENT_SECRET = "811dba94023d42fc94c5b02c56ecdcd0";
+
   const [track, setTrack] = useState([]);
 
-  const getTrack = async () => {
-    let response = await fetch("https://v1.nocodeapi.com/rajparmar/spotify/MMpjJQOImNiQcdII/search?q=hot&type=track")
-    const data = await response.json();
+  const [accessToken, setAccessToken] = useState("");
+  console.log(accessToken)
+
+  const getSong = async () => {
+
+    const { data } = await axios.get("https://api.spotify.com/v1/albums/6mHNMtHrXIdUWWuZD9njsG", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      // params: {
+      //   q: "leon",
+      //   type: "album"
+      // }
+    })
     console.log(data)
-    setTrack(data.tracks.items)
+
   }
 
   useEffect(() => {
-    // getTrack();
+    var authParameters = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+    }
+    fetch("https://accounts.spotify.com/api/token", authParameters)
+      .then(result => result.json())
+      .then(data => setAccessToken(data.access_token))
   }, [])
+
+  useEffect(() => {
+    // getSong();
+  })
+
 
 
   return (
-    <AsideTabProvider>
-      <div className="App">
-        <BrowserRouter>
-          <div className='nav_app'>
-            <Nav />
-          </div>
-          <Routes>
-            <Route path='/' element={<Layout />} >
-              <Route index path='' element={<Home />} />
-              <Route path='discover' element={<Discover />} />
-              <Route path='search' element={<Search />} />
-              <Route path='library' element={<Library />} />
-              <Route path='playlist' element={<PlaylistDetail />} />
-              <Route path='album' element={<Album/>} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </AsideTabProvider>
+    <AccessTokenContext.Provider value={{ accessToken }} >
+      <AsideTabProvider>
+        <div className="App">
+          <BrowserRouter>
+            <div className='nav_app'>
+              <Nav />
+            </div>
+            <Routes>
+              <Route path='/' element={<Layout />} >
+                <Route index path='' element={<Home />} />
+                <Route path='discover' element={<Discover />} />
+                <Route path='search' element={<Search />} />
+                <Route path='library' element={<Library />} />
+                <Route path='playlist' element={<PlaylistDetail />} />
+                <Route path='album' element={<Album />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </AsideTabProvider>
+    </AccessTokenContext.Provider>
   );
 }
 

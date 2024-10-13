@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './home.css'
+import HomeNav from './homeComponents/homeNav'
 
 function Home() {
 
   const [currentPath,setCurrentPath] = useState('all')
 
+  const MadeForYouData = [
+
+  ]
+
   return (
     <div className='home_container' >
-      <div className='home_nav'>
-        <div className='home_nav_item' style={currentPath==="all"?{background:"white",color:'black'}: {color:"white"}} onClick={()=>setCurrentPath("all")}  >All</div>
-        <div className='home_nav_item'  style={currentPath==="music"?{background:"white",color:'black'}: {color:"white"}} onClick={()=>setCurrentPath("music")}>Music</div>
-        <div className='home_nav_item'  style={currentPath==="podcast"?{background:"white",color:'black'}: {color:"white"}} onClick={()=>setCurrentPath("podcast")}>Podcast</div>
-        <div className='home_nav_item'  style={currentPath==="audiobook"?{background:"white",color:'black'}: {color:"white"}} onClick={()=>setCurrentPath("audiobook")}>Audiobook</div>
-      </div>
+      <HomeNav currentPath={currentPath} setCurrentPath={setCurrentPath}/>
       <div className='home_section'>
+        <div>
         <h2>Made For You</h2>
-        <div className='home_albums_container'>
-
+        <div>
+          
+        </div>
         </div>
       </div>
     </div>
