@@ -20,7 +20,7 @@
 }
 .layout_main_sidebar{
     width: 36%;
-    min-width: 350px;
+    /* min-width: 350px; */
     height: 100%;
     border: 1px solid #202020;
     border-radius: 15px;
