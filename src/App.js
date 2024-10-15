@@ -13,6 +13,7 @@ import AsideTabProvider from './provider/AsideTabProvider';
 import PlaylistDetail from './page/playlistDetail/playlistDetail';
 import Album from './page/album/album';
 import { AccessTokenContext } from './provider/AccessTokenProvider';
+import SearchValueProvider from './provider/SearchValueProvider';
 
 function App() {
 
@@ -59,27 +60,29 @@ function App() {
 
 
   return (
-    <AccessTokenContext.Provider value={{ accessToken }} >
-      <AsideTabProvider>
-        <div className="App">
-          <BrowserRouter>
-            <div className='nav_app'>
-              <Nav />
-            </div>
-            <Routes>
-              <Route path='/' element={<Layout />} >
-                <Route index path='' element={<Home />} />
-                <Route path='discover' element={<Discover />} />
-                <Route path='search' element={<Search />} />
-                <Route path='library' element={<Library />} />
-                <Route path='playlist' element={<PlaylistDetail />} />
-                <Route path='album' element={<Album />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </AsideTabProvider>
-    </AccessTokenContext.Provider>
+    <SearchValueProvider>
+      <AccessTokenContext.Provider value={{ accessToken }} >
+        <AsideTabProvider>
+          <div className="App">
+            <BrowserRouter>
+              <div className='nav_app'>
+                <Nav />
+              </div>
+              <Routes>
+                <Route path='/' element={<Layout />} >
+                  <Route index path='' element={<Home />} />
+                  <Route path='discover' element={<Discover />} />
+                  <Route path='search' element={<Search />} />
+                  <Route path='library' element={<Library />} />
+                  <Route path='playlist' element={<PlaylistDetail />} />
+                  <Route path='album' element={<Album />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </AsideTabProvider>
+      </AccessTokenContext.Provider>
+    </SearchValueProvider>
   );
 }
 
