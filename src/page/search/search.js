@@ -10,7 +10,7 @@ function Search() {
   const { searchValue } = useContext(SearchValueContext)
 
   return (
-    <div className='search_container'>
+    <div className='search_container' style={  searchValue === "" ? {gridTemplateRows:"12ft"}: {gridTemplateRows:"6fr 6ft"}}>
       {
         searchValue === "" ?
           <>

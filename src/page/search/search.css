@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 6fr 6fr;
   gap: 1rem;
   overflow: scroll;
 }
@@ -77,4 +76,174 @@
 .search_suggestions_container .suggestion_albums_container .suggestion_album p {
   font-size: 15px;
   color: #808080;
+}
+
+.search_filter_container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.search_filter_container div {
+  padding: 0.3rem 1rem;
+  background: #1d1d1d;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.search_result_container {
+  width: 100%;
+  height: 100%;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.song_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.song_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.song_list_container .list_container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding-bottom: 1rem;
+}
+.song_list_container .list_container .search_song_bar {
+  display: flex;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 19%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: rgba(156, 156, 156, 0.1);
+  border-radius: 10px;
+}
+.song_list_container .list_container .search_song_bar .search_song_bar_img {
+  width: 100%;
+  display: flex;
+}
+.song_list_container .list_container .search_song_bar .search_song_bar_img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.song_list_container .list_container .search_song_bar .search_song_details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.5rem 0.5rem;
+}
+.song_list_container .list_container .search_song_bar .search_song_details h3 {
+  flex-wrap: nowrap;
+  height: 20px;
+  overflow: hidden;
+  width: 70%;
+  font-size: 16px;
+  font-weight: 500;
+}
+.song_list_container .list_container .search_song_bar .search_song_details h4 {
+  font-size: 14px;
+  font-weight: 400;
+}
+.song_list_container .list_container .search_song_bar .search_song_details p {
+  font-size: 13px;
+  color: #898989;
+}
+
+.album_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.album_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.album_list_container .list_container {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.album_list_container .list_container .search_album_cover {
+  width: 19%;
+}
+.album_list_container .list_container .search_album_cover .search_album_img {
+  width: 100%;
+}
+.album_list_container .list_container .search_album_cover .search_album_img img {
+  width: 100%;
+  border-radius: 10px;
+}
+.album_list_container .list_container .search_album_cover h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.show_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.show_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.show_list_container .list_container {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.playlist_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.playlist_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.playlist_list_container .list_container {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.audiobook_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.audiobook_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.audiobook_list_container .list_container {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.artist_list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.artist_list_container h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.artist_list_container .list_container {
+  width: 100%;
+  border: 1px solid red;
 }/*# sourceMappingURL=search.css.map */

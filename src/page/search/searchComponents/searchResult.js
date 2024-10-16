@@ -1,7 +1,27 @@
 import axios from 'axios'
+import '../search.css'
 import React, { useContext, useEffect, useState } from 'react'
 import { SearchValueContext } from '../../../provider/SearchValueProvider'
 import { AccessTokenContext } from '../../../provider/AccessTokenProvider'
+import SongList from '../resultComponent/songList'
+import AlbumList from '../resultComponent/albumList'
+import ShowList from '../resultComponent/showList'
+import PlaylistList from '../resultComponent/playlistList'
+import AudioBookList from '../resultComponent/audioBookList'
+import ArtistList from '../resultComponent/artistList'
+
+const NavForSearch = ({currentPath, setCurrentPath}) => {
+  return (
+    <div className='search_filter_container'>
+      <div style={currentPath === "all" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("all")} >All</div>
+      <div style={currentPath === "song" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("song")} >Songs</div>
+      <div style={currentPath === "album" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("album")} >Albums</div>
+      <div style={currentPath === "playlist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("playlist")} >Playlists</div>
+      <div style={currentPath === "show" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("show")} >Shows</div>
+      <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Audiobooks</div>
+    </div>
+  )
+}
 
 function SearchResult() {
 
@@ -15,7 +35,10 @@ function SearchResult() {
   const [artist, setArtist] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [show, setShow] = useState([]);
-  const [audiobook,setAudiobook] = useState([]);
+  const [audiobook, setAudiobook] = useState([]);
+
+
+  const [currentPath, setCurrentPath] = useState('all')
 
   //  getting search data 
 
@@ -130,9 +153,9 @@ function SearchResult() {
       }
     })
     console.log(data)
-    if(data){
+    if (data) {
       setAudiobook(data.audiobooks.items)
-    }else{
+    } else {
       console.log("audiobook data found !")
     }
   }
@@ -148,7 +171,45 @@ function SearchResult() {
   }, [searchValue])
 
   return (
-    <div>SearchResult</div>
+    <div className='search_result_container'>
+      <NavForSearch currentPath={currentPath} setCurrentPath={setCurrentPath} />
+      {
+      currentPath === 'all'?
+      <>
+      <SongList data={songs} />
+      <AlbumList data={albums} /> 
+      <ShowList data={show}/>
+      <PlaylistList data={playlist} />
+      <AudioBookList data={audiobook} />
+      <ArtistList data={artist} />
+      </>
+      : ""
+      }
+      {
+        currentPath === "song"?
+        <SongList data={songs} /> : ""
+      }
+      {
+        currentPath === "album"?
+        <AlbumList data={albums}/> : ""
+      }
+      {
+        currentPath === 'show' ?
+        <ShowList data={show}/> : ""
+      }
+      {
+        currentPath === "playlist" ?
+        <PlaylistList data={playlist} /> : ""
+      }
+      {
+        currentPath === "audiobook" ? 
+        <AudioBookList data={audiobook} /> : ""
+      }
+      {
+        currentPath === "artist" ? 
+        <ArtistList data={artist} /> : ""
+      }
+    </div>
   )
 }
 
