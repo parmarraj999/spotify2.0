@@ -108,7 +108,7 @@
   gap: 0.8rem;
 }
 .song_list_container h3 {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
 }
 .song_list_container .list_container {
@@ -122,11 +122,10 @@
   display: flex;
   height: -moz-fit-content;
   height: fit-content;
-  width: 19%;
+  width: 18%;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  background: rgba(156, 156, 156, 0.1);
+  gap: 0.2rem;
   border-radius: 10px;
 }
 .song_list_container .list_container .search_song_bar .search_song_bar_img {
@@ -167,7 +166,7 @@
   gap: 0.8rem;
 }
 .album_list_container h3 {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
 }
 .album_list_container .list_container {
@@ -175,21 +174,56 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 .album_list_container .list_container .search_album_cover {
-  width: 19%;
+  width: 15%;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.2s all;
 }
 .album_list_container .list_container .search_album_cover .search_album_img {
   width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  background-image: url("https://i.pinimg.com/564x/3a/a6/22/3aa622c900041633f8fb3f6917cf5904.jpg");
+  background-size: cover;
+  background-position: center;
+  justify-content: flex-end;
+  overflow: hidden;
 }
-.album_list_container .list_container .search_album_cover .search_album_img img {
+.album_list_container .list_container .search_album_cover .search_album_img div {
   width: 100%;
-  border-radius: 10px;
+  height: 50px;
+  border-radius: 0 0 10px 10px;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.3rem;
+  transition: 0.3s all;
 }
-.album_list_container .list_container .search_album_cover h3 {
-  font-size: 14px;
+.album_list_container .list_container .search_album_cover .search_album_img div h3 {
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+  font-size: 15px;
   font-weight: 500;
+}
+.album_list_container .list_container .search_album_cover .search_album_img div h4 {
+  width: 100%;
+  font-weight: 400;
+  font-size: 12px;
+}
+.album_list_container .list_container .search_album_cover:hover {
+  scale: 1.04;
+}
+.album_list_container .list_container .search_album_cover:hover .search_album_img div {
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .show_list_container {

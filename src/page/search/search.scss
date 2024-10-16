@@ -111,7 +111,7 @@
     flex-direction: column;
     gap: 0.8rem;
     h3 {
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 700;
     }
     .list_container {
@@ -124,11 +124,11 @@
         .search_song_bar {
             display: flex;
             height: fit-content;
-            width: 19%;
+            width: 18%;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
-            background: rgba(156, 156, 156, 0.1);
+            gap: 0.2rem;
+            // background: rgba(156, 156, 156, 0.1);
             border-radius: 10px;
             .search_song_bar_img {
                 width: 100%;
@@ -172,7 +172,7 @@
     flex-direction: column;
     gap: 0.8rem;
     h3 {
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 700;
     }
     .list_container {
@@ -180,20 +180,54 @@
         display: flex;
         gap: 1rem;
         flex-wrap: wrap;
-        justify-content: space-between;
         .search_album_cover{
-            width: 19%;
-            // border: 1px solid white;
+            width: 15%;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            // border: 1px solid red;
+            transition: .2s all;
             .search_album_img{
                 width: 100%;
-                img{
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+                background-image: url('https://i.pinimg.com/564x/3a/a6/22/3aa622c900041633f8fb3f6917cf5904.jpg');
+                background-size: cover;
+                background-position: center;
+                justify-content: flex-end;
+                overflow: hidden;
+                div{
                     width: 100%;
-                    border-radius: 10px;
+                    height: 50px;
+                    border-radius: 0 0 10px 10px;
+                    backdrop-filter: blur(15px);
+                    background: rgba(0,0,0,.2);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0 .3rem;
+                    transition: .3s all;
+                    h3{
+                        height: 20px;
+                        width: 100%;
+                        overflow: hidden;
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+                    h4{
+                        width: 100%;
+                        font-weight: 400;
+                        font-size: 12px;
+                    }
                 }
             }
-            h3{
-                font-size: 14px;
-                font-weight: 500;
+            &:hover{
+                scale: 1.04;
+            }
+            &:hover .search_album_img div{
+                background: rgba(0,0,0,.4);
             }
         }
     }
