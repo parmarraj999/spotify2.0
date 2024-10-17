@@ -2,8 +2,6 @@ import React from 'react'
 
 function AlbumList({ data }) {
 
-  console.log(data)
-
   return (
     <div className='album_list_container' >
       <h3>Albums</h3>

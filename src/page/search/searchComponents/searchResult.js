@@ -15,10 +15,11 @@ const NavForSearch = ({currentPath, setCurrentPath}) => {
     <div className='search_filter_container'>
       <div style={currentPath === "all" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("all")} >All</div>
       <div style={currentPath === "song" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("song")} >Songs</div>
+      <div style={currentPath === "artist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("artist")} >Artists</div>
       <div style={currentPath === "album" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("album")} >Albums</div>
       <div style={currentPath === "playlist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("playlist")} >Playlists</div>
       <div style={currentPath === "show" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("show")} >Shows</div>
-      <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Audiobooks</div>
+      <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Podcasts</div>
     </div>
   )
 }
@@ -178,8 +179,8 @@ function SearchResult() {
       <>
       <SongList data={songs} />
       <AlbumList data={albums} /> 
-      <ShowList data={show}/>
       <PlaylistList data={playlist} />
+      {/* <ShowList data={show}/> */}
       <AudioBookList data={audiobook} />
       <ArtistList data={artist} />
       </>
@@ -193,10 +194,10 @@ function SearchResult() {
         currentPath === "album"?
         <AlbumList data={albums}/> : ""
       }
-      {
+      {/* {
         currentPath === 'show' ?
         <ShowList data={show}/> : ""
-      }
+      } */}
       {
         currentPath === "playlist" ?
         <PlaylistList data={playlist} /> : ""
