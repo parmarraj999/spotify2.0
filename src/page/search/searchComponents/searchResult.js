@@ -18,7 +18,7 @@ const NavForSearch = ({currentPath, setCurrentPath}) => {
       <div style={currentPath === "artist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("artist")} >Artists</div>
       <div style={currentPath === "album" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("album")} >Albums</div>
       <div style={currentPath === "playlist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("playlist")} >Playlists</div>
-      <div style={currentPath === "show" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("show")} >Shows</div>
+      {/* <div style={currentPath === "show" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("show")} >Shows</div> */}
       <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Podcasts</div>
     </div>
   )

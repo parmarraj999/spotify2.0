@@ -307,7 +307,8 @@
   gap: 0.8rem;
 }
 .podcast_list_container h3 {
-  font-size: 20px;
+  font-size: 24px;
+  text-transform: capitalize;
   font-weight: 700;
 }
 .podcast_list_container .list_container {
@@ -376,10 +377,35 @@
   gap: 0.8rem;
 }
 .artist_list_container h3 {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
 }
 .artist_list_container .list_container {
   width: 100%;
-  border: 1px solid red;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.artist_list_container .list_container .artist_cover {
+  width: 18%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+.artist_list_container .list_container .artist_cover .artist_image {
+  width: 100%;
+}
+.artist_list_container .list_container .artist_cover .artist_image img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.artist_list_container .list_container .artist_cover h3 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.artist_list_container .list_container .artist_cover h5 {
+  font-size: 15px;
+  font-weight: 400;
+  color: #898989;
 }/*# sourceMappingURL=search.css.map */

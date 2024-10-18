@@ -2,8 +2,6 @@ import React from 'react'
 
 function AudioBookList({ data }) {
 
-  console.log(data)
-
   return (
     <div className='podcast_list_container' >
       <h3>Podcasts</h3>

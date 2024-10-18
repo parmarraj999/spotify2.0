@@ -74,8 +74,8 @@ function App() {
                   <Route path='discover' element={<Discover />} />
                   <Route path='search' element={<Search />} />
                   <Route path='library' element={<Library />} />
-                  <Route path='playlist' element={<PlaylistDetail />} />
-                  <Route path='album' element={<Album />} />
+                  <Route path='playlist/:id' element={<PlaylistDetail />} />
+                  <Route path='album/:id' element={<Album />} />
                 </Route>
               </Routes>
             </BrowserRouter>

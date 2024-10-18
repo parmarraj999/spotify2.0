@@ -3,7 +3,7 @@ import './songbar.css';
 
 function SongBar({ data, album }) {
 
-    console.log(data)
+    // console.log(data)
 
     const artistName = data.track.artists
 
