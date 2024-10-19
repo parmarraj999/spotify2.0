@@ -50,7 +50,10 @@ function App() {
     }
     fetch("https://accounts.spotify.com/api/token", authParameters)
       .then(result => result.json())
-      .then(data => setAccessToken(data.access_token))
+      .then(data => {
+        setAccessToken(data.access_token)
+        window.localStorage.setItem('token',data.access_token)
+      })
   }, [])
 
   useEffect(() => {

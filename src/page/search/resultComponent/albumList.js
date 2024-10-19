@@ -1,4 +1,6 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 function AlbumList({ data }) {
 
@@ -9,15 +11,15 @@ function AlbumList({ data }) {
         {
           data.map((data) => {
             return (
-              <div className='search_album_cover' >
-                <div className='search_album_img' style={{backgroundImage:`url(${data.images[0].url})`}}>
+              <Link to={`/playlist/${data.id}`} className='search_album_cover' >
+                <div className='search_album_img' style={{ backgroundImage: `url(${data.images[0].url})` }}>
                   {/* <img className='img_1' src={data.images[0].url} /> */}
                   <div>
                     <h3>{data.name}</h3>
                     <h4>{data.artists[0].name},</h4>
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           })
         }

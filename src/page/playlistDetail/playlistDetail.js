@@ -16,9 +16,12 @@ function PlaylistDetail() {
   console.log(id)
 
   const getPlaylistDetail = async () => {
-    const { data } = await axios.get("https://api.spotify.com/v1/playlists/37i9dQZF1DX0XUfTFmNBRM", {
+
+    const access_token = window.localStorage.getItem("token")
+
+    const { data } = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     console.log(data)
@@ -33,8 +36,7 @@ function PlaylistDetail() {
   }, [])
 
 
-  // const songData = data?.tracks?.items;
-  // const coverImage = data?.images[0]?.url
+  const songData = data?.tracks?.items;
 
   return (
     <>
@@ -43,13 +45,13 @@ function PlaylistDetail() {
           <div className='playlist_detail_container' >
             <div className='playlist_main' >
               <div className='playlist_main_header' >
-                <h2>{ }</h2>
+                <h2>{data?.name}</h2>
                 <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }} >
                   <h5>By <span>Spotify</span></h5>
                   <div className='circle'></div>
                   <h5>{data.tracks.items.length} songs</h5>
-                  <div className='circle'></div>
-                  <h5>3 hr 30 min</h5>
+                  {/* <div className='circle'></div>
+                  <h5>3 hr 30 min</h5> */}
                 </div>
                 <div className='playlist_functional_icons' >
                   <div style={{ display: 'flex', alignItems: "center", gap: ".8rem" }}>
@@ -123,31 +125,26 @@ function PlaylistDetail() {
                   <h4>Duration</h4>
                 </div>
                 <div className='song_list_container' >
-                  {/* {
+                  {
                     songData.map((data, key) => {
                       return (
-                        <ul>
-                          <li>
-
-                            <SongBar data={data} />
-                          </li>
-                        </ul>
+                        <SongBar data={data} />
                       )
                     })
-                  } */}
+                  }
                 </div>
               </div>
             </div>
             <div className='playlist_sidebar' >
               <div className='playlist_cover_image' >
-                {/* <img src={`${coverImage}`} /> */}
+                <img src={`${data?.images[0]?.url}`} />
               </div>
               <div className='playlist_details'>
 
               </div>
-              {/* <a href={data.external_urls.spotify} className='open_spotify_button' >
+              <a href={data.external_urls.spotify} className='open_spotify_button' >
                 Open In Spotify
-              </a> */}
+              </a>
             </div>
           </div>
       }

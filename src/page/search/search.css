@@ -227,11 +227,13 @@
   overflow: hidden;
   font-size: 15px;
   font-weight: 500;
+  color: white;
 }
 .album_list_container .list_container .search_album_cover .search_album_img div h4 {
   width: 100%;
   font-weight: 400;
   font-size: 12px;
+  color: white;
 }
 .album_list_container .list_container .search_album_cover:hover {
   scale: 1.04;
@@ -291,6 +293,7 @@
   font-weight: 500;
   height: 20px;
   overflow: hidden;
+  color: white;
 }
 .playlist_list_container .list_container .search_playlist_cover .playlist_details h4 {
   font-size: 14px;

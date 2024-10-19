@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import './home.css'
 import HomeNav from './homeComponents/homeNav'
+import { Link } from 'react-router-dom'
 
 function Home() {
 
@@ -504,7 +505,7 @@ return (
           {
             MadeForYouData.map((data) => {
               return (
-                <div className='album_cover_container'>
+                <Link to={`/playlist/${data.id}`} className='album_cover_container'>
                   <div className='album_image' >
                     <img src={data.images[0].url} />
                   </div>
@@ -514,7 +515,7 @@ return (
                       <h5>{data.tracks.total}</h5>
                     </div>
                   </div>
-                </div>
+                </Link>
               )
             })
           }
@@ -527,7 +528,7 @@ return (
           {
             TopMixData.map((data)=>{
               return(
-                <div className='album_cover_container'>
+                <Link to={`/playlist/${data.id}`} className='album_cover_container'>
                   <div className='album_image' >
                     <img src={data.images[0].url} />
                   </div>
@@ -537,7 +538,7 @@ return (
                       <h5>{data.tracks.total}</h5>
                     </div>
                   </div>
-                </div>
+                </Link>
               )
             })
           }
