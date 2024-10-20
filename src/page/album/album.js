@@ -16,7 +16,7 @@ function Album() {
 
         const access_token = window.localStorage.getItem("token")
 
-        const { data } = await axios.get(`https://api.spotify.com/v1/albums/5KF4xCxDD8ip003hoatFT9`, {
+        const { data } = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -44,7 +44,7 @@ function Album() {
                     <div className='playlist_detail_container' >
                         <div className='playlist_main' >
                             <div className='playlist_main_header' >
-                                <h2>Hot Hit Hindi</h2>
+                                <h2>{data.name}</h2>
                                 <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }} >
                                     <h5>By <span>Spotify</span></h5>
                                     <div className='circle'></div>

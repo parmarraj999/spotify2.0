@@ -13,9 +13,9 @@ function ArtistList({ data }) {
             return (
               <div className='artist_cover' >
                 <div className='artist_image' >
-                  <img src={data.images[0].url} />
+                  <img src={data?.images[0]?.url} />
                 </div>
-                <h3>{data.name}</h3>
+                <h3>{data?.name}</h3>
                 <h5>Artist</h5>
               </div>
             )

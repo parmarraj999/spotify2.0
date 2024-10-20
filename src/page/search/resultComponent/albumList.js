@@ -11,7 +11,7 @@ function AlbumList({ data }) {
         {
           data.map((data) => {
             return (
-              <Link to={`/playlist/${data.id}`} className='search_album_cover' >
+              <Link to={`/album/${data.id}`} className='search_album_cover' >
                 <div className='search_album_img' style={{ backgroundImage: `url(${data.images[0].url})` }}>
                   {/* <img className='img_1' src={data.images[0].url} /> */}
                   <div>

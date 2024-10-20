@@ -1,0 +1,65 @@
+.artist_detail_container{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    // border: 1px solid red;
+    .artist_banner_container{
+        width: 100%;
+        height: 40vh;
+        // background: red;
+        border-radius: 10px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        .artist_details{
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.5);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            padding: .8rem;
+            display: flex;
+            gap:1.5rem;
+            img{
+                height: 100%;
+                border-radius: 10px;
+            }
+            .artist_names_buttons{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                gap: 1.5rem;
+                h2{
+                    font-size: 32px;
+                }
+                h4{
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #d6d6d6;
+                    text-transform: capitalize  ;
+                }
+                .artist_buttons{
+                    display: flex;
+                    gap: 1.5rem;
+                    justify-content: space-between;
+                    width: 100%;
+                    // border: 1px solid red;
+                    button{
+                        padding: .6rem 2rem;
+                        font-size: 15px;
+                        color: white;
+                        background: rgba(255,255,255,.2);
+                        border: none;
+                        border-radius: 2rem;
+                    }
+                    div{
+                        display: flex;
+                        align-items: center;
+                        gap: 1.2rem;
+                    }
+                }
+            }
+        }
+    }
+}
