@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function BrowseSection() {
 
@@ -732,10 +733,10 @@ function BrowseSection() {
                 {
                     data.map((data, index) => {
                         return (
-                            <div className='suggestion_album' >
+                            <Link to={`/playlist/${data.id}`} className='suggestion_album' >
                                 <img src={`${data.images[0].url}`} /> 
                                 <p>{data.name}</p>
-                            </div>
+                            </Link>
                         )
                     })
                 }

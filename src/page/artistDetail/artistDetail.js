@@ -2,26 +2,31 @@ import React, { useEffect, useState } from 'react';
 import './artistDetail.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ArtistTopTrack from './artistComponent/ArtistTopTrack';
 
 function ArtistDetail() {
 
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [currentNav,setCurrentNav] = useState('home')
+  const [coverImage,setCoverImage] = useState('')
+
+  const access_token = window.localStorage.getItem("token")
+
+  // function for artist details
 
   const getArtistDetail = async () => {
-
-    const access_token = window.localStorage.getItem("token")
-
-    const { data } = await axios.get(`https://api.spotify.com/v1/artists/7uIbLdzzSEqnX0Pkrb56cR`, {
+    const { data } = await axios.get(`https://api.spotify.com/v1/artists/${id}`, {
       headers: {
         Authorization: `Bearer ${access_token}`
       }
     })
     console.log(data)
     setData(data);
-    if (data) {
+    if (data.images[0].url) {
       setIsLoading(false)
+      setCoverImage(data.images[0].url)
     }
   }
 
@@ -35,18 +40,18 @@ function ArtistDetail() {
         isLoading ? <div>Loading</div>
           :
           <div className='artist_detail_container' >
-            <div className='artist_banner_container' style={{ backgroundImage: `url(${data?.images[0]?.url})` }}>
-              <div className='artist_details' >
-                <img src={data?.images[0]?.url} />
+            <div className='artist_banner_container' style={{backgroundImage:`url(${coverImage})`}} >
+              <div className='artist_details'>
+                <img src={`${coverImage}`} />
                 <div className='artist_names_buttons'>
                   <div>
-                    <h2>{data.name}</h2>
-                    <h4>{data.type}</h4>
+                    <h2>{data?.name}</h2>
+                    <h4>{data?.type}</h4>
                   </div>
                   <div className='artist_buttons'>
                     <div style={{display:'flex',alignItems:'center',gap:".5rem",fontSize:"16px"}}>
                       <svg style={{width:'20px',height:'20px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg>
-                      {data.followers.total}
+                      {data?.followers?.total}
                     </div>
                     <div >
                     <button>Follow</button>
@@ -56,6 +61,14 @@ function ArtistDetail() {
                 </div>
               </div>
             </div>
+            <div className='artist_nav_container' >
+              <div onClick={()=>setCurrentNav("home")} style={currentNav === 'home' ? {color:"white",borderBottom:"2px solid #1ed760"}: {}}>Home</div>
+              <div onClick={()=>setCurrentNav("track")} style={currentNav === 'track' ? {color:"white",borderBottom:"2px solid #1ed760"}: {}}>Tracks</div>
+              <div onClick={()=>setCurrentNav("album")} style={currentNav === 'album' ? {color:"white",borderBottom:"2px solid #1ed760"}: {}}>Albums</div>
+              <div onClick={()=>setCurrentNav("artist")} style={currentNav === 'artist' ? {color:"white",borderBottom:"2px solid #1ed760"}: {}}>Related Artist</div>
+            </div>
+            <ArtistTopTrack id={id} />
+            
           </div>
       }
     </>

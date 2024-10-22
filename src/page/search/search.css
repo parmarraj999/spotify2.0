@@ -382,6 +382,7 @@
 .artist_list_container h3 {
   font-size: 24px;
   font-weight: 700;
+  color: white;
 }
 .artist_list_container .list_container {
   width: 100%;

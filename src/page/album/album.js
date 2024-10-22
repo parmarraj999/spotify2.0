@@ -35,7 +35,6 @@ function Album() {
     const songData = data?.tracks?.items;
     // const coverImage = data?.images[0]?.url
 
-
     return (
         <>
             {
@@ -48,7 +47,7 @@ function Album() {
                                 <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }} >
                                     <h5>By <span>Spotify</span></h5>
                                     <div className='circle'></div>
-                                    {/* <h5>{data.tracks.items.length} songs</h5> */}
+                                    <h5>{data.tracks.items.length} songs</h5>
                                     <div className='circle'></div>
                                     <h5>3 hr 30 min</h5>
                                 </div>

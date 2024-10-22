@@ -43,7 +43,7 @@ function SongBar({ data, album }) {
                             album ?
                                 <>
                                     {
-                                        artistNameAlbum.map((data) => {
+                                        artistNameAlbum?.map((data) => {
                                             return (
                                                 <h5>{data.name},</h5>
                                             )
@@ -53,7 +53,7 @@ function SongBar({ data, album }) {
                                 :
                                 <>
                                     {
-                                        artistNamePlaylist.map((data) => {
+                                        artistNamePlaylist?.map((data) => {
                                             return (
                                                 <h5>{data.name},</h5>
                                             )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function ArtistList({ data }) {
 
@@ -11,13 +12,13 @@ function ArtistList({ data }) {
         {
           data.map((data) => {
             return (
-              <div className='artist_cover' >
+              <Link to={`/artist/${data.id}`} className='artist_cover' >
                 <div className='artist_image' >
                   <img src={data?.images[0]?.url} />
                 </div>
                 <h3>{data?.name}</h3>
                 <h5>Artist</h5>
-              </div>
+              </Link>
             )
           })
         }
