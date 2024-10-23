@@ -29,7 +29,6 @@ function ArtistTopTrack({ id }) {
         Authorization: `Bearer ${access_token}`
       }
     })
-    console.log(data)
     setTrackData(data.tracks)
     setLoading(false)
   }
@@ -47,8 +46,6 @@ function ArtistTopTrack({ id }) {
     const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     return timeString;
   }
-
-  console.log(trackData)
 
   return (
     <>

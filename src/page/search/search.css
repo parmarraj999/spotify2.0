@@ -349,6 +349,7 @@
   font-weight: 500;
   height: 50px;
   overflow: hidden;
+  color: white;
 }
 .podcast_list_container .list_container .search_podcast .podcast_details h4 {
   font-size: 13px;

@@ -1,6 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function AudioBookList({ data }) {
+
+  console.log(data)
 
   return (
     <div className='podcast_list_container' >
@@ -9,7 +12,7 @@ function AudioBookList({ data }) {
         {
           data.map((data) => {
             return (
-              <div className='search_podcast' >
+              <Link to={`/podcast/${data.id}`} className='search_podcast' >
                 <div className='podcast_cover_image' >
                   <img src={data.images[0].url} />
                 </div>
@@ -23,7 +26,7 @@ function AudioBookList({ data }) {
                     <h5>Chapters : <span>{data.total_chapters}</span></h5>
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           })
         }

@@ -134,7 +134,7 @@ function SearchResult() {
       }
     })
     console.log(data)
-    if (data) {
+    if (data) { 
       setShow(data.shows.items)
     } else {
       console.log("show data found !")
@@ -153,7 +153,7 @@ function SearchResult() {
         type: "audiobook"
       }
     })
-    console.log(data)
+    // console.log(data)
     if (data) {
       setAudiobook(data.audiobooks.items)
     } else {

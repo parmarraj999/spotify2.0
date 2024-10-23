@@ -1,7 +1,10 @@
 import React from 'react'
 import '../search.css'
 
-function ShowList() {
+function ShowList({data}) {
+
+  console.log(data)
+
   return (
     <div className='show_list_container' >
         <h3>Show</h3>
