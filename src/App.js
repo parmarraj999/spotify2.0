@@ -17,6 +17,9 @@ import SearchValueProvider from './provider/SearchValueProvider';
 import ArtistDetail from './page/artistDetail/artistDetail';
 import PodcastDetail from './page/podcast/podcastDetail';
 import TrackPage from './page/track/trackPage';
+import Auth from './page/authentication/auth';
+import SignUp from './page/authentication/signUp';
+import LogIn from './page/authentication/logIn';
 
 function App() {
 
@@ -26,7 +29,7 @@ function App() {
   const [track, setTrack] = useState([]);
 
   const [accessToken, setAccessToken] = useState("");
-  console.log(accessToken)
+  // console.log(accessToken)
 
   const getSong = async () => {
 
@@ -39,7 +42,7 @@ function App() {
       //   type: "album"
       // }
     })
-    console.log(data)
+    // console.log(data)
 
   }
 
@@ -86,6 +89,7 @@ function App() {
                   <Route path='podcast/:id' element={<PodcastDetail/>}/>
                   <Route path='track/:id' element={<TrackPage/>} />
                 </Route>
+                <Route path='/auth' element={<Auth/>}></Route>
               </Routes>
             </BrowserRouter>
           </div>
