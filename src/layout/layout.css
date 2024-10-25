@@ -11,7 +11,7 @@
     /* max-height: 80vh; */
     border: 1px solid #202020;
     border-radius: 15px;
-    padding: 1rem 1rem 0 1rem;
+    /* padding: 1rem 1rem 0 1rem; */
     display: flex;
     gap: 1rem;
 }

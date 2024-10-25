@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../search.css'
+import { Link } from 'react-router-dom';
 
 function SongList({ data }) {
 
@@ -21,7 +22,7 @@ function SongList({ data }) {
         {
           data.map((data) => {
             return (
-              <div className='search_song_bar'>
+              <Link to={`/track/${data.id}`} className='search_song_bar'>
                 <div className='search_song_bar_img' >
                   <img src={data.album.images[0].url} />
                 </div>
@@ -45,7 +46,7 @@ function SongList({ data }) {
                     <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
                   </svg>
                 </div>
-              </div>
+              </Link>
             )
           })
         }

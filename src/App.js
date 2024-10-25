@@ -16,6 +16,7 @@ import { AccessTokenContext } from './provider/AccessTokenProvider';
 import SearchValueProvider from './provider/SearchValueProvider';
 import ArtistDetail from './page/artistDetail/artistDetail';
 import PodcastDetail from './page/podcast/podcastDetail';
+import TrackPage from './page/track/trackPage';
 
 function App() {
 
@@ -83,6 +84,7 @@ function App() {
                   <Route path='album/:id' element={<Album />} />
                   <Route path='artist/:id' element={<ArtistDetail/>} />
                   <Route path='podcast/:id' element={<PodcastDetail/>}/>
+                  <Route path='track/:id' element={<TrackPage/>} />
                 </Route>
               </Routes>
             </BrowserRouter>

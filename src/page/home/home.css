@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 0.8rem;
   transition: 0.5s all;
+  padding: 1rem;
 }
 .home_container .home_section {
   width: 100%;
