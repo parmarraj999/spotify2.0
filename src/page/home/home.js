@@ -1,11 +1,18 @@
 import React, { useContext, useState } from 'react'
 import './home.css'
 import HomeNav from './homeComponents/homeNav'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Home() {
 
   const [currentPath, setCurrentPath] = useState('all')
+
+  const isLogIn = localStorage.getItem('isLogIn')
+  const navigate = useNavigate();
+
+  if(!isLogIn){
+    navigate('/auth')
+  }
 
   const MadeForYouData = [
     {

@@ -17,6 +17,8 @@ function LogIn({current, setCurrent}) {
       .then(user=>{
         console.log(user)
         navigate("/")
+        localStorage.setItem("isLogIn", true)
+        localStorage.setItem("userId", user.user.uid)
       })
       // Handle successful login (e.g., redirect to dashboard)   
  
