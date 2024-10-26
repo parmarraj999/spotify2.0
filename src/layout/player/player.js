@@ -1,11 +1,33 @@
 import React from 'react'
 import './player.css'
+import { db } from '../../firbeaseConfig/firebaseConfig'
+import { addDoc, collection, doc } from 'firebase/firestore'
 
 function Player() {
+
+    const handlePlay = async () => {
+        console.log("click")
+        const userOneRef = doc(db, "Playlist_Data", "UserOne");
+        const playlistsCollectionRef = collection(userOneRef, "playlists");
+
+        const newPlaylistData = {
+            name: "Los Angeles",
+            state: "CA",
+            country: "USA"
+        };
+
+        addDoc(playlistsCollectionRef, newPlaylistData)
+            .then((docRef) => {
+                console.log("Document written with ID:", docRef.id);
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+    }
     return (
         <div className='player_container' >
             <div className='player_control_container'>
-                <div>
+                <div onClick={handlePlay}>
                     <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
                         <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />

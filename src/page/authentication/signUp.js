@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { auth } from '../../firbeaseConfig/firebaseConfig';
-import { createUserWithEmailAndPassword, getRedirectResult, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp({ current, setCurrent }) {
 
@@ -8,42 +9,24 @@ function SignUp({ current, setCurrent }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState();
 
-    const handleSignUp = () => {
+    const navigate = useNavigate();
+
+    const handleSignUp = async() => {
         console.log(name, email, password)
-        createUserWithEmailAndPassword(auth, email, password)
+        await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user)
+                if(user){
+                    navigate('/')
+                }
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorMessage)
             });
-    }
-
-    const handleGoogleSign = () => {
-        console.log('ssldfl')
-        getRedirectResult(auth)
-        .then((result) => {
-          // This gives you a Google Access Token. You can use it to access Google APIs.
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-      
-          // The signed-in user info.
-          const user = result.user;
-          // IdP data available using getAdditionalUserInfo(result)
-          // ...
-        }).catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-        //   const email = error.customData.email;
-          // The AuthCredential type that was used.
-          const credential = GoogleAuthProvider.credentialFromError(error);
-          // ...
-        });
+        await updateProfile(auth.currentUser,{displayName:name})
     }
 
 
