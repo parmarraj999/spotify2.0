@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import './home.css'
 import HomeNav from './homeComponents/homeNav'
 import { Link, useNavigate } from 'react-router-dom'
+import { auth } from '../../firbeaseConfig/firebaseConfig'
 
 function Home() {
 
@@ -501,6 +502,7 @@ function Home() {
     "primary_color": null
   },
 ]
+
 
 return (
   <div className='home_container' >

@@ -18,32 +18,21 @@ import ArtistDetail from './page/artistDetail/artistDetail';
 import PodcastDetail from './page/podcast/podcastDetail';
 import TrackPage from './page/track/trackPage';
 import Auth from './page/authentication/auth';
-import SignUp from './page/authentication/signUp';
-import LogIn from './page/authentication/logIn';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firbeaseConfig/firebaseConfig';
 
 function App() {
 
   const CLIENT_ID = 'f5c193cd77ec4b80983881a119bbe2a2';
   const CLIENT_SECRET = "811dba94023d42fc94c5b02c56ecdcd0";
 
-  const [track, setTrack] = useState([]);
-
   const [accessToken, setAccessToken] = useState("");
-  // console.log(accessToken)
 
-  const getSong = async () => {
-
-    const { data } = await axios.get("https://api.spotify.com/v1/albums/6mHNMtHrXIdUWWuZD9njsG", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
-      // params: {
-      //   q: "leon",
-      //   type: "album"
-      // }
-    })
-    // console.log(data)
-
+  const getUserCredentials = async() => {
+    const userId = localStorage.getItem("userId")
+    const docRef = doc(db, "Users", userId)
+    const data = await getDoc(docRef);
+    console.log(data.data())
   }
 
   useEffect(() => {
@@ -59,13 +48,9 @@ function App() {
       .then(data => {
         setAccessToken(data.access_token)
         window.localStorage.setItem('token',data.access_token)
+        getUserCredentials();
       })
   }, [])
-
-  useEffect(() => {
-    // getSong();
-  })
-
 
 
   return (

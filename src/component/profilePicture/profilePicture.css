@@ -1,0 +1,57 @@
+.profile_picture_container{
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+}
+.profile_picture_card{
+    width: 30%;
+    padding: 2rem;
+    background: black;
+    border-radius: 15px;
+    box-shadow: 10px 10px 15px rgba(255,255,255,.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+.profile_picture_wrapper{
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.profile_picture_wrapper .profile_pictures{
+    width: 100px;
+    height: 100px;
+}
+.profile_pictures img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid white;
+    cursor: pointer;
+}
+.profile_picture_card button{
+    padding: .6rem 2.5rem;
+    font-size: 16px;
+    color: black;
+    border-radius: 5px;
+    font-weight: 500;
+    border: none;
+}
+.profile_picture_card .upload_btn{
+    background: #1ed760;
+}
+.profile_picture_card .cancel_btn{
+    background: rgba(255,255,255,.1);
+    color: white;
+}
