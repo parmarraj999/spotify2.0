@@ -7,6 +7,7 @@ import { AsideTabContext } from '../provider/AsideTabProvider'
 import Player from './player/player'
 import ProfilePicture from '../component/profilePicture/profilePicture'
 import { auth } from '../firbeaseConfig/firebaseConfig'
+import { UserCredentialContext } from '../provider/UserCredentialProvider'
 
 function Layout() {
 
@@ -14,7 +15,16 @@ function Layout() {
 
   const { pathname } = useLocation();
 
-  const [showPhotoCard, setShowPhotoCard] = useState(true)
+  const [showPhotoCard, setShowPhotoCard] = useState(false)
+
+  const userData = useContext(UserCredentialContext).userData
+
+  useEffect(()=>{
+    if(userData.profilePicture === "../../../../default.png"){
+      setShowPhotoCard(true)
+    } 
+  },[])
+  
 
   return (
     <div className='layout_container'>

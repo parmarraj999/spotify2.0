@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { auth } from '../../firbeaseConfig/firebaseConfig';
+import { auth, db } from '../../firbeaseConfig/firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 function SignUp({ current, setCurrent }) {
 
@@ -11,13 +12,26 @@ function SignUp({ current, setCurrent }) {
 
     const navigate = useNavigate();
 
-    const handleSignUp = async() => {
+    // const playlistRef = collection(db, `${user.uid + name.replace(/\s+/g, '')}`, 'user-data');
+
+
+    const handleSignUp = async () => {
         console.log(name, email, password)
         await createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 const user = userCredential.user;
-                console.log(user)
-                if(user){
+                const data = {
+                    name: name,
+                    email: email,
+                    profilePicture: user.photoURL || "../../../../image/default.png",
+                }
+                await setDoc(doc(db, user.uid, "user-credentials"), data)
+                    .then(() => {
+                        console.log('successfull')
+                        localStorage.setItem("isLogIn", true)
+                        localStorage.setItem("userId", user.uid)
+                    })
+                if (user) {
                     navigate('/')
                 }
             })
@@ -26,7 +40,7 @@ function SignUp({ current, setCurrent }) {
                 const errorMessage = error.message;
                 console.log(errorMessage)
             });
-        await updateProfile(auth.currentUser,{displayName:name})
+        await updateProfile(auth.currentUser, { displayName: name })
     }
 
 

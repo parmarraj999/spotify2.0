@@ -20,6 +20,8 @@ import TrackPage from './page/track/trackPage';
 import Auth from './page/authentication/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firbeaseConfig/firebaseConfig';
+import UserCredentialProvider, { UserCredentialContext } from './provider/UserCredentialProvider';
+import LikedSong from './page/likedSong/likedSong';
 
 function App() {
 
@@ -27,13 +29,17 @@ function App() {
   const CLIENT_SECRET = "811dba94023d42fc94c5b02c56ecdcd0";
 
   const [accessToken, setAccessToken] = useState("");
+  const [userData, setUserData] = useState([])
 
-  const getUserCredentials = async() => {
-    const userId = localStorage.getItem("userId")
-    const docRef = doc(db, "Users", userId)
-    const data = await getDoc(docRef);
-    console.log(data.data())
-  }
+  const userId = localStorage.getItem("userId")
+
+  const fetchData = async () => {
+    const userDocRef = doc(db, userId, "user-credentials");
+    const userDocSnapshot = await getDoc(userDocRef);
+    setUserData(userDocSnapshot.data());
+  };
+
+  // console.log(userData)
 
   useEffect(() => {
     var authParameters = {
@@ -47,40 +53,45 @@ function App() {
       .then(result => result.json())
       .then(data => {
         setAccessToken(data.access_token)
-        window.localStorage.setItem('token',data.access_token)
-        getUserCredentials();
+        window.localStorage.setItem('token', data.access_token)
+        if (userId) {
+          fetchData();
+        }
       })
   }, [])
 
 
   return (
-    <SearchValueProvider>
-      <AccessTokenContext.Provider value={{ accessToken }} >
-        <AsideTabProvider>
-          <div className="App">
-            <BrowserRouter>
-              <div className='nav_app'>
-                <Nav />
-              </div>
-              <Routes>
-                <Route path='/' element={<Layout />} >
-                  <Route index path='' element={<Home />} />
-                  <Route path='discover' element={<Discover />} />
-                  <Route path='search' element={<Search />} />
-                  <Route path='library' element={<Library />} />
-                  <Route path='playlist/:id' element={<PlaylistDetail />} />
-                  <Route path='album/:id' element={<Album />} />
-                  <Route path='artist/:id' element={<ArtistDetail/>} />
-                  <Route path='podcast/:id' element={<PodcastDetail/>}/>
-                  <Route path='track/:id' element={<TrackPage/>} />
-                </Route>
-                <Route path='/auth' element={<Auth/>}></Route>
-              </Routes>
-            </BrowserRouter>
-          </div>
-        </AsideTabProvider>
-      </AccessTokenContext.Provider>
-    </SearchValueProvider>
+    <UserCredentialContext.Provider value={{ userData, setUserData }} >
+      <SearchValueProvider>
+        <AccessTokenContext.Provider value={{ accessToken }} >
+          <AsideTabProvider>
+            <div className="App">
+              <BrowserRouter>
+                <div className='nav_app'>
+                  <Nav />
+                </div>
+                <Routes>
+                  <Route path='/' element={<Layout />} >
+                    <Route index path='' element={<Home />} />
+                    <Route path='discover' element={<Discover />} />
+                    <Route path='search' element={<Search />} />
+                    <Route path='library' element={<Library />} />
+                    <Route path='playlist/:id' element={<PlaylistDetail />} />
+                    <Route path='album/:id' element={<Album />} />
+                    <Route path='artist/:id' element={<ArtistDetail />} />
+                    <Route path='podcast/:id' element={<PodcastDetail />} />
+                    <Route path='track/:id' element={<TrackPage />} />
+                    <Route path='liked' element={<LikedSong/>} />
+                  </Route>
+                  <Route path='/auth' element={<Auth />}></Route>
+                </Routes>
+              </BrowserRouter>
+            </div>
+          </AsideTabProvider>
+        </AccessTokenContext.Provider>
+      </SearchValueProvider>
+    </UserCredentialContext.Provider>
   );
 }
 

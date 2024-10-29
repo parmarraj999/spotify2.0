@@ -10,8 +10,6 @@ function Nav() {
   const location = useLocation();
   const { pathname } = location;
 
-  console.log(pathname)
-
   const { currentTab, setCurrentTab, setShowTab } = useContext(AsideTabContext);
 
   const hanldeTab = (tabText) => {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 export const AsideTabContext = React.createContext();
 

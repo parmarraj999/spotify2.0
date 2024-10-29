@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { auth, db } from '../../firbeaseConfig/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 function LogIn({ current, setCurrent }) {
 
@@ -18,14 +17,7 @@ function LogIn({ current, setCurrent }) {
         .then(async (user) => {
 
           console.log(user)
-          await setDoc(doc(db, "Users", user.user.uid), {
-            name : user.user.displayName,
-            email: user.user.email,
-            profilePicture : user.user.photoURL,
-          })
-          .then(()=>{
-            console.log('successfull')
-          })
+          
 
           navigate("/")
           localStorage.setItem("isLogIn", true)

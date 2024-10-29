@@ -1,0 +1,16 @@
+.liked_song_container{
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+    padding: 1.5rem;
+}
+.like_song_list{
+    width: 100%;
+    height: 50px;
+    border: 1px solid red;
+}
+.liked_song_header{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #89898933;
+}
