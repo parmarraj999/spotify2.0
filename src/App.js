@@ -22,6 +22,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firbeaseConfig/firebaseConfig';
 import UserCredentialProvider, { UserCredentialContext } from './provider/UserCredentialProvider';
 import LikedSong from './page/likedSong/likedSong';
+import ProfilePicture from './component/profilePicture/profilePicture';
 
 function App() {
 
@@ -32,14 +33,21 @@ function App() {
   const [userData, setUserData] = useState([])
 
   const userId = localStorage.getItem("userId")
+  const [showProfile, setShowProfile] = useState(false)
 
   const fetchData = async () => {
     const userDocRef = doc(db, userId, "user-credentials");
     const userDocSnapshot = await getDoc(userDocRef);
-    setUserData(userDocSnapshot.data());
+    setUserData(userDocSnapshot.data())
   };
 
-  // console.log(userData)
+  useEffect(() => {
+    if (userData.profilePicture === "../../../../image/default.png") {
+      setShowProfile(true)
+    }
+  }, [userData])
+
+  console.log(userData)
 
   useEffect(() => {
     var authParameters = {
@@ -67,6 +75,11 @@ function App() {
         <AccessTokenContext.Provider value={{ accessToken }} >
           <AsideTabProvider>
             <div className="App">
+              {
+                showProfile ?
+                  <ProfilePicture setShowPhotoCard={setShowProfile} />
+                  : ""
+              }
               <BrowserRouter>
                 <div className='nav_app'>
                   <Nav />
@@ -82,7 +95,7 @@ function App() {
                     <Route path='artist/:id' element={<ArtistDetail />} />
                     <Route path='podcast/:id' element={<PodcastDetail />} />
                     <Route path='track/:id' element={<TrackPage />} />
-                    <Route path='liked' element={<LikedSong/>} />
+                    <Route path='liked' element={<LikedSong />} />
                   </Route>
                   <Route path='/auth' element={<Auth />}></Route>
                 </Routes>

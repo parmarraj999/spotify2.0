@@ -3,10 +3,13 @@ import { AsideTabContext } from '../../../provider/AsideTabProvider'
 import { auth } from '../../../firbeaseConfig/firebaseConfig'
 import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import { UserCredentialContext } from '../../../provider/UserCredentialProvider'
 
 function SettingTab() {
 
     const { setCurrentTab, setShowTab } = useContext(AsideTabContext)
+    const userData = useContext(UserCredentialContext).userData;
+
     const navigate = useNavigate();
 
     const handleCloseTab = () => {
@@ -27,7 +30,7 @@ function SettingTab() {
     }
 
     return (
-        <div>
+        <div className='setting_nav_container'>
             <div className='tab_headers' >
                 <h4>Setting</h4>
                 <div className='tab_header_icon' >
@@ -36,7 +39,16 @@ function SettingTab() {
                     </div>
                 </div>
             </div>
-            <button onClick={handleClick} > Log Out</button>
+            <div className='setting_profile_section' >
+              <div className='setting_profile'>
+                <img src={userData.profilePicture} />
+              </div>
+              <div>
+                <h3>{userData.name}</h3>
+                <h4>{userData.email}</h4>
+              </div>
+            </div>
+            <button onClick={handleClick} className='log_out_button' > Log Out</button>
         </div>
     )
 }

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import './trackPage.css'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../firbeaseConfig/firebaseConfig';
 
 function TrackPage() {
 
     const { id } = useParams();
     const access_token = window.localStorage.getItem("token")
+    const userId = window.localStorage.getItem('userId')
 
     const [data, setData] = useState();
 
@@ -48,13 +51,17 @@ function TrackPage() {
         return timeString;
     }
 
+    const AddLikedSong = async() => {
+        await setDoc(doc(db, userId, "liked-songs"))
+    }
+
     const ArtistList = (data) => {
         return (
             <>
                 {
                     data?.map((data) => {
                         return (
-                            <h4 className='artist_list_item'>{data?.name}</h4>
+                            <Link to={`/artist/${data.id}`} className='artist_list_item'>{data?.name}</Link>
                         )
                     })
                 }

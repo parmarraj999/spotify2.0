@@ -1,16 +1,117 @@
-.liked_song_container{
+.liked_song_container {
     width: 100%;
     height: 100%;
-    border: 1px solid red;
-    padding: 1.5rem;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
-.like_song_list{
+
+.liked_song_header {
     width: 100%;
     height: 50px;
-    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.5rem;
 }
-.liked_song_header{
+
+.liked_song_header h1 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.liked_song_header h2 {
+    font-size: 16px;
+    color: #898989;
+    font-weight: 500;
+}
+
+.liked_song_header .circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #898989;
+}
+
+.like_song_detail_header {
+    width: 80%;
+    height: 50px;
+    border-bottom: 1px solid #89898940;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.like_song_detail_header h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #898989;
+    max-width: 300px;
+    min-width: 250px;
     width: 100%;
-    height: 40px;
-    border-bottom: 1px solid #89898933;
+    /* border: 1px solid red; */
+}
+
+.like_song_list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+.like_song_item {
+    width: 80%;
+    height: 60px;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    gap: 1rem;
+}
+
+.like_song_cover{
+    width: 100%;
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+    max-width: 300px;
+    min-width: 250px;
+}
+.like_song_cover img{
+    height: 60px;
+    border-radius: 5px;
+}
+.like_song_cover h2{
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+}
+.like_song_cover h3{
+    font-size: 14px;
+    font-weight: 400;
+    color: #898989;
+}
+.like_song_album{
+    max-width: 300px;
+    min-width: 250px;
+    width: 100%;
+    font-size: 16px;
+    color: #898989;
+}
+.like_song_duration{
+    max-width: 300px;
+    min-width: 250px;
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.like_song_duration h3{
+    font-size: 16px;
+    font-weight: 500;
+    color: #898989;
 }

@@ -1,14 +1,42 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import '../asideNav.css'
 import { AsideTabContext } from '../../../provider/AsideTabProvider'
+import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { db } from '../../../firbeaseConfig/firebaseConfig'
 
 function FriendNav() {
 
   const { setShowTab, setCurrentTab } = useContext(AsideTabContext)
+  const userId = window.localStorage.getItem("userId")
+
+  const [data,setData] = useState([])
 
   const handleCloseTab = () => {
     setShowTab(false)
     setCurrentTab("")
+  }
+
+  const dataSample = {
+    name : 'reaj s',
+    email:" a;lsdjf;s"
+  }
+
+  const addData = () => {
+    console.log('click');
+    const collectionRef = doc(db, userId, "liked-songs")
+    const nesCollection = collection(collectionRef, "liked-song-list")
+    addDoc(nesCollection, dataSample)
+  }
+  const getData = async() => {
+    console.log('click');
+    const collectionRef = doc(db, userId, "liked-songs")
+    const nesCollection = collection(collectionRef, "liked-song-list")
+    const data = await getDocs(nesCollection)
+    console.log(data.docs)
+    console.log(data.docs.map(data=>{
+      console.log({...data.data()})
+    }))
+    // setData(data?.docs?.map((doc)=>({...doc.data(), id:doc.id})))
   }
 
   return (
@@ -24,6 +52,8 @@ function FriendNav() {
                 </div>
             </div>
         </div>
+        <button onClick={addData} >Add data</button>
+        <button onClick={getData} >get data</button>
     </div>
   )
 }

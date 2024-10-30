@@ -34,12 +34,13 @@ function ProfilePicture({ setShowPhotoCard }) {
 
     const addProfilePicture = async() => {
         const userId = localStorage.getItem('userId');
-        const docRef = doc(db, "Users", userId);
+        const docRef = doc(db, userId, 'user-credentials');
         await updateDoc(docRef,{
             profilePicture : choosePhoto
         })
         .then(()=>{
             console.log("updated")
+            handleClose();
         })
     }
 

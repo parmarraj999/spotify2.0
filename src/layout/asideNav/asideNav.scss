@@ -44,3 +44,45 @@
         }
     }
 }
+
+// ====== setting nav css ============ 
+
+.setting_nav_container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .setting_profile_section{
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        .setting_profile{
+            img{
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+            }
+        }
+        h3{
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        h4{
+            font-size: 14px;
+            font-weight: 400;
+            color: #898989;
+        }
+    }
+    .log_out_button{
+        width: 100%;
+        height: 50px;
+        font-size: 16px;
+        font-weight: 500;
+        color: red;
+        border: 2px solid red;
+        border-radius: 2rem;
+        background: transparent;
+    }
+}
