@@ -3,7 +3,7 @@ import './trackPage.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 
 function TrackPage() {
@@ -15,6 +15,9 @@ function TrackPage() {
     const [data, setData] = useState();
 
     const [currentNav, setCurrentNav] = useState('lyrics')
+    const [artistArray,setArtistArray] = useState()
+
+    // ===== to get data of track 
 
     const getTrackDetail = async () => {
         console.log(id)
@@ -24,6 +27,8 @@ function TrackPage() {
             }
         })
         setData(data)
+        setArtistArray(data?.artists)
+        console.log(artistArray)
         console.log(data)
     }
 
@@ -37,9 +42,13 @@ function TrackPage() {
         alignItems: "center"
     }
 
+    // ===== to extract years 
+
     const extractYear = (dateString) => {
         return dateString?.slice(0, 4);
     };
+
+    // ===== to convert milliseconds 
 
     function convertMillisecondsToTimeString(milliseconds) {
         const seconds = Math.floor(milliseconds / 1000);
@@ -51,8 +60,25 @@ function TrackPage() {
         return timeString;
     }
 
-    const AddLikedSong = async() => {
-        await setDoc(doc(db, userId, "liked-songs"))
+    // ==== add data to like songs 
+
+    const likeSongData = {
+        songId : data?.id,
+        songName: data?.name,
+        songDuration : data?.duration_ms,
+        songImage: data?.album?.images?.[0].url,
+        artists: {artistArray},
+        albumName : data?.album?.name,
+        albumId : data?.album?.id
+    }
+
+    const AddLikedSong = async () => {
+        const collectionRef = doc(db, userId, "liked-songs")
+        const likeSongCollection = collection(collectionRef, "liked-song-list")
+        addDoc(likeSongCollection, likeSongData)
+        .then(()=>{
+            console.log("successfully added")
+        })
     }
 
     const ArtistList = (data) => {
@@ -75,7 +101,7 @@ function TrackPage() {
 
     return (
         <div className='track_details_container' style={{ backgroundImage: `url(${data?.album?.images[0]?.url})` }} >
-            <div style={{ backdropFilter: "blur(20px)", width: "100%", height: "100%", padding: '1rem', background: "rgba(0,0,0,.7)",overflow:'auto' }} >
+            <div style={{ backdropFilter: "blur(20px)", width: "100%", height: "100%", padding: '1rem', background: "rgba(0,0,0,.7)", overflow: 'auto' }} >
                 <div className='track_detail_header' >
                     <div className='track_cover_image' >
                         <img src={data?.album?.images[0]?.url} />
@@ -117,7 +143,7 @@ function TrackPage() {
 
 
                             </div>
-                            <div>
+                            <div onClick={AddLikedSong} >
                                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M22.4804 13.7733L20.6166 15.5792L18.7527 13.7733C16.7984 11.8796 13.6632 11.9841 11.8394 14.0038C10.0696 15.9636 9.82595 18.899 11.4285 20.9977C11.6254 21.2556 11.8191 21.5026 12.0034 21.7287C13.1698 23.1596 15.7148 25.6586 16.99 26.9997C17.932 27.9904 18.7789 28.8168 19.4168 29.4187C20.0906 30.0543 21.1305 30.0404 21.8055 29.4062C22.9819 28.3008 24.7858 26.5791 26.0565 25.2427C27.3316 23.9016 28.0633 23.1596 29.2298 21.7287C29.414 21.5026 29.6077 21.2556 29.8046 20.9977C31.4072 18.899 31.1635 15.9636 29.3938 14.0038C27.5699 11.9841 24.4348 11.8796 22.4804 13.7733Z" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -160,9 +186,9 @@ function TrackPage() {
                 </div>
                 <div className='track_nav_section' >
                     {
-                        currentNav === 'lyrics' ? 
-                        <Lyrics/>
-                        : ""
+                        currentNav === 'lyrics' ?
+                            <Lyrics />
+                            : ""
                     }
                 </div>
             </div>

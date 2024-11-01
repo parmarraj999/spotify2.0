@@ -89,11 +89,20 @@
     font-size: 16px;
     font-weight: 500;
     color: white;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+     max-width: 170px;
 }
 .like_song_cover h3{
     font-size: 14px;
     font-weight: 400;
     color: #898989;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    max-width: 180px;
+    gap: .5rem;
 }
 .like_song_album{
     max-width: 300px;
@@ -107,11 +116,27 @@
     min-width: 250px;
     height: 100%;
     display: flex;
-    gap: 1rem;
+    gap: .5rem;
     align-items: center;
+    position: relative;
 }
 .like_song_duration h3{
     font-size: 16px;
     font-weight: 500;
     color: #898989;
+    width: 50px;
+}
+
+.artist_list_song{
+    font-size: 14px;
+    color: #898989;
+    font-weight: 400;
+    white-space: nowrap;
+}
+.menu_icon_songs{
+    opacity: 0;
+    transition: .2s all;
+}
+.like_song_item:hover .menu_icon_songs{
+    opacity: 1;
 }

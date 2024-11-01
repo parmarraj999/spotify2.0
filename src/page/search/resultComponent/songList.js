@@ -24,18 +24,18 @@ function SongList({ data }) {
             return (
               <Link to={`/track/${data.id}`} className='search_song_bar'>
                 <div className='search_song_bar_img' >
-                  <img src={data.album.images[0].url} />
+                  <img src={data?.album?.images[0]?.url} />
                 </div>
                 <div className='search_song_details' >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }} >
-                    <h3>{data.name}</h3>
-                    <h4 style={{color:"white"}}>{convertMillisecondsToTimeString(data.duration_ms)}</h4>
+                    <h3>{data?.name}</h3>
+                    <h4 style={{color:"white"}}>{convertMillisecondsToTimeString(data?.duration_ms)}</h4>
                   </div>
                   <div style={{ width: "100%", display: 'flex', alignItems: 'center', gap: '.5rem' }} >
-                    <p>{data.artists[0].name},</p>
+                    <p>{data?.artists[0]?.name},</p>
                     {
                       data.artists[1] ?
-                        <p>{data.artists[1].name}</p>
+                        <p>{data?.artists[1]?.name}</p>
                         : ""
                     }
                   </div>
