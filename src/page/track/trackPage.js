@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './trackPage.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
+import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 
 function TrackPage() {
 
@@ -12,24 +13,36 @@ function TrackPage() {
     const access_token = window.localStorage.getItem("token")
     const userId = window.localStorage.getItem('userId')
 
+    const { likeSongList } = useContext(LikeSongListContext)
+    console.log(likeSongList)
+
     const [data, setData] = useState();
 
     const [currentNav, setCurrentNav] = useState('lyrics')
-    const [artistArray,setArtistArray] = useState()
+    const [artistArray, setArtistArray] = useState()
+    const [isLiked, setIsLiked] = useState()
+
+    // ===== checking like or not 
+
+    const checkLiked = () => {
+        const found = likeSongList.some(obj => obj.id === data?.songId);
+        setIsLiked(found)
+        console.log(found, "=", data?.id)
+    }
 
     // ===== to get data of track 
 
     const getTrackDetail = async () => {
-        console.log(id)
         const { data } = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
         })
         setData(data)
+        if(data){
+            checkLiked();
+        }
         setArtistArray(data?.artists)
-        console.log(artistArray)
-        console.log(data)
     }
 
     useEffect(() => {
@@ -63,23 +76,24 @@ function TrackPage() {
     // ==== add data to like songs 
 
     const likeSongData = {
-        songId : data?.id,
+        songId: data?.id,
         songName: data?.name,
-        songDuration : data?.duration_ms,
+        songDuration: data?.duration_ms,
         songImage: data?.album?.images?.[0].url,
-        artists: {artistArray},
-        albumName : data?.album?.name,
-        albumId : data?.album?.id
+        artists: { artistArray },
+        albumName: data?.album?.name,
+        albumId: data?.album?.id
     }
 
     const AddLikedSong = async () => {
         const collectionRef = doc(db, userId, "liked-songs")
         const likeSongCollection = collection(collectionRef, "liked-song-list")
         addDoc(likeSongCollection, likeSongData)
-        .then(()=>{
-            console.log("successfully added")
-        })
+            .then(() => {
+                console.log("successfully added")
+            })
     }
+
 
     const ArtistList = (data) => {
         return (
@@ -95,9 +109,6 @@ function TrackPage() {
         )
     }
 
-    const background = {
-
-    }
 
     return (
         <div className='track_details_container' style={{ backgroundImage: `url(${data?.album?.images[0]?.url})` }} >
@@ -135,19 +146,24 @@ function TrackPage() {
                         </div>
                         <div className='track_functional_icons' >
                             <div>
-
                                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
                                     <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
                                 </svg>
-
-
                             </div>
-                            <div onClick={AddLikedSong} >
-                                <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22.4804 13.7733L20.6166 15.5792L18.7527 13.7733C16.7984 11.8796 13.6632 11.9841 11.8394 14.0038C10.0696 15.9636 9.82595 18.899 11.4285 20.9977C11.6254 21.2556 11.8191 21.5026 12.0034 21.7287C13.1698 23.1596 15.7148 25.6586 16.99 26.9997C17.932 27.9904 18.7789 28.8168 19.4168 29.4187C20.0906 30.0543 21.1305 30.0404 21.8055 29.4062C22.9819 28.3008 24.7858 26.5791 26.0565 25.2427C27.3316 23.9016 28.0633 23.1596 29.2298 21.7287C29.414 21.5026 29.6077 21.2556 29.8046 20.9977C31.4072 18.899 31.1635 15.9636 29.3938 14.0038C27.5699 11.9841 24.4348 11.8796 22.4804 13.7733Z" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
+                            {
+                                isLiked ? <div>
+                                    <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22.0693 14.0678L20.2054 15.8738L18.3416 14.0678C16.3872 12.1741 13.2521 12.2787 11.4282 14.2984C9.65847 16.2581 9.41482 19.1936 11.0174 21.2923C11.2143 21.5502 11.408 21.7972 11.5922 22.0232C12.7587 23.4542 15.3037 25.9531 16.5788 27.2942C17.5209 28.285 18.3677 29.1113 19.0057 29.7132C19.6794 30.3488 20.7194 30.335 21.3944 29.7007C22.5707 28.5954 24.3747 26.8736 25.6453 25.5372C26.9205 24.1961 27.6522 23.4542 28.8186 22.0232C29.0029 21.7972 29.1965 21.5502 29.3935 21.2923C30.996 19.1936 30.7524 16.2581 28.9826 14.2984C27.1588 12.2787 24.0236 12.1741 22.0693 14.0678Z" fill="#1ED760" stroke="#1ED760" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                    :
+                                    <div onClick={AddLikedSong} >
+                                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M22.4804 13.7733L20.6166 15.5792L18.7527 13.7733C16.7984 11.8796 13.6632 11.9841 11.8394 14.0038C10.0696 15.9636 9.82595 18.899 11.4285 20.9977C11.6254 21.2556 11.8191 21.5026 12.0034 21.7287C13.1698 23.1596 15.7148 25.6586 16.99 26.9997C17.932 27.9904 18.7789 28.8168 19.4168 29.4187C20.0906 30.0543 21.1305 30.0404 21.8055 29.4062C22.9819 28.3008 24.7858 26.5791 26.0565 25.2427C27.3316 23.9016 28.0633 23.1596 29.2298 21.7287C29.414 21.5026 29.6077 21.2556 29.8046 20.9977C31.4072 18.899 31.1635 15.9636 29.3938 14.0038C27.5699 11.9841 24.4348 11.8796 22.4804 13.7733Z" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                            }
                             <div>
 
                                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">

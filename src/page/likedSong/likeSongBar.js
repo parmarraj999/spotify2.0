@@ -79,7 +79,7 @@ function LikeSongBar({ data, getLikeSongList }) {
                 </div>
                 {
                     showMenu ?
-                        <SongMenu linkData={linkData} setShowMenu={setShowMenu} />
+                        <SongMenu removeLikedSong={removeLikedSong} linkData={linkData} setShowMenu={setShowMenu} />
                         : ""
                 }
             </div>

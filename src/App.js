@@ -23,6 +23,7 @@ import { db } from './firbeaseConfig/firebaseConfig';
 import UserCredentialProvider, { UserCredentialContext } from './provider/UserCredentialProvider';
 import LikedSong from './page/likedSong/likedSong';
 import ProfilePicture from './component/profilePicture/profilePicture';
+import LikeSongListProvider from './provider/LikeSongListProvider';
 
 function App() {
 
@@ -47,7 +48,7 @@ function App() {
     }
   }, [userData])
 
-  console.log(userData)
+  // console.log(userData)
 
   useEffect(() => {
     var authParameters = {
@@ -70,41 +71,43 @@ function App() {
 
 
   return (
-    <UserCredentialContext.Provider value={{ userData, setUserData }} >
-      <SearchValueProvider>
-        <AccessTokenContext.Provider value={{ accessToken }} >
-          <AsideTabProvider>
-            <div className="App">
-              {
-                showProfile ?
-                  <ProfilePicture setShowPhotoCard={setShowProfile} />
-                  : ""
-              }
-              <BrowserRouter>
-                <div className='nav_app'>
-                  <Nav />
-                </div>
-                <Routes>
-                  <Route path='/' element={<Layout />} >
-                    <Route index path='' element={<Home />} />
-                    <Route path='discover' element={<Discover />} />
-                    <Route path='search' element={<Search />} />
-                    <Route path='library' element={<Library />} />
-                    <Route path='playlist/:id' element={<PlaylistDetail />} />
-                    <Route path='album/:id' element={<Album />} />
-                    <Route path='artist/:id' element={<ArtistDetail />} />
-                    <Route path='podcast/:id' element={<PodcastDetail />} />
-                    <Route path='track/:id' element={<TrackPage />} />
-                    <Route path='liked' element={<LikedSong />} />
-                  </Route>
-                  <Route path='/auth' element={<Auth />}></Route>
-                </Routes>
-              </BrowserRouter>
-            </div>
-          </AsideTabProvider>
-        </AccessTokenContext.Provider>
-      </SearchValueProvider>
-    </UserCredentialContext.Provider>
+    <LikeSongListProvider>
+      <UserCredentialContext.Provider value={{ userData, setUserData }} >
+        <SearchValueProvider>
+          <AccessTokenContext.Provider value={{ accessToken }} >
+            <AsideTabProvider>
+              <div className="App">
+                {
+                  showProfile ?
+                    <ProfilePicture setShowPhotoCard={setShowProfile} />
+                    : ""
+                }
+                <BrowserRouter>
+                  <div className='nav_app'>
+                    <Nav />
+                  </div>
+                  <Routes>
+                    <Route path='/' element={<Layout />} >
+                      <Route index path='' element={<Home />} />
+                      <Route path='discover' element={<Discover />} />
+                      <Route path='search' element={<Search />} />
+                      <Route path='library' element={<Library />} />
+                      <Route path='playlist/:id' element={<PlaylistDetail />} />
+                      <Route path='album/:id' element={<Album />} />
+                      <Route path='artist/:id' element={<ArtistDetail />} />
+                      <Route path='podcast/:id' element={<PodcastDetail />} />
+                      <Route path='track/:id' element={<TrackPage />} />
+                      <Route path='liked' element={<LikedSong />} />
+                    </Route>
+                    <Route path='/auth' element={<Auth />}></Route>
+                  </Routes>
+                </BrowserRouter>
+              </div>
+            </AsideTabProvider>
+          </AccessTokenContext.Provider>
+        </SearchValueProvider>
+      </UserCredentialContext.Provider>
+    </LikeSongListProvider>
   );
 }
 
