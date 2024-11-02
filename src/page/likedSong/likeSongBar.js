@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './likeSong.css'
 import { Link } from 'react-router-dom';
 import SongMenu from '../../component/menu/songMenu/songMenu';
 import { collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
+import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 
 const ArtistList = (data) => {
     return (
@@ -19,15 +20,12 @@ const ArtistList = (data) => {
     )
 }
 
-
 function LikeSongBar({ data, getLikeSongList }) {
 
     const linkData = {
         albumLink : data?.albumId,
         artistLink : data?.artists?.artistArray?.[0]?.id
     }
-
-    console.log(data)
 
     const [showMenu, setShowMenu] = useState(false)
 
@@ -42,14 +40,16 @@ function LikeSongBar({ data, getLikeSongList }) {
     }
 
     const userId = window.localStorage.getItem('userId');
+    console.log(data)
 
     const removeLikedSong = async() => {
         console.log('clicked')
         await deleteDoc(doc(db, userId, "liked-songs", "liked-song-list", data.id))
         .then(()=>{
-            console.log("successfully")
             getLikeSongList();
+            console.log("successfully")
         })
+        console.log(data.id)
     }
 
     return (
