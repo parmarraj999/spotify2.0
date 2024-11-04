@@ -3,7 +3,7 @@ import './trackPage.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
-import { addDoc, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp, setDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 
@@ -91,7 +91,8 @@ function TrackPage() {
         songImage: data?.album?.images?.[0].url,
         artists: { artistArray },
         albumName: data?.album?.name,
-        albumId: data?.album?.id
+        albumId: data?.album?.id,
+        addedAt : serverTimestamp()
     }
 
     const AddLikedSong = async () => {
