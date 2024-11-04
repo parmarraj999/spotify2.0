@@ -5,6 +5,8 @@ import axios from 'axios';
 import ArtistTopTrack from './artistComponent/ArtistTopTrack';
 import ArtistAlbums from './artistComponent/ArtistAlbums';
 import ArtistRelated from './artistComponent/ArtistRelated';
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { db } from '../../firbeaseConfig/firebaseConfig';
 
 function ArtistDetail() {
 
@@ -14,7 +16,8 @@ function ArtistDetail() {
   const [currentNav, setCurrentNav] = useState('home')
   const [coverImage, setCoverImage] = useState('')
 
-  const access_token = window.localStorage.getItem("token")
+  const access_token = window.localStorage.getItem("token");
+  const userId = window.localStorage.getItem('userId');
 
   // function for artist details
 
@@ -24,7 +27,7 @@ function ArtistDetail() {
         Authorization: `Bearer ${access_token}`
       }
     })
-    console.log(data)
+    // console.log(data)
     setData(data);
     if (data.images[0].url) {
       setIsLoading(false)
@@ -39,6 +42,31 @@ function ArtistDetail() {
   useEffect(()=>{
     getArtistDetail();
   },[id])
+
+  // ==== adding artist to favourite 
+
+  const dataToAdd = {
+    artistImage : data?.images?.[0]?.url,
+    artistName : data?.name,
+    artistId: data?.id
+  }
+
+  const AddtoFavourite = () => {
+    console.log('click')
+    console.log(dataToAdd)
+    const collectionRef = doc(db, userId, "favorite-artists")
+        const favArtistCollection = collection(collectionRef, "favorite-artists-list")
+        addDoc(favArtistCollection, dataToAdd)
+        .then(() => {
+            console.log("successfully added")
+        })
+  }
+
+  // ============ to check follow or not
+
+  const checkFollow = () => {
+    
+  }
 
   return (
     <>
@@ -60,7 +88,7 @@ function ArtistDetail() {
                       {data?.followers?.total}
                     </div>
                     <div >
-                      <button>Follow</button>
+                      <button onClick={AddtoFavourite}>Follow</button>
                       <svg style={{ width: "25px", height: "25px", rotate: "90deg" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C10.9 3 10 3.9 10 5C10 6.1 10.9 7 12 7C13.1 7 14 6.1 14 5C14 3.9 13.1 3 12 3ZM12 17C10.9 17 10 17.9 10 19C10 20.1 10.9 21 12 21C13.1 21 14 20.1 14 19C14 17.9 13.1 17 12 17ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"></path></svg>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import './trackPage.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
-import { addDoc, collection, deleteDoc, doc, serverTimestamp, setDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp} from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 
@@ -21,9 +21,10 @@ function TrackPage() {
     const [currentNav, setCurrentNav] = useState('lyrics')
     const [artistArray, setArtistArray] = useState()
     const [isLiked, setIsLiked] = useState()
+    const [trackDocId, setTrackDocId] = useState()
 
     // ===== checking like or not 
-
+    
     const checkLiked = () => {
         const foundSong = likeSongList.find(song => song.songId === data?.id);
         if (foundSong) {
@@ -31,7 +32,6 @@ function TrackPage() {
         }
         const found = likeSongList.some(obj => obj.songId === data?.id);
         setIsLiked(found)
-        // console.log(found, "=", data?.id)
         console.log('song found in Like list =', found)
     }
 
@@ -108,7 +108,7 @@ function TrackPage() {
 
     // ====== disliking on click 
 
-    const [trackDocId, setTrackDocId] = useState()
+
     console.log(trackDocId)
 
     const removeLike = async () => {

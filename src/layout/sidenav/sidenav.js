@@ -103,7 +103,7 @@ function Sidenav() {
           Audiobooks
         </div>
       </div>
-      <div className='sidebar_links' >
+      <Link to='/myArtist' className='sidebar_links' >
         <div className='flex_align'>
           <div className='navigatio_button_icon' >
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +114,7 @@ function Sidenav() {
           </div>
           Artist
         </div>
-      </div>
+      </Link>
     </div>
   )
 }

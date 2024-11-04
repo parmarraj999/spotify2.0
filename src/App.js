@@ -24,6 +24,7 @@ import UserCredentialProvider, { UserCredentialContext } from './provider/UserCr
 import LikedSong from './page/likedSong/likedSong';
 import ProfilePicture from './component/profilePicture/profilePicture';
 import LikeSongListProvider from './provider/LikeSongListProvider';
+import MyArtist from './page/myArtist/myArtist';
 
 function App() {
 
@@ -98,6 +99,7 @@ function App() {
                       <Route path='podcast/:id' element={<PodcastDetail />} />
                       <Route path='track/:id' element={<TrackPage />} />
                       <Route path='liked' element={<LikedSong />} />
+                      <Route path='myArtist' element={<MyArtist/>} />
                     </Route>
                     <Route path='/auth' element={<Auth />}></Route>
                   </Routes>
