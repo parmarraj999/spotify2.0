@@ -228,6 +228,7 @@
 .artist_related_container .list_container .artist_cover .artist_image img {
   width: 100%;
   aspect-ratio: 1;
+  max-height: 190px;
   border-radius: 50%;
 }
 .artist_related_container .list_container .artist_cover h3 {

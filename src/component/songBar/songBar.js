@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './songbar.css';
+import { Link } from 'react-router-dom';
 
 function SongBar({ data, album }) {
-
-    console.log(data)
 
     const artistNameAlbum = data?.artists
     const artistNamePlaylist = data?.track?.artists
@@ -19,7 +18,7 @@ function SongBar({ data, album }) {
     }
 
     return (
-        <div className='song_bar_container' >
+        <Link to={`/track/${data.track.id}`} className='song_bar_container' >
             <div className='song_number' >
                 {
                     album ? <h4>{data?.track_number}</h4> :
@@ -84,7 +83,7 @@ function SongBar({ data, album }) {
                 </div>
 
             </div>
-        </div>
+        </Link>
     )
 }
 
