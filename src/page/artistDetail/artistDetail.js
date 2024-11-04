@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './artistDetail.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ArtistTopTrack from './artistComponent/ArtistTopTrack';
 import ArtistAlbums from './artistComponent/ArtistAlbums';
 import ArtistRelated from './artistComponent/ArtistRelated';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
+import { ArtistListContext } from '../../provider/ArtistListProvider';
 
 function ArtistDetail() {
 
@@ -39,15 +40,15 @@ function ArtistDetail() {
     getArtistDetail();
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     getArtistDetail();
-  },[id])
+  }, [id])
 
   // ==== adding artist to favourite 
 
   const dataToAdd = {
-    artistImage : data?.images?.[0]?.url,
-    artistName : data?.name,
+    artistImage: data?.images?.[0]?.url,
+    artistName: data?.name,
     artistId: data?.id
   }
 
@@ -55,18 +56,49 @@ function ArtistDetail() {
     console.log('click')
     console.log(dataToAdd)
     const collectionRef = doc(db, userId, "favorite-artists")
-        const favArtistCollection = collection(collectionRef, "favorite-artists-list")
-        addDoc(favArtistCollection, dataToAdd)
-        .then(() => {
-            console.log("successfully added")
-        })
+    const favArtistCollection = collection(collectionRef, "favorite-artists-list")
+    addDoc(favArtistCollection, dataToAdd)
+      .then(() => {
+        console.log("successfully added")
+      })
   }
 
   // ============ to check follow or not
 
+  const { artistList, getArtistList } = useContext(ArtistListContext);
+  const [artistCheckData, setArtistCheckData] = useState();
+  const [isFollow, setIsFollow] = useState(false);
+
   const checkFollow = () => {
-    
+    const foundArtist = artistList.find(artist => artist.artistId === data?.id)
+    if (foundArtist) {
+      setArtistCheckData(foundArtist);
+    }
+    const found = artistList.some(obj => obj.artistId === data?.id);
+    setIsFollow(found)
+    getArtistList();
+    // console.log(found)
   }
+
+  useEffect(() => {
+    checkFollow();
+  }, [data])
+  useEffect(() => {
+    checkFollow();
+  })
+
+  // ====== unfollow function 
+
+  
+  const unfollowFunction = async () => {
+    await deleteDoc(doc(db, userId, "favorite-artists", "favorite-artists-list", artistCheckData.id))
+    .then(()=>{
+        console.log("successfully")
+    })
+    getArtistList();
+    checkFollow();
+}
+
 
   return (
     <>
@@ -88,7 +120,10 @@ function ArtistDetail() {
                       {data?.followers?.total}
                     </div>
                     <div >
-                      <button onClick={AddtoFavourite}>Follow</button>
+                      {
+                        isFollow ? <button onClick={unfollowFunction} className='unfollow-btn' >Unfollow</button> :
+                          <button className='follow-btn'  onClick={AddtoFavourite}>Follow</button>
+                      }
                       <svg style={{ width: "25px", height: "25px", rotate: "90deg" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C10.9 3 10 3.9 10 5C10 6.1 10.9 7 12 7C13.1 7 14 6.1 14 5C14 3.9 13.1 3 12 3ZM12 17C10.9 17 10 17.9 10 19C10 20.1 10.9 21 12 21C13.1 21 14 20.1 14 19C14 17.9 13.1 17 12 17ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"></path></svg>
                     </div>
                   </div>
@@ -103,29 +138,29 @@ function ArtistDetail() {
             </div>
             {
               currentNav === "home" ? <>
-              <ArtistTopTrack id={id} />
-              <ArtistAlbums id={id} />
-              <ArtistRelated id={id} />
+                <ArtistTopTrack id={id} />
+                <ArtistAlbums id={id} />
+                <ArtistRelated id={id} />
               </>
-              : ""
+                : ""
             }
             {
               currentNav === "track" ? <>
-              <ArtistTopTrack id={id} />
+                <ArtistTopTrack id={id} />
               </>
-              : ""
+                : ""
             }
             {
               currentNav === "album" ? <>
-              <ArtistAlbums id={id} />
+                <ArtistAlbums id={id} />
               </>
-              : ""
+                : ""
             }
             {
               currentNav === "artist" ? <>
-               <ArtistRelated id={id} />
+                <ArtistRelated id={id} />
               </>
-              : ""
+                : ""
             }
           </div>
       }

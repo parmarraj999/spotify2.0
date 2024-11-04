@@ -66,6 +66,10 @@
 .artist_detail_container .artist_banner_container .artist_details .artist_names_buttons .artist_buttons button:hover {
   background: rgba(255, 255, 255, 0.4);
 }
+.artist_detail_container .artist_banner_container .artist_details .artist_names_buttons .artist_buttons .follow-btn {
+  background: #13e760;
+  color: black;
+}
 .artist_detail_container .artist_banner_container .artist_details .artist_names_buttons .artist_buttons div {
   display: flex;
   align-items: center;

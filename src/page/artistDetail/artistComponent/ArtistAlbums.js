@@ -14,7 +14,7 @@ function ArtistAlbums({id}) {
         Authorization: `Bearer ${access_token}`
       }
     })
-    console.log(data)
+    // console.log(data)
     setAlbumData(data.items)
   }
 

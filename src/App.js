@@ -25,6 +25,7 @@ import LikedSong from './page/likedSong/likedSong';
 import ProfilePicture from './component/profilePicture/profilePicture';
 import LikeSongListProvider from './provider/LikeSongListProvider';
 import MyArtist from './page/myArtist/myArtist';
+import ArtistListProvider from './provider/ArtistListProvider';
 
 function App() {
 
@@ -73,42 +74,44 @@ function App() {
 
   return (
     <LikeSongListProvider>
-      <UserCredentialContext.Provider value={{ userData, setUserData }} >
-        <SearchValueProvider>
-          <AccessTokenContext.Provider value={{ accessToken }} >
-            <AsideTabProvider>
-              <div className="App">
-                {
-                  showProfile ?
-                    <ProfilePicture setShowPhotoCard={setShowProfile} />
-                    : ""
-                }
-                <BrowserRouter>
-                  <div className='nav_app'>
-                    <Nav />
-                  </div>
-                  <Routes>
-                    <Route path='/' element={<Layout />} >
-                      <Route index path='' element={<Home />} />
-                      <Route path='discover' element={<Discover />} />
-                      <Route path='search' element={<Search />} />
-                      <Route path='library' element={<Library />} />
-                      <Route path='playlist/:id' element={<PlaylistDetail />} />
-                      <Route path='album/:id' element={<Album />} />
-                      <Route path='artist/:id' element={<ArtistDetail />} />
-                      <Route path='podcast/:id' element={<PodcastDetail />} />
-                      <Route path='track/:id' element={<TrackPage />} />
-                      <Route path='liked' element={<LikedSong />} />
-                      <Route path='myArtist' element={<MyArtist/>} />
-                    </Route>
-                    <Route path='/auth' element={<Auth />}></Route>
-                  </Routes>
-                </BrowserRouter>
-              </div>
-            </AsideTabProvider>
-          </AccessTokenContext.Provider>
-        </SearchValueProvider>
-      </UserCredentialContext.Provider>
+      <ArtistListProvider>
+        <UserCredentialContext.Provider value={{ userData, setUserData }} >
+          <SearchValueProvider>
+            <AccessTokenContext.Provider value={{ accessToken }} >
+              <AsideTabProvider>
+                <div className="App">
+                  {
+                    showProfile ?
+                      <ProfilePicture setShowPhotoCard={setShowProfile} />
+                      : ""
+                  }
+                  <BrowserRouter>
+                    <div className='nav_app'>
+                      <Nav />
+                    </div>
+                    <Routes>
+                      <Route path='/' element={<Layout />} >
+                        <Route index path='' element={<Home />} />
+                        <Route path='discover' element={<Discover />} />
+                        <Route path='search' element={<Search />} />
+                        <Route path='library' element={<Library />} />
+                        <Route path='playlist/:id' element={<PlaylistDetail />} />
+                        <Route path='album/:id' element={<Album />} />
+                        <Route path='artist/:id' element={<ArtistDetail />} />
+                        <Route path='podcast/:id' element={<PodcastDetail />} />
+                        <Route path='track/:id' element={<TrackPage />} />
+                        <Route path='liked' element={<LikedSong />} />
+                        <Route path='myArtist' element={<MyArtist />} />
+                      </Route>
+                      <Route path='/auth' element={<Auth />}></Route>
+                    </Routes>
+                  </BrowserRouter>
+                </div>
+              </AsideTabProvider>
+            </AccessTokenContext.Provider>
+          </SearchValueProvider>
+        </UserCredentialContext.Provider>
+      </ArtistListProvider>
     </LikeSongListProvider>
   );
 }

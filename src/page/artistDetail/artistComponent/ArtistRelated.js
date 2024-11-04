@@ -14,7 +14,7 @@ function ArtistRelated({id}) {
         Authorization: `Bearer ${access_token}`
       }
     })
-    console.log(data)
+    // console.log(data)
     setRelatedArtist(data.artists)
   }
 

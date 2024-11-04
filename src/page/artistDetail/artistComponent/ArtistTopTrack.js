@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../artistDetail.css'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const artistList = (data) => {
   return (
@@ -57,7 +58,7 @@ function ArtistTopTrack({ id }) {
               {
                 trackData?.map((data) => {
                   return (
-                    <div className='artist_top_track_item' >
+                    <Link to={`/track/${data.id}`} className='artist_top_track_item' >
                       <div style={{ width: "100%", display: 'flex', gap: ".5rem", alignItems: "center" }}>
                         <div className='track_cover_image_name' >
                           <div className='track_cover_image' >
@@ -78,7 +79,7 @@ function ArtistTopTrack({ id }) {
 
                         </div>
                       </div>
-                    </div>
+                    </Link>
 
                   )
                 })
