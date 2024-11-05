@@ -26,6 +26,7 @@ import ProfilePicture from './component/profilePicture/profilePicture';
 import LikeSongListProvider from './provider/LikeSongListProvider';
 import MyArtist from './page/myArtist/myArtist';
 import ArtistListProvider from './provider/ArtistListProvider';
+import MyPlaylist from './page/myPlaylist/myPlaylist';
 
 function App() {
 
@@ -102,6 +103,7 @@ function App() {
                         <Route path='track/:id' element={<TrackPage />} />
                         <Route path='liked' element={<LikedSong />} />
                         <Route path='myArtist' element={<MyArtist />} />
+                        <Route path='myPlaylists' element={<MyPlaylist/>} />
                       </Route>
                       <Route path='/auth' element={<Auth />}></Route>
                     </Routes>

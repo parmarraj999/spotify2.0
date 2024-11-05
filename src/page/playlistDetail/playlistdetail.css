@@ -24,7 +24,9 @@
   gap: 0.8rem;
 }
 .playlist_detail_container .playlist_main .playlist_main_header h2 {
-  font-size: 45px;
+  font-size: 38px;
+  height: 50px;
+  overflow: hidden;
 }
 .playlist_detail_container .playlist_main .playlist_main_header h5 {
   color: #898989;
