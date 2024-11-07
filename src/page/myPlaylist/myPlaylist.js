@@ -2,7 +2,7 @@ import React from 'react'
 
 function MyPlaylist() {
   return (
-    <div>MyPlaylist</div>
+    <div>MyPlaylist work</div>
   )
 }
 
