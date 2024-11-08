@@ -1,0 +1,22 @@
+.playlist_menu{
+    width: 260px;
+    height: fit-content;
+    background: #1d1d1d;
+    position: absolute;
+    z-index: 999999;
+    top: 0;
+    left: -10%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.playlist_menu button{
+    width: 100%;
+    height: 40px;
+    background: #1ed760;
+    border: none;
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: .4rem;
+}

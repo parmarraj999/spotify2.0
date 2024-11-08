@@ -3,6 +3,7 @@ import '../playlistDetail/playlistdetail.css';
 import SongBar from '../../component/songBar/songBar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import SongBarAlbum from '../../component/songBar/songBarAlbum';
 
 function Album() {
 
@@ -119,14 +120,14 @@ function Album() {
                                 <div className='playlist_list_header' >
                                     <h4>#</h4>
                                     <h4>Title</h4>
-                                    {/* <h4>Album</h4> */}
+                                    <h4></h4>
                                     <h4>Duration</h4>
                                 </div>
                                 <div className='song_list_container' >
                                     {
                                         songData.map((data, key) => {
                                             return (
-                                                <SongBar data={data} album={true} />
+                                                <SongBarAlbum data={data} />
                                             )
                                         })
                                     }
