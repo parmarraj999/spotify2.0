@@ -4,6 +4,8 @@ import SongBar from '../../component/songBar/songBar';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AccessTokenContext } from '../../provider/AccessTokenProvider';
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { db } from '../../firbeaseConfig/firebaseConfig';
 
 function PlaylistDetail() {
 
@@ -15,10 +17,10 @@ function PlaylistDetail() {
   const { id } = useParams();
   console.log(id)
 
+  const access_token = window.localStorage.getItem("token");
+  const userId = window.localStorage.getItem("userId");
+
   const getPlaylistDetail = async () => {
-
-    const access_token = window.localStorage.getItem("token")
-
     const { data } = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, {
       headers: {
         Authorization: `Bearer ${access_token}`
@@ -34,6 +36,25 @@ function PlaylistDetail() {
   useEffect(() => {
     getPlaylistDetail();
   }, [])
+
+  const playlistData = {
+      playlistId : data?.id,
+      playlistName : data?.name,
+      playlistImage : data?.images?.[0]?.url,
+      playlistLength : data?.tracks?.items?.length,
+
+  }
+  console.log(data)
+
+  const addPlaylist = () => {
+    console.log('click')
+    const collectionRef = doc(db, userId, "playlist")
+    const PlaylistCollection = collection(collectionRef, "playlist-list");
+    addDoc(PlaylistCollection, playlistData)
+    .then(()=>{
+      console.log('playlist successfully added')
+    })
+  }
 
 
   const songData = data?.tracks?.items;
@@ -61,6 +82,7 @@ function PlaylistDetail() {
                         <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
                       </svg>
                     </div>
+
                     <div>
                       <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_367_118022)">
@@ -75,12 +97,14 @@ function PlaylistDetail() {
                       </svg>
 
                     </div>
-                    <div>
+
+                    <div onClick={addPlaylist} >
                       <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M25.3224 20.1881H21.0098M16.6971 20.1881H21.0098M21.0098 20.1881L21.0098 15.8755M21.0098 20.1881V24.5008" stroke="#898989" stroke-width="1.68378" stroke-linecap="round" stroke-linejoin="round" />
                         <circle cx="21.0265" cy="20.2055" r="9.26081" stroke="#898989" stroke-width="1.68378" />
                       </svg>
                     </div>
+
                     <div>
 
                       <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,6 +114,7 @@ function PlaylistDetail() {
                         <path d="M23.8057 14.3123H26.3313M28.857 14.3123H26.3313M26.3313 14.3123V11.7866M26.3313 14.3123V16.838" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
                     </div>
+
                     <div>
 
                       <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,6 +123,7 @@ function PlaylistDetail() {
                       </svg>
 
                     </div>
+
                     <div>
 
                       <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,6 +131,7 @@ function PlaylistDetail() {
                       </svg>
 
                     </div>
+
                   </div>
                   <div className='playlist_search_container' >
                     <div>

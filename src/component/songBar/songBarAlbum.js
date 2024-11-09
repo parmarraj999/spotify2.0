@@ -23,7 +23,7 @@ function SongBarAlbum({ data, album }) {
     console.log(data)
 
     return (
-        <div to={`/track/${data?.id}`} className='song_bar_container' >
+        <Link to={`/track/${data?.id}`} className='song_bar_container' >
             <div className='song_number' >
                 <h4>{data?.track_number}</h4>
             </div>
@@ -63,7 +63,7 @@ function SongBarAlbum({ data, album }) {
                         <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} /> : ""
                 }
             </div>
-        </div>
+        </Link>
     )
 }
 

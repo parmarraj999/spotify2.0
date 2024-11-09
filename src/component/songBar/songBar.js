@@ -24,7 +24,7 @@ function SongBar({ data }) {
         artistLink : data?.track?.artists?.[0]?.id
     }
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <div to={`/track/${data.track.id}`} className='song_bar_container' >

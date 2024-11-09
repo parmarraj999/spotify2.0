@@ -37,7 +37,7 @@ const LikeButton = ({ data, artistData }) => {
       songId: data?.id,
       songName: data?.name,
       songDuration: data?.duration_ms,
-      songImage: data?.album?.images?.[0].url || imageUrl,
+      songImage: data?.album?.images?.[0].url,
       artists: { artistData },
       albumName: data?.album?.name,
       albumId: data?.album?.id,
