@@ -49,7 +49,7 @@ function PlaylistDetail() {
   const addPlaylist = () => {
     console.log('click')
     const collectionRef = doc(db, userId, "playlist")
-    const PlaylistCollection = collection(collectionRef, "playlist-list");
+    const PlaylistCollection = collection(collectionRef, "playlist-list",);
     addDoc(PlaylistCollection, playlistData)
     .then(()=>{
       console.log('playlist successfully added')

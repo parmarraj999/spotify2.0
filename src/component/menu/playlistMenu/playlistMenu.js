@@ -29,14 +29,14 @@ function PlaylistMenu({setShowPlaylistMenu, linkData}) {
                 </svg>
                 <h3>Add to Queue</h3>
             </div>
-            <div className='song_menu_items' >
+            <Link to={`/artist/${linkData?.artistLink}`} className='song_menu_items' >
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 8C14 9.10457 13.1046 10 12 10C10.8954 10 10 9.10457 10 8C10 6.89543 10.8954 6 12 6C13.1046 6 14 6.89543 14 8Z" stroke="#ffffff" stroke-width="1.2" />
                     <path d="M10 12L7.8906 13.4063C7.3342 13.7772 7 14.4017 7 15.0704V16.0667C7 16.5821 7.41787 17 7.93333 17H12" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M16.5 8V12.5M16.5 12.5V14.7348C16.5 15.1798 16.1832 15.5678 15.7385 15.5538C15.0031 15.5306 14 15.2669 14 14C14 12 16.5 12.5 16.5 12.5Z" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <h3>Go to Artist</h3>
-            </div>
+            </Link>
             <Link to={`/album/${linkData?.albumLink}`} className='song_menu_items' >
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 16.2273C19 17.2063 18.2063 18 17.2273 18H6.77273C5.79368 18 5 17.2063 5 16.2273V8.14054V7.77273C5 6.79368 5.79368 6 6.77273 6H9.74797C10.3574 6 10.9242 6.31308 11.2486 6.829L11.5521 7.31155C11.8765 7.82746 12.4433 8.14054 13.0527 8.14054H17.2273C18.2063 8.14054 19 8.93422 19 9.91327V16.2273Z" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round" />

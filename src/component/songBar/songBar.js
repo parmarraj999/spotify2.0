@@ -20,14 +20,14 @@ function SongBar({ data }) {
     }
 
     const linkData = {
-        albumLink : data?.track.album.id,
-        artistLink : data?.track?.artists?.[0]?.id
+        albumLink: data?.track.album.id,
+        artistLink: data?.track?.artists?.[0]?.id
     }
 
-    // console.log(data)
+    console.log(data)
 
     return (
-        <div to={`/track/${data.track.id}`} className='song_bar_container' >
+        <div className='song_bar_container' >
             <div className='song_number' >
 
                 <h4>{data?.track?.track_number}</h4>
@@ -35,17 +35,22 @@ function SongBar({ data }) {
             </div>
             <div className='song_details' >
                 <div className='song_cover_img' >
-                    <img src={data?.track?.album?.images[0]?.url} />
+                    <Link to={`/track/${data.track.id}`}>
+                        <img src={data?.track?.album?.images[0]?.url} />
+                    </Link>
                 </div>
                 <div className='song_names'>
-
-                    <h4>{data?.track?.name}</h4>
+                    <Link to={`/track/${data.track.id}`}>
+                        <h4>{data?.track?.name}</h4>
+                    </Link>
 
                     <div style={{ width: '200px', display: "flex", gap: '.3rem', overflow: 'hidden' }} >
                         {
                             artistNamePlaylist?.map((data) => {
                                 return (
-                                    <h5>{data.name},</h5>
+                                    <Link to={`/artist/${data.id}`}>
+                                        <h5>{data.name},</h5>
+                                    </Link>
                                 )
                             })
                         }
@@ -55,7 +60,9 @@ function SongBar({ data }) {
             </div>
 
             <div className='song_type' >
-                <h4>{data?.track?.album?.name}</h4>
+                <Link to={`/album/${data.track?.album?.id}`} >
+                    <h4>{data?.track?.album?.name}</h4>
+                </Link>
             </div>
 
             <div className='song_timing' style={{ position: "relative" }} >
