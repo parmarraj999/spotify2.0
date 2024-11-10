@@ -4,12 +4,13 @@
     background: #1d1d1d;
     position: absolute;
     z-index: 99999;
-    top: 0;
-    left: -15%;
+    top: -50%;
+    left: -105%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    cursor: pointer;
 }
 .playlist_menu button{
     width: 100%;
@@ -19,4 +20,29 @@
     font-weight: 500;
     font-size: 18px;
     margin-top: .4rem;
+}
+.playlist_menu .playlist_menu_header{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    border-bottom: 1px solid #89898933;
+}
+.playlist_menu_header h2{
+    font-size: 16px;
+    font-weight: 500;
+}
+.playlist_menu .playlist_menu_item{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    gap: .5rem;
+    transform: .3s all;
+}
+.playlist_menu_item:hover{
+    background-color: #2f2f2f;
+}
+.playlist_menu_item h3{
+    font-size: 15px;
 }

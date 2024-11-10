@@ -5,11 +5,11 @@
     position: absolute;
     z-index: 999999;
     top: 0;
-    left: 20%;
+    left: -15%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    cursor: pointer;
 }
 .song_menu_items{
     width: 100%;
@@ -18,10 +18,12 @@
     gap: 1rem;
     align-items: center;
     white-space: nowrap;
-    padding: 0 1rem;
+    border-radius: 10px;
+    padding: 0 .5rem;
 }
 .song_menu_items h3{
     font-size: 15px;
+    font-weight: 500;
     color: white;
 }
 .song_menu_items:hover{
@@ -35,4 +37,5 @@
     font-weight: 500;
     font-size: 18px;
     margin-top: .4rem;
+    border-radius: 0 0 10px 10px;
 }

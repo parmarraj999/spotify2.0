@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './songMenu.css';
 import { Link } from 'react-router-dom';
+import PlaylistMenu from '../playlistMenu/playlistMenu';
 
-function SongMenu({setShowMenu, linkData, removeLikedSong}) {
+function SongMenu({ setShowMenu, linkData, removeLikedSong }) {
 
     // ==== function to remove like song 
 
@@ -11,13 +12,18 @@ function SongMenu({setShowMenu, linkData, removeLikedSong}) {
         setShowMenu(false);
     }
 
+    const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
 
     return (
         <div className='song_menu_container' >
-            <div className='song_menu_items' >
-                <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 7.75736V12M12 16.2426V12M12 12L7.75732 12M12 12H16.2426" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+            <div className='song_menu_items' style={{ position: "relative" }} onClick={() => setShowPlaylistMenu(!showPlaylistMenu)} >
+                {
+                    showPlaylistMenu ?
+                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} />
+                        : ""
+                }
+                <svg style={{ width: "30px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+
                 <h3>Add to Playlist</h3>
             </div>
             <div className='song_menu_items' onClick={removeLikeSongHandle}>
@@ -51,7 +57,7 @@ function SongMenu({setShowMenu, linkData, removeLikedSong}) {
                 </svg>
                 <h3>Go to Album</h3>
             </Link>
-            <button onClick={()=>setShowMenu(false)} >Close</button>
+            <button onClick={() => setShowMenu(false)} >Close</button>
         </div>
     )
 }
