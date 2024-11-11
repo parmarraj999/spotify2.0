@@ -1,26 +1,18 @@
 .playlist_menu{
     width: 260px;
     height: fit-content;
+    max-height: 400px;
     background: #1d1d1d;
     position: absolute;
     z-index: 99999;
     top: -50%;
-    left: -105%;
+    left: -115%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     cursor: pointer;
 }
-.playlist_menu button{
-    width: 100%;
-    height: 40px;
-    background: #1ed760;
-    border: none;
-    font-weight: 500;
-    font-size: 18px;
-    margin-top: .4rem;
-}
+
 .playlist_menu .playlist_menu_header{
     height: 50px;
     display: flex;
@@ -45,4 +37,34 @@
 }
 .playlist_menu_item h3{
     font-size: 15px;
+    font-weight: 500;
+}
+.playlist_menu_item h4{
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    padding-left: 10px;
+    text-transform: capitalize;
+    width: 100%;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.add_button{
+    width: 100%;
+    height: 40px;
+    background: #1ed760;
+    border: none;
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: .4rem;
+    border-radius: 0 0 10px 10px    ;
+    cursor: pointer;
+}
+.check_playlist{
+    width: 20px;
+    height:20px;
+    border-radius: 50%;
+    /* background: #1ed760; */
+    border: 1px solid #898989;
 }

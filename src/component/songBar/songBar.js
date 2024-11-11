@@ -3,12 +3,15 @@ import './songbar.css';
 import { Link } from 'react-router-dom';
 import PlaylistMenu from '../menu/playlistMenu/playlistMenu';
 import SongMenu from '../menu/songMenu/songMenu';
+import AddPlaylist from '../menu/addPlaylist/addPlaylist';
 
 function SongBar({ data }) {
 
     const artistNamePlaylist = data?.track?.artists
 
     const [showMenu, setShowMenu] = useState(false)
+    const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
+    const [showAddMenu,setShowAddMenu] = useState(false)
 
     function convertMillisecondsToTimeString(milliseconds) {
         const seconds = Math.floor(milliseconds / 1000);
@@ -25,7 +28,7 @@ function SongBar({ data }) {
         artistLink: data?.track?.artists?.[0]?.id
     }
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <div className='song_bar_container' >
@@ -85,7 +88,11 @@ function SongBar({ data }) {
                 </div>
                 {
                     showMenu ?
-                        <SongMenu setShowMenu={setShowMenu} linkData={linkData} /> : ""
+                        <SongMenu setShowMenu={setShowMenu} setShowPlaylistMenu={setShowPlaylistMenu} showPlaylistMenu={showPlaylistMenu} linkData={linkData} /> : ""
+                }
+                {
+                    showPlaylistMenu ?
+                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} songData={data}/> : ""
                 }
             </div>
         </div>

@@ -96,8 +96,8 @@ function TrackPage() {
     }
 
     const AddLikedSong = async () => {
-        const collectionRef = doc(db, userId, "my-playlist")
-        const likeSongCollection = collection(collectionRef, "my-playlist-list")
+        const collectionRef = doc(db, userId, "liked-songs")
+        const likeSongCollection = collection(collectionRef, "liked-song-list")
         addDoc(likeSongCollection, likeSongData)
             .then(() => {
                 console.log("successfully added")

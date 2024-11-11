@@ -3,7 +3,7 @@ import './songMenu.css';
 import { Link } from 'react-router-dom';
 import PlaylistMenu from '../playlistMenu/playlistMenu';
 
-function SongMenu({ setShowMenu, linkData, removeLikedSong }) {
+function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu, showPlaylistMenu }) {
 
     // ==== function to remove like song 
 
@@ -12,16 +12,21 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong }) {
         setShowMenu(false);
     }
 
-    const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
+    // ==== to close menu 
+
+    const handleClose = () => {
+        setShowMenu(false)
+        setShowPlaylistMenu(false)
+    }
+
+    // const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
 
     return (
         <div className='song_menu_container' >
-            <div className='song_menu_items' style={{ position: "relative" }} onClick={() => setShowPlaylistMenu(!showPlaylistMenu)} >
-                {
-                    showPlaylistMenu ?
-                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} />
-                        : ""
-                }
+            <div className='song_menu_items' style={{ position: "relative" }} onClick={() => {
+                console.log("click on plyalist Button")
+                setShowPlaylistMenu(!showPlaylistMenu)}} >
+               
                 <svg style={{ width: "30px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
 
                 <h3>Add to Playlist</h3>
@@ -57,7 +62,7 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong }) {
                 </svg>
                 <h3>Go to Album</h3>
             </Link>
-            <button onClick={() => setShowMenu(false)} >Close</button>
+            <button onClick={handleClose} >Close</button>
         </div>
     )
 }
