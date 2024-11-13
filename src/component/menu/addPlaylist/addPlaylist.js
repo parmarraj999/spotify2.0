@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './addplaylist.css';
 import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
+import { v4 as uuidv4 } from 'uuid';
 
 function AddPlaylist({ setShowAddMenu, getPlaylistName }) {
 
@@ -11,6 +12,7 @@ function AddPlaylist({ setShowAddMenu, getPlaylistName }) {
 
   const data = {
     playlistName : playlistName,
+    playlistId : uuidv4(),
     addedAt : serverTimestamp(),
   }
 
