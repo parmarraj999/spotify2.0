@@ -7,12 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 function AddPlaylist({ setShowAddMenu, getPlaylistName }) {
 
   const [playlistName,setPlaylistName] = useState('')
+  const [imageUrl,setImageUrl] = useState('');
 
   const userId = window.localStorage.getItem("userId");
 
   const data = {
     playlistName : playlistName,
     playlistId : uuidv4(),
+    playlistImage : imageUrl,
     addedAt : serverTimestamp(),
   }
 
@@ -35,6 +37,9 @@ function AddPlaylist({ setShowAddMenu, getPlaylistName }) {
       </div>
       <div className='add_playlist_item' >
         <input placeholder='Playlist Name' onChange={(e)=>setPlaylistName(e.target.value)} />
+      </div>
+      <div className='add_playlist_item' >
+        <input placeholder='Playlist Image Url' onChange={(e)=>setImageUrl(e.target.value)} />
       </div>
       <div className='add_button_container' >
         <button className='cancel_button' onClick={() => setShowAddMenu(false)}>Cancel</button>
