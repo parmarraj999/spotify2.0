@@ -4,7 +4,7 @@ import SongBar from '../../component/songBar/songBar';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AccessTokenContext } from '../../provider/AccessTokenProvider';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { AllPlaylistDataContext } from '../../provider/AllPlaylistDataProvider';
 
@@ -13,11 +13,12 @@ function PlaylistDetail() {
   const accessToken = useContext(AccessTokenContext);
 
   const [data, setData] = useState([])
+  const [playlistDoc, setPlaylistDoc] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const [isAdded, setIsAdded] = useState(false)
 
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
 
   const access_token = window.localStorage.getItem("token");
   const userId = window.localStorage.getItem("userId");
@@ -28,7 +29,7 @@ function PlaylistDetail() {
         Authorization: `Bearer ${access_token}`
       }
     })
-    console.log(data)
+    // console.log(data)
     setData(data);
     if (data) {
       setIsLoading(false)
@@ -47,19 +48,20 @@ function PlaylistDetail() {
 
   }
 
-  console.log(data)
+  // console.log(data)
 
   const addPlaylist = () => {
-    console.log('click')
+    // console.log('click')
     const collectionRef = doc(db, userId, "playlist")
     const PlaylistCollection = collection(collectionRef, "playlist-list",);
     addDoc(PlaylistCollection, playlistDataFirestore)
       .then(() => {
         console.log('playlist successfully added')
       })
+    checkPlaylist();
   }
 
-  const [hexCode,setHexCode] = useState();
+  const [hexCode, setHexCode] = useState();
 
   const generateHexCode = () => {
     const characters = '0123456789abcdef';
@@ -72,29 +74,44 @@ function PlaylistDetail() {
 
   const songData = data?.tracks?.items;
 
-  const { playlistData } = useContext(AllPlaylistDataContext)
+  const { playlistData, getAllPlaylistData } = useContext(AllPlaylistDataContext)
 
   const checkPlaylist = () => {
+    // getAllPlaylistData();
+    const foundPlaylistDoc = playlistData?.find(song => song.playlistId === data?.id);
+    if (foundPlaylistDoc) {
+      setPlaylistDoc(foundPlaylistDoc)
+    }
     const foundPlaylist = playlistData?.some(obj => obj.playlistId === data?.id);
     setIsAdded(foundPlaylist);
-    console.log(foundPlaylist)
+    getAllPlaylistData();
   }
 
   useEffect(() => {
     checkPlaylist();
     generateHexCode();
   }, [])
-  useEffect(() => {
+  useEffect(()=>{
     checkPlaylist();
   })
 
- 
+
+  const removeFromList = async () => {
+    console.log('clicked')
+    await deleteDoc(doc(db, userId, "playlist", "playlist-list", playlistDoc.id))
+      .then(() => {
+        console.log("successfully delete")
+        getAllPlaylistData();
+      })
+    checkPlaylist();
+  }
+
 
   return (
     <>
       {
         isLoading ? <div>loading</div> :
-          <div className='playlist_detail_container' style={{background:`linear-gradient(${hexCode}35,transparent)`}} >
+          <div className='playlist_detail_container' style={{ background: `linear-gradient(${hexCode}35,transparent)` }} >
             <div className='playlist_main' >
               <div className='playlist_main_header' >
                 <h2>{data?.name}</h2>
@@ -130,7 +147,7 @@ function PlaylistDetail() {
 
                     {
                       isAdded ?
-                        <div>
+                        <div onClick={removeFromList} >
                           <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="21.0054" cy="20.4961" r="11" fill="#1ED760" />
                             <path d="M16.7567 20.9961L19.7567 23.9961L25.2567 18.4961" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

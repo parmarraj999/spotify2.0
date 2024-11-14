@@ -28,7 +28,7 @@ const AllPlaylistDataProvider = ({ children }) => {
     console.log(playlistData)
 
     return (
-        <AllPlaylistDataContext.Provider value={{ playlistData, setPlaylistData }} >
+        <AllPlaylistDataContext.Provider value={{ playlistData, setPlaylistData, getAllPlaylistData }} >
             {children}
         </AllPlaylistDataContext.Provider>
     )

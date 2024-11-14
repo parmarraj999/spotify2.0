@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './playlistMenu.css';
 import { Link } from 'react-router-dom';
 import AddPlaylist from '../addPlaylist/addPlaylist';
 import { addDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
+import { AllPlaylistDataContext } from '../../../provider/AllPlaylistDataProvider';
 
 function PlaylistMenu({ setShowPlaylistMenu, linkData, songData }) {
 
     const [data, setdata] = useState([]);
+    const [isAdded,setIsAdded] = useState()
 
     const [showAddMenu, setShowAddMenu] = useState(false)
     const userId = window.localStorage.getItem("userId");
 
     const [currentId, setCurrentId] = useState("")
 
+    const { playlistData } = useContext(AllPlaylistDataContext);
+
     // close playlist menu 
 
     const handlePlaylist = () => {
         console.log("click")
-        if(currentId !== ""){
+        if (currentId !== "") {
             const collectionRef = doc(db, userId, "my-playlist")
             const playlistCollection = collection(collectionRef, currentId)
             addDoc(playlistCollection, songData)
-            .then(() => {
-                console.log("successfully added")
-                setShowPlaylistMenu(false)
-            })
+                .then(() => {
+                    console.log("successfully added")
+                    setShowPlaylistMenu(false)
+                })
         }
     }
 
@@ -40,6 +44,12 @@ function PlaylistMenu({ setShowPlaylistMenu, linkData, songData }) {
         setdata(playlistName)
         console.log(playlistName)
         console.log(songData)
+    }
+
+    const checkPlaylist = () => {
+        const foundPlaylist = playlistData?.some(obj => obj.playlistId === data?.id);
+        setIsAdded(foundPlaylist);
+        console.log(foundPlaylist)
     }
 
     useEffect(() => {
