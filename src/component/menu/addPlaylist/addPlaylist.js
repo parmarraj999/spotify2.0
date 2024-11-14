@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './addplaylist.css';
-import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,11 +11,18 @@ function AddPlaylist({ setShowAddMenu, getPlaylistName }) {
 
   const userId = window.localStorage.getItem("userId");
 
+  const date = new Date();
+  const dateDay = date.getDate();
+  const monthNumber = date.getMonth();
+  const month = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sept","Oct","Nov","Dec"];
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+
   const data = {
     playlistName : playlistName,
     playlistId : uuidv4(),
     playlistImage : imageUrl,
-    addedAt : serverTimestamp(),
+    addedAt : `${dateDay} ${month[monthNumber]}, ${hour}:${minute}`,
   }
 
   const createPlaylist = () => {

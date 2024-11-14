@@ -34,7 +34,7 @@ function SongBarAlbum({ data, album }) {
                         {
                             artistNameAlbum?.map((data) => {
                                 return (
-                                    <h5>{data.name},</h5>
+                                    <h5>{data.name}</h5>
                                 )
                             })
                         }

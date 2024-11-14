@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { db } from '../../firbeaseConfig/firebaseConfig'
 import './myplaylist.css';
 import MyPlaylistComponent from './myplaylistComponent/my-playlist';
+import OtherPlaylist from './myplaylistComponent/other-playlits';
 
 function MyPlaylist() {
 
@@ -27,6 +28,7 @@ function MyPlaylist() {
   return (
     <div className='my-playlist-container' >
         <MyPlaylistComponent/>
+        <OtherPlaylist/>
     </div>
   )
 }

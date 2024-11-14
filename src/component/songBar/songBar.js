@@ -39,12 +39,12 @@ function SongBar({ data }) {
             </div>
             <div className='song_details' >
                 <div className='song_cover_img' >
-                    <Link to={`/track/${data.track.id}`}>
+                    <Link to={`/track/${data?.track.id}`}>
                         <img src={data?.track?.album?.images[0]?.url} />
                     </Link>
                 </div>
                 <div className='song_names'>
-                    <Link to={`/track/${data.track.id}`}>
+                    <Link to={`/track/${data?.track.id}`}>
                         <h4>{data?.track?.name}</h4>
                     </Link>
 
@@ -64,7 +64,7 @@ function SongBar({ data }) {
             </div>
 
             <div className='song_type' >
-                <Link to={`/album/${data.track?.album?.id}`} >
+                <Link to={`/album/${data?.track?.album?.id}`} >
                     <h4>{data?.track?.album?.name}</h4>
                 </Link>
             </div>

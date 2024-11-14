@@ -58,6 +58,7 @@ function PlaylistDetail() {
 
 
   const songData = data?.tracks?.items;
+  console.log(songData)
 
   return (
     <>
@@ -70,7 +71,7 @@ function PlaylistDetail() {
                 <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }} >
                   <h5>By <span>Spotify</span></h5>
                   <div className='circle'></div>
-                  <h5>{data.tracks.items.length} songs</h5>
+                  <h5>{data?.tracks?.items?.length} songs</h5>
                   {/* <div className='circle'></div>
                   <h5>3 hr 30 min</h5> */}
                 </div>
@@ -153,7 +154,7 @@ function PlaylistDetail() {
                 </div>
                 <div className='song_list_container' >
                   {
-                    songData.map((data, key) => {
+                    songData?.map((data, key) => {
                       return (
                         <SongBar data={data} />
                       )
