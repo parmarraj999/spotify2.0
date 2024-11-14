@@ -284,6 +284,8 @@
 }
 .playlist_list_container .list_container .search_playlist_cover img {
   width: 100%;
+  min-height: 160px;
+  max-height: 160px;
   border-radius: 10px;
 }
 .playlist_list_container .list_container .search_playlist_cover .playlist_details {

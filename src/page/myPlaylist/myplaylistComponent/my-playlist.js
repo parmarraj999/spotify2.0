@@ -3,7 +3,7 @@ import '../myplaylist.css';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
 import { Link } from 'react-router-dom';
-import { PlaylistDataContext } from '../../../provider/PlaylistDataProvider';
+import { MyPlaylistDataContext } from '../../../provider/MyPlaylistDataProvider';
 
 function MyPlaylistComponent() {
 
@@ -11,7 +11,7 @@ function MyPlaylistComponent() {
   const userId = window.localStorage.getItem("userId");
   const [data,setData] = useState([]);
 
-  const { playlistData, setPlaylistData } = useContext(PlaylistDataContext);
+  const { playlistData, setPlaylistData } = useContext(MyPlaylistDataContext);
 
   const getMyPlaylist = async () => {
     const collectionRef = doc(db, userId, "playlist")

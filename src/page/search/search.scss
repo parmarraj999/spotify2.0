@@ -284,6 +284,8 @@
             transition: .2s all;
             img {
                 width: 100%;
+                min-height: 160px;
+                max-height: 160px;
                 border-radius: 10px;
             }
             .playlist_details {

@@ -2,7 +2,7 @@ import { collection, doc, getDocs } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { db } from '../../firbeaseConfig/firebaseConfig';
-import { PlaylistDataContext } from '../../provider/PlaylistDataProvider';
+import { MyPlaylistDataContext } from '../../provider/MyPlaylistDataProvider';
 import './playlistdetail.css';
 import SongBar from '../../component/songBar/songBar';
 
@@ -12,7 +12,7 @@ function PlaylistPage() {
   const userId = window.localStorage.getItem("userId");
 
   const [data, setData] = useState([]);
-  const { playlistData } = useContext(PlaylistDataContext)
+  const { playlistData } = useContext(MyPlaylistDataContext)
 
   const getMyPlaylist = async () => {
     const collectionRef = doc(db, userId, "my-playlist")
