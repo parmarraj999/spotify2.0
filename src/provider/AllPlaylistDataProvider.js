@@ -17,15 +17,15 @@ const AllPlaylistDataProvider = ({ children }) => {
             id: doc.id,
             ...doc.data()
         }));
-        console.log(playlistData)
+        // console.log(playlistData)
         setPlaylistData(playlistData)
     }
+
+    
 
     useEffect(() => {
         getAllPlaylistData();
     }, [])
-
-    console.log(playlistData)
 
     return (
         <AllPlaylistDataContext.Provider value={{ playlistData, setPlaylistData, getAllPlaylistData }} >
