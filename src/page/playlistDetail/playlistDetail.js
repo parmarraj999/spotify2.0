@@ -215,7 +215,7 @@ function PlaylistDetail() {
                   {
                     songData?.map((data, key) => {
                       return (
-                        <SongBar data={data} />
+                        <SongBar data={data.track} />
                       )
                     })
                   }

@@ -5,9 +5,9 @@ import PlaylistMenu from '../menu/playlistMenu/playlistMenu';
 import SongMenu from '../menu/songMenu/songMenu';
 import AddPlaylist from '../menu/addPlaylist/addPlaylist';
 
-function SongBar({ data }) {
+function SongBar({ data, playlistName }) {
 
-    const artistNamePlaylist = data?.track?.artists
+    const artistNamePlaylist = data?.artists
 
     const [showMenu, setShowMenu] = useState(false)
     const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
@@ -24,8 +24,8 @@ function SongBar({ data }) {
     }
 
     const linkData = {
-        albumLink: data?.track.album.id,
-        artistLink: data?.track?.artists?.[0]?.id
+        albumLink: data?.album?.id,
+        artistLink: data?.artists?.[0]?.id
     }
 
     // console.log(data)
@@ -34,18 +34,18 @@ function SongBar({ data }) {
         <div className='song_bar_container' >
             <div className='song_number' >
 
-                <h4>{data?.track?.track_number}</h4>
+                <h4>{data?.track_number}</h4>
 
             </div>
             <div className='song_details' >
                 <div className='song_cover_img' >
-                    <Link to={`/track/${data?.track.id}`}>
-                        <img src={data?.track?.album?.images[0]?.url} />
+                    <Link to={`/track/${data?.id}`}>
+                        <img src={data?.album?.images[0]?.url} />
                     </Link>
                 </div>
                 <div className='song_names'>
-                    <Link to={`/track/${data?.track.id}`}>
-                        <h4>{data?.track?.name}</h4>
+                    <Link to={`/track/${data?.id}`}>
+                        <h4>{data?.name}</h4>
                     </Link>
 
                     <div style={{ width: '200px', display: "flex", gap: '.3rem', overflow: 'hidden' }} >
@@ -64,14 +64,14 @@ function SongBar({ data }) {
             </div>
 
             <div className='song_type' >
-                <Link to={`/album/${data?.track?.album?.id}`} >
-                    <h4>{data?.track?.album?.name}</h4>
+                <Link to={`/album/${data?.album?.id}`} >
+                    <h4>{data?.album?.name}</h4>
                 </Link>
             </div>
 
             <div className='song_timing' style={{ position: "relative" }} >
 
-                <h4>{convertMillisecondsToTimeString(data?.track?.duration_ms)}</h4>
+                <h4>{convertMillisecondsToTimeString(data?.duration_ms)}</h4>
 
                 <div>
 
@@ -92,7 +92,7 @@ function SongBar({ data }) {
                 }
                 {
                     showPlaylistMenu ?
-                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} songData={data}/> : ""
+                        <PlaylistMenu playlistName={playlistName} setShowPlaylistMenu={setShowPlaylistMenu} songData={data}/> : ""
                 }
             </div>
         </div>

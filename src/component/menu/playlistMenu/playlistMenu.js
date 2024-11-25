@@ -6,10 +6,10 @@ import { addDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
 import { AllPlaylistDataContext } from '../../../provider/AllPlaylistDataProvider';
 
-function PlaylistMenu({ setShowPlaylistMenu, linkData, songData }) {
+function PlaylistMenu({ setShowPlaylistMenu, linkData, songData, playlistName }) {
 
     const [data, setdata] = useState([]);
-    const [isAdded,setIsAdded] = useState()
+    const [isAdded, setIsAdded] = useState()
 
     const [showAddMenu, setShowAddMenu] = useState(false)
     const userId = window.localStorage.getItem("userId");
@@ -17,6 +17,7 @@ function PlaylistMenu({ setShowPlaylistMenu, linkData, songData }) {
     const [currentId, setCurrentId] = useState("")
 
     const { playlistData } = useContext(AllPlaylistDataContext);
+    console.log(playlistName)
 
     // close playlist menu 
 
@@ -75,10 +76,17 @@ function PlaylistMenu({ setShowPlaylistMenu, linkData, songData }) {
                                 return (
                                     <div className='playlist_menu_item' onClick={() => setCurrentId(data.playlistId)}>
                                         {
-                                            currentId === data.playlistId ?
+                                            data.playlistName === playlistName ?
                                                 <svg style={{ width: '25px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(30,215,96,1)"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path></svg>
                                                 :
-                                                <svg style={{ width: "25px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"></path></svg>
+                                                <>
+                                                    {
+                                                        currentId === data.playlistId ?
+                                                            <svg style={{ width: '25px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(30,215,96,1)"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path></svg>
+                                                            :
+                                                            <svg style={{ width: "25px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"></path></svg>
+                                                    }
+                                                </>
                                         }
                                         <h4>{data.playlistName}</h4>
                                     </div>

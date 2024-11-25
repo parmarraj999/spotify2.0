@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { MyPlaylistDataContext } from '../../provider/MyPlaylistDataProvider';
 import './playlistdetail.css';
@@ -10,9 +10,11 @@ function PlaylistPage() {
 
   const { id } = useParams();
   const userId = window.localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   const [data, setData] = useState([]);
   const { playlistData } = useContext(MyPlaylistDataContext)
+  console.log(playlistData)
 
   const getMyPlaylist = async () => {
     const collectionRef = doc(db, userId, "my-playlist")
@@ -26,9 +28,29 @@ function PlaylistPage() {
     console.log(playlist)
   }
 
+  console.log(id)
   const deleteplaylist = async() => {
-    console.log('click')
-    await deleteDoc(doc(db, userId, 'my-playlist', ))
+    console.log(playlistData.id)
+    const collectionRef = doc(db, userId, "my-playlist");
+    const nesCollection = collection(collectionRef, id);
+
+    // await deleteDoc(nesCollection);
+    try {
+      const querySnapshot = await getDocs(nesCollection);
+      querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+      });
+
+      await deleteDoc(doc(db, userId, 'playlist','my-playlist-name',playlistData?.id))
+      .then(()=>{
+        navigate(-1)
+      })
+
+      console.log("Nested collection deleted successfully.");
+
+  } catch (error) {
+      console.error("Error deleting nested collection:", error);
+  }
   }
 
   useEffect(() => {
@@ -60,7 +82,7 @@ function PlaylistPage() {
         {
           data.map((data) => {
             return (
-              <SongBar data={data} />
+              <SongBar data={data} playlistName={playlistData.playlistName} />
             )
           })
         }

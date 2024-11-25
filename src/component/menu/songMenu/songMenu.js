@@ -3,7 +3,7 @@ import './songMenu.css';
 import { Link } from 'react-router-dom';
 import PlaylistMenu from '../playlistMenu/playlistMenu';
 
-function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu, showPlaylistMenu }) {
+function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu }) {
 
     // ==== function to remove like song 
 
@@ -25,8 +25,9 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu,
         <div className='song_menu_container' >
             <div className='song_menu_items' style={{ position: "relative" }} onClick={() => {
                 console.log("click on plyalist Button")
-                setShowPlaylistMenu(!showPlaylistMenu)}} >
-               
+                setShowPlaylistMenu(true)
+            }} >
+
                 <svg style={{ width: "30px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
 
                 <h3>Add to Playlist</h3>
@@ -48,7 +49,7 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu,
                 </svg>
                 <h3>Add to Queue</h3>
             </div>
-            <Link to={`/artist/${linkData.artistLink}`} className='song_menu_items' >
+            <Link to={`/artist/${linkData?.artistLink}`} className='song_menu_items' >
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 8C14 9.10457 13.1046 10 12 10C10.8954 10 10 9.10457 10 8C10 6.89543 10.8954 6 12 6C13.1046 6 14 6.89543 14 8Z" stroke="#ffffff" stroke-width="1.2" />
                     <path d="M10 12L7.8906 13.4063C7.3342 13.7772 7 14.4017 7 15.0704V16.0667C7 16.5821 7.41787 17 7.93333 17H12" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -56,7 +57,7 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu,
                 </svg>
                 <h3>Go to Artist</h3>
             </Link>
-            <Link to={`/album/${linkData.albumLink}`} className='song_menu_items' >
+            <Link to={`/album/${linkData?.albumLink}`} className='song_menu_items' >
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 16.2273C19 17.2063 18.2063 18 17.2273 18H6.77273C5.79368 18 5 17.2063 5 16.2273V8.14054V7.77273C5 6.79368 5.79368 6 6.77273 6H9.74797C10.3574 6 10.9242 6.31308 11.2486 6.829L11.5521 7.31155C11.8765 7.82746 12.4433 8.14054 13.0527 8.14054H17.2273C18.2063 8.14054 19 8.93422 19 9.91327V16.2273Z" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round" />
                 </svg>

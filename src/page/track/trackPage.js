@@ -3,9 +3,11 @@ import './trackPage.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import Lyrics from './trackComponents/lyrics';
-import { addDoc, collection, deleteDoc, doc, serverTimestamp} from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
+import SongMenu from '../../component/menu/songMenu/songMenu';
+import PlaylistMenu from '../../component/menu/playlistMenu/playlistMenu';
 
 function TrackPage() {
 
@@ -23,8 +25,11 @@ function TrackPage() {
     const [isLiked, setIsLiked] = useState()
     const [trackDocId, setTrackDocId] = useState()
 
+    const [showMenu, setShowMenu] = useState(false)
+    const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
+
     // ===== checking like or not 
-    
+
     const checkLiked = () => {
         const foundSong = likeSongList.find(song => song.songId === data?.id);
         if (foundSong) {
@@ -92,7 +97,7 @@ function TrackPage() {
         artists: { artistArray },
         albumName: data?.album?.name,
         albumId: data?.album?.id,
-        addedAt : serverTimestamp()
+        addedAt: serverTimestamp()
     }
 
     const AddLikedSong = async () => {
@@ -113,9 +118,9 @@ function TrackPage() {
 
     const removeLike = async () => {
         await deleteDoc(doc(db, userId, "liked-songs", "liked-song-list", trackDocId.id))
-        .then(()=>{
-            console.log("successfully")
-        })
+            .then(() => {
+                console.log("successfully")
+            })
         getLikeSongListProvider();
         checkLiked();
     }
@@ -206,13 +211,24 @@ function TrackPage() {
                                     <path d="M23.9844 14.3123H26.5101M29.0357 14.3123H26.5101M26.5101 14.3123V11.7866M26.5101 14.3123V16.838" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
-                            <div>
-
-                                <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12.4299" cy="20.2056" r="1.68378" fill="#898989" />
-                                    <circle cx="20.8488" cy="20.2056" r="1.68378" fill="#898989" />
-                                    <circle cx="29.2678" cy="20.2056" r="1.68378" fill="#898989" />
-                                </svg>
+                            <div style={{ position: 'relative' }} >
+                                <div onClick={() => setShowMenu(true)}>
+                                    <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12.4299" cy="20.2056" r="1.68378" fill="#898989" />
+                                        <circle cx="20.8488" cy="20.2056" r="1.68378" fill="#898989" />
+                                        <circle cx="29.2678" cy="20.2056" r="1.68378" fill="#898989" />
+                                    </svg>
+                                </div>
+                                {
+                                    showMenu ?
+                                        <SongMenu setShowMenu={setShowMenu} setShowPlaylistMenu={setShowPlaylistMenu} />
+                                        : ""
+                                }
+                                {
+                                    showPlaylistMenu ?
+                                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} songData={data} />
+                                        : ""
+                                }
 
                             </div>
                         </div>

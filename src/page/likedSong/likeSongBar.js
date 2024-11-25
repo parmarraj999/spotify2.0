@@ -5,6 +5,7 @@ import { collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 import SongMenu from '../../component/menu/songMenu/songMenu';
+import PlaylistMenu from '../../component/menu/playlistMenu/playlistMenu';
 
 const ArtistList = (data) => {
     return (
@@ -21,6 +22,8 @@ const ArtistList = (data) => {
 }
 
 function LikeSongBar({ data, getLikeSongList }) {
+
+    const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
 
     const linkData = {
         albumLink : data?.albumId,
@@ -79,8 +82,12 @@ function LikeSongBar({ data, getLikeSongList }) {
                 </div>
                 {
                     showMenu ?
-                        <SongMenu removeLikedSong={removeLikedSong} linkData={linkData} setShowMenu={setShowMenu} />
+                        <SongMenu removeLikedSong={removeLikedSong} linkData={linkData} setShowMenu={setShowMenu} setShowPlaylistMenu={setShowPlaylistMenu} />
                         : ""
+                }
+                {
+                    showPlaylistMenu ?
+                        <PlaylistMenu setShowPlaylistMenu={setShowPlaylistMenu} songData={data} /> : ""
                 }
             </div>
         </div >
