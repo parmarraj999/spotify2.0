@@ -20,7 +20,7 @@ function SongBarAlbum({ data, album }) {
         return timeString;
     }
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <Link to={`/track/${data?.id}`} className='song_bar_container' >

@@ -31,6 +31,7 @@ import PlaylistPage from './page/playlistDetail/playlistPage';
 import MyPlaylistDataProvider from './provider/MyPlaylistDataProvider';
 import AllPlaylistDataProvider from './provider/AllPlaylistDataProvider';
 import MyAlbum from './page/myAlbum/myAlbum';
+import MyAlbumListProvider from './provider/MyAlbumListProvider';
 
 function App() {
 
@@ -78,6 +79,7 @@ function App() {
 
 
   return (
+    <MyAlbumListProvider>
     <AllPlaylistDataProvider>
       <MyPlaylistDataProvider>
         <LikeSongListProvider>
@@ -125,6 +127,7 @@ function App() {
         </LikeSongListProvider>
       </MyPlaylistDataProvider>
     </AllPlaylistDataProvider>
+    </MyAlbumListProvider>
   );
 }
 

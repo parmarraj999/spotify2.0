@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../playlistDetail/playlistdetail.css';
 import SongBar from '../../component/songBar/songBar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import SongBarAlbum from '../../component/songBar/songBarAlbum';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbeaseConfig/firebaseConfig';
+import { MyAlbumListContext } from '../../provider/MyAlbumListProvider';
 
 function Album() {
 
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const userId= window.localStorage.getItem("userId");
+    const [albumAdded, setAlbumAdded] = useState(false)
+    const userId = window.localStorage.getItem("userId");
 
     const { id } = useParams();
     console.log(id)
@@ -32,25 +34,60 @@ function Album() {
         }
     }
 
-    const albumData = {
-        albumName : data?.name,
+    const albumDataFirebase = {
+        albumName: data?.name,
         albumId: data?.id,
-        albumImage : data?.images?.[0]?.url
+        albumImage: data?.images?.[0]?.url
     }
 
     const addAlbumData = () => {
         console.log("click");
         const collectionRef = doc(db, userId, 'my-albums')
         const albumCollection = collection(collectionRef, "my-albums-list");
-        addDoc(albumCollection, albumData)
-        .then(()=>{
-            console.log("data succesfully added");
-        })
+        addDoc(albumCollection, albumDataFirebase)
+            .then(() => {
+                console.log("data succesfully added");
+                getMyAlbumData();
+            })
+            checkAlbum();
     }
+
+    /// checking that album added of not 
+
+    const { albumData, getMyAlbumData } = useContext(MyAlbumListContext)
+    const [albmumDocId,setAlbumDocId] = useState()
+
+    const checkAlbum = () => {
+        const foundAlbum = albumData?.find(album => album.albumId === data?.id)
+        if (foundAlbum) {
+            console.log(foundAlbum)
+            setAlbumAdded(true)
+            setAlbumDocId(foundAlbum?.id)
+        }
+        else {
+            console.log("not found")
+            setAlbumAdded(false)
+        }
+    }
+
+    // ==== remove album ===== 
+
+    const removeFromList = async () => {
+        console.log('clicked')
+        await deleteDoc(doc(db, userId, "my-albums", "my-albums-list", albmumDocId))
+          .then(() => {
+            console.log("successfully delete")
+            getMyAlbumData();
+          })
+          checkAlbum();
+      }
 
     useEffect(() => {
         getPlaylistDetail();
     }, [])
+    useEffect(() => {
+        checkAlbum();
+    })
 
     const songData = data?.tracks?.items;
     // const coverImage = data?.images[0]?.url
@@ -93,14 +130,22 @@ function Album() {
                                             </svg>
 
                                         </div>
-                                        
-                                        <div onClick={addAlbumData} >
-                                            <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M25.3224 20.1881H21.0098M16.6971 20.1881H21.0098M21.0098 20.1881L21.0098 15.8755M21.0098 20.1881V24.5008" stroke="#898989" stroke-width="1.68378" stroke-linecap="round" stroke-linejoin="round" />
-                                                <circle cx="21.0265" cy="20.2055" r="9.26081" stroke="#898989" stroke-width="1.68378" />
-                                            </svg>
-                                        </div>
-
+                                        {
+                                            albumAdded ?
+                                                <div onClick={removeFromList} >
+                                                    <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="21.0054" cy="20.4961" r="11" fill="#1ED760" />
+                                                        <path d="M16.7567 20.9961L19.7567 23.9961L25.2567 18.4961" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                                :
+                                                <div onClick={addAlbumData} >
+                                                    <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M25.3224 20.1881H21.0098M16.6971 20.1881H21.0098M21.0098 20.1881L21.0098 15.8755M21.0098 20.1881V24.5008" stroke="#898989" stroke-width="1.68378" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <circle cx="21.0265" cy="20.2055" r="9.26081" stroke="#898989" stroke-width="1.68378" />
+                                                    </svg>
+                                                </div>
+                                        }
                                         <div>
 
                                             <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
