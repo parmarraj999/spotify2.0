@@ -14,7 +14,7 @@ function Search() {
       {
         searchValue === "" ?
           <>
-            <RecentSearch />
+            {/* <RecentSearch /> */}
             <BrowseSection />
           </>
           : <SearchResult/>

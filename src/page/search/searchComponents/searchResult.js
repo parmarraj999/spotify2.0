@@ -10,7 +10,7 @@ import PlaylistList from '../resultComponent/playlistList'
 import AudioBookList from '../resultComponent/audioBookList'
 import ArtistList from '../resultComponent/artistList'
 
-const NavForSearch = ({currentPath, setCurrentPath}) => {
+const NavForSearch = ({ currentPath, setCurrentPath }) => {
   return (
     <div className='search_filter_container'>
       <div style={currentPath === "all" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("all")} >All</div>
@@ -19,7 +19,7 @@ const NavForSearch = ({currentPath, setCurrentPath}) => {
       <div style={currentPath === "album" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("album")} >Albums</div>
       <div style={currentPath === "playlist" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("playlist")} >Playlists</div>
       {/* <div style={currentPath === "show" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("show")} >Shows</div> */}
-      <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Podcasts</div>
+      {/* <div style={currentPath === "audiobook" ? { color: "black", background: 'white' } : {}} onClick={() => setCurrentPath("audiobook")} >Podcasts</div> */}
     </div>
   )
 }
@@ -134,7 +134,7 @@ function SearchResult() {
       }
     })
     console.log(data)
-    if (data) { 
+    if (data) {
       setShow(data.shows.items)
     } else {
       console.log("show data found !")
@@ -167,49 +167,50 @@ function SearchResult() {
     getAlbumData();
     getArtistData();
     getPlaylistData();
-    getShowData();
-    getAudiobookData();
+    // getShowData();
+    // getAudiobookData();
   }, [searchValue])
 
   return (
     <div className='search_result_container'>
       <NavForSearch currentPath={currentPath} setCurrentPath={setCurrentPath} />
       {
-      currentPath === 'all'?
-      <>
-      <SongList data={songs} />
-      <AlbumList data={albums} /> 
-      <PlaylistList data={playlist} />
-      {/* <ShowList data={show}/> */}
-      <AudioBookList data={audiobook} />
-      <ArtistList data={artist} />
-      </>
-      : ""
+        currentPath === 'all' ?
+          <>
+            <SongList data={songs} />
+            <AlbumList data={albums} />
+            <PlaylistList data={playlist} />
+            {/* <ShowList data={show}/> */}
+            <AudioBookList data={audiobook} />
+            <ArtistList data={artist} />
+          </>
+          : ""
       }
       {
-        currentPath === "song"?
-        <SongList data={songs} /> : ""
+        currentPath === "song" ?
+          <SongList data={songs} /> : ""
       }
       {
-        currentPath === "album"?
-        <AlbumList data={albums}/> : ""
+        currentPath === "album" ?
+          <AlbumList data={albums} /> : ""
+      }
+      {
+        currentPath === "playlist" ?
+          <PlaylistList data={playlist} /> : ""
+      }
+      {
+        currentPath === "artist" ?
+          <ArtistList data={artist} /> : ""
       }
       {/* {
         currentPath === 'show' ?
         <ShowList data={show}/> : ""
       } */}
-      {
-        currentPath === "playlist" ?
-        <PlaylistList data={playlist} /> : ""
-      }
-      {
-        currentPath === "audiobook" ? 
+      {/* {
+        currentPath === "podcast" ? 
         <AudioBookList data={audiobook} /> : ""
-      }
-      {
-        currentPath === "artist" ? 
-        <ArtistList data={artist} /> : ""
-      }
+      } */}
+
     </div>
   )
 }
