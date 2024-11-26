@@ -57,7 +57,7 @@ function Sidenav() {
           Saves
         </div>
       </div>
-      <div className='sidebar_links' >
+      <Link to='/myAlbum' className='sidebar_links' >
         <div className='flex_align'>
           <div className='navigation_button_icon' >
             <svg width="40" height="40" viewBox="0 0 41 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@ function Sidenav() {
           </div>
           Album
         </div>
-      </div>
+      </Link>
       <div className='sidebar_links' >
         <div className='flex_align'>
           <div className='navigation-button_icon' >

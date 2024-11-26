@@ -4,11 +4,14 @@ import SongBar from '../../component/songBar/songBar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import SongBarAlbum from '../../component/songBar/songBarAlbum';
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { db } from '../../firbeaseConfig/firebaseConfig';
 
 function Album() {
 
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const userId= window.localStorage.getItem("userId");
 
     const { id } = useParams();
     console.log(id)
@@ -27,6 +30,22 @@ function Album() {
         if (data) {
             setIsLoading(false)
         }
+    }
+
+    const albumData = {
+        albumName : data?.name,
+        albumId: data?.id,
+        albumImage : data?.images?.[0]?.url
+    }
+
+    const addAlbumData = () => {
+        console.log("click");
+        const collectionRef = doc(db, userId, 'my-albums')
+        const albumCollection = collection(collectionRef, "my-albums-list");
+        addDoc(albumCollection, albumData)
+        .then(()=>{
+            console.log("data succesfully added");
+        })
     }
 
     useEffect(() => {
@@ -74,12 +93,14 @@ function Album() {
                                             </svg>
 
                                         </div>
-                                        <div>
+                                        
+                                        <div onClick={addAlbumData} >
                                             <svg width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M25.3224 20.1881H21.0098M16.6971 20.1881H21.0098M21.0098 20.1881L21.0098 15.8755M21.0098 20.1881V24.5008" stroke="#898989" stroke-width="1.68378" stroke-linecap="round" stroke-linejoin="round" />
                                                 <circle cx="21.0265" cy="20.2055" r="9.26081" stroke="#898989" stroke-width="1.68378" />
                                             </svg>
                                         </div>
+
                                         <div>
 
                                             <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">

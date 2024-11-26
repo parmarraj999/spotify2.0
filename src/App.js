@@ -30,6 +30,7 @@ import MyPlaylist from './page/myPlaylist/myPlaylist';
 import PlaylistPage from './page/playlistDetail/playlistPage';
 import MyPlaylistDataProvider from './provider/MyPlaylistDataProvider';
 import AllPlaylistDataProvider from './provider/AllPlaylistDataProvider';
+import MyAlbum from './page/myAlbum/myAlbum';
 
 function App() {
 
@@ -110,6 +111,7 @@ function App() {
                             <Route path='myArtist' element={<MyArtist />} />
                             <Route path='myPlaylists' element={<MyPlaylist />} />
                             <Route path='myPlaylists/:id' element={<PlaylistPage />} />
+                            <Route path='myAlbum' element={<MyAlbum/>} />
                           </Route>
                           <Route path='/auth' element={<Auth />}></Route>
                         </Routes>
