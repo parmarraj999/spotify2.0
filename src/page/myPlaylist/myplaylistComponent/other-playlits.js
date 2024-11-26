@@ -4,7 +4,7 @@ import { collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firbeaseConfig/firebaseConfig';
 import { Link } from 'react-router-dom';
 
-function OtherPlaylist() {
+function OtherPlaylist({}) {
 
     const userId = window.localStorage.getItem("userId");
     const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ function OtherPlaylist() {
 
     return (
         <div className='other_playlist_container' >
-            <h2>All Playlist</h2>
+            <h2>Other Playlist</h2>
             <div className='other_playlist_albums' >
                 {
                     data?.map((data) => {

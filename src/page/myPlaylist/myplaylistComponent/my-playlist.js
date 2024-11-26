@@ -5,7 +5,7 @@ import { db } from '../../../firbeaseConfig/firebaseConfig';
 import { Link } from 'react-router-dom';
 import { MyPlaylistDataContext } from '../../../provider/MyPlaylistDataProvider';
 
-function MyPlaylistComponent() {
+function MyPlaylistComponent({setPlaylistLength}) {
 
     
   const userId = window.localStorage.getItem("userId");
@@ -22,8 +22,8 @@ function MyPlaylistComponent() {
       ...doc.data()
     }));
     setData(playlists)
-    console.log(playlists)
   }
+
 
   useEffect(() => {
     getMyPlaylist();

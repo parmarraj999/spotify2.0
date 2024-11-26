@@ -1,9 +1,10 @@
 import { collection, doc, getDocs } from 'firebase/firestore'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { db } from '../../firbeaseConfig/firebaseConfig'
 import './myplaylist.css';
 import MyPlaylistComponent from './myplaylistComponent/my-playlist';
 import OtherPlaylist from './myplaylistComponent/other-playlits';
+import { MyPlaylistDataContext } from '../../provider/MyPlaylistDataProvider';
 
 function MyPlaylist() {
 
@@ -25,10 +26,16 @@ function MyPlaylist() {
   //   getMyPlaylist();
   // }, [])
 
+  const { playlistData } = useContext(MyPlaylistDataContext);
+
   return (
     <div className='my-playlist-container' >
-        <MyPlaylistComponent/>
-        <OtherPlaylist/>
+      {
+        playlistData.length === 0 ?
+          "" :
+          <MyPlaylistComponent />
+      }
+      <OtherPlaylist />
     </div>
   )
 }
