@@ -21,8 +21,6 @@ const AllPlaylistDataProvider = ({ children }) => {
         setPlaylistData(playlistData)
     }
 
-    
-
     useEffect(() => {
         getAllPlaylistData();
     }, [])

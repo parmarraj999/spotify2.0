@@ -30,11 +30,7 @@ function MyPlaylist() {
 
   return (
     <div className='my-playlist-container' >
-      {
-        playlistData.length === 0 ?
-          "" :
           <MyPlaylistComponent />
-      }
       <OtherPlaylist />
     </div>
   )

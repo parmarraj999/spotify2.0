@@ -41,7 +41,7 @@ function LikedSong() {
             <div className='liked_song_header' >
               <h1>Liked Songs</h1>
               <div className='circle' ></div>
-              <h2>{likeData.length} songs</h2>
+              <h2>{likeData?.length} songs</h2>
             </div>
             <div className='like_song_detail_header' >
               <h2>Title</h2>

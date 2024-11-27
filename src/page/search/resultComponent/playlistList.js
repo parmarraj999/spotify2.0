@@ -10,13 +10,13 @@ function PlaylistList({data}) {
           {
             data.map((data)=>{
               return (
-                <Link to={`/playlist/${data.id}`} className='search_playlist_cover' >
+                <Link to={`/playlist/${data?.id}`} className='search_playlist_cover' >
                     <div className='playlist_cover_image' >
                       <img src={data?.images[0]?.url} />
                     </div>
                     <div className='playlist_details'>
-                      <h3>{data.name}</h3>
-                      <h4>By <span>{data.owner.display_name}</span></h4>
+                      <h3>{data?.name}</h3>
+                      <h4>By <span>{data?.owner?.display_name}</span></h4>
                     </div>
                 </Link>
               )
