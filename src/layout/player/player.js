@@ -1,39 +1,81 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './player.css'
 import { db } from '../../firbeaseConfig/firebaseConfig'
 import { addDoc, collection, doc } from 'firebase/firestore'
+import axios from 'axios';
 
 function Player() {
 
-    const handlePlay = async () => {
-        console.log("click")
-        const userOneRef = doc(db, "Playlist_Data", "UserOne");
-        const playlistsCollectionRef = collection(userOneRef, "playlists");
+    const [audioProgress, setAudioProgress] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false)
+    const currentAudio = useRef();
 
-        const newPlaylistData = {
-            name: "Los Angeles",
-            state: "CA",
-            country: "USA"
-        };
-
-        addDoc(playlistsCollectionRef, newPlaylistData)
-            .then((docRef) => {
-                console.log("Document written with ID:", docRef.id);
-            })
-            .catch((error) => {
-                console.error("Error adding document: ", error);
-            });
+    const handleAudioProgressBar = async (e) => {
+        setAudioProgress(e.target.value)
+        currentAudio.current.currentTime = e.target.value * currentAudio.current.duration / 100;
     }
+
+    const handleAudioUpdate = () => {
+        const progress = parseInt((currentAudio.current.currentTime / currentAudio.current.duration) * 100)
+        setAudioProgress(isNaN(progress) ? 0 : progress)
+    }
+
+    const deezerOptions = {
+        method: 'GET',
+        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
+        params: { q: 'jatt mehkma, yo yo honey singh' },
+        headers: {
+            'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
+            'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        },
+    };
+
+    const [url, setUrl] = useState('');
+    const [duration, setDuration] = useState();
+
+    const fetch = async () => {
+        await axios(deezerOptions)
+            .then((result) => {
+                setUrl(result.data.data[0].preview)
+                setDuration(result.data.data[0].duration)
+                console.log(duration)
+            })
+    }
+
+    useEffect(() => {
+        fetch();
+    }, [])
+
+    const handleAudioPlay = () => {
+        if (currentAudio.current.paused) {
+            currentAudio.current.play();
+            setIsPlaying(true)
+        } else {
+            currentAudio.current.pause();
+            setIsPlaying(false)
+        }
+    }
+
     return (
         <div className='player_container' >
             <div className='player_control_container'>
-                <div onClick={handlePlay}>
-                    <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
-                        <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
-                        <path d="M22.1765 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
-                    </svg>
-                </div>
+                {
+                    isPlaying ?
+                        <div onClick={handleAudioPlay} >
+                            <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
+                                <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                                <path d="M22.1765 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        :
+                        <div onClick={handleAudioPlay}>
+                            <svg width="45" height="45" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
+                                <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
+                            </svg>
+                        </div>
+                }
                 <div>
                     <svg width="30" height="30" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.21082 6.44092V15.9452" stroke="#898989" stroke-width="2.37606" stroke-linecap="round" />
@@ -58,12 +100,10 @@ function Player() {
                     </svg>
                 </div>
             </div>
-            <div className='player_timing' >
-                <h4>1:10</h4>
-                <div className='player_liner'>
-                    <div className='liner' ></div>
-                </div>
-                <h4>2:20</h4>
+            <div className='player_timing'>
+                <h4>0:00</h4>
+                <input type='range' value={audioProgress} onChange={handleAudioProgressBar} className='player_liner' />
+                <h4>0:30</h4>
                 <div className='mute_button' >
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_2124_6365)">
@@ -90,6 +130,7 @@ function Player() {
                 </div>
             </div>
             <div className='player_functional_icons' >
+
                 <div>
                     <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22.7197 14.0678L20.8558 15.8738L18.992 14.0678C17.0376 12.1741 13.9025 12.2787 12.0786 14.2984C10.3089 16.2581 10.0652 19.1936 11.6678 21.2923C11.8647 21.5502 12.0583 21.7972 12.2426 22.0232C13.4091 23.4542 15.9541 25.9531 17.2292 27.2942C18.1713 28.285 19.0181 29.1113 19.6561 29.7132C20.3298 30.3488 21.3698 30.335 22.0448 29.7007C23.2211 28.5954 25.025 26.8736 26.2957 25.5372C27.5709 24.1961 28.3026 23.4542 29.469 22.0232C29.6533 21.7972 29.8469 21.5502 30.0439 21.2923C31.6464 19.1936 31.4028 16.2581 29.633 14.2984C27.8092 12.2787 24.674 12.1741 22.7197 14.0678Z" stroke="#898989" stroke-width="2.02054" stroke-linecap="round" stroke-linejoin="round" />
@@ -135,6 +176,7 @@ function Player() {
                     </svg>
                 </div>
             </div>
+            <audio ref={currentAudio} src={url} onTimeUpdate={handleAudioUpdate}></audio>
         </div>
     )
 }

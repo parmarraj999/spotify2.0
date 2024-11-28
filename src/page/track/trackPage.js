@@ -55,6 +55,7 @@ function TrackPage() {
                 Authorization: `Bearer ${access_token}`
             }
         })
+        fetch();
         setData(data)
         setArtistArray(data?.artists)
     }
@@ -114,7 +115,8 @@ function TrackPage() {
     // ====== disliking on click 
 
 
-    console.log(trackDocId)
+    console.log(data)
+    console.log(data?.preview_url)
 
     const removeLike = async () => {
         await deleteDoc(doc(db, userId, "liked-songs", "liked-song-list", trackDocId.id))
@@ -123,6 +125,23 @@ function TrackPage() {
             })
         getLikeSongListProvider();
         checkLiked();
+    }
+
+    const deezerOptions = {
+        method: 'GET',
+        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
+        params: { q: 'jatt mehkma, yo yo honey singh' },
+        headers: {
+            'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
+            'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        },
+    };
+
+    const fetch = async () => {
+        await axios(deezerOptions)
+            .then((result) => {
+                console.log(result)
+            })
     }
 
 
