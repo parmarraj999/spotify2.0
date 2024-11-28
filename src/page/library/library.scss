@@ -5,23 +5,57 @@
     .library_collection{
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 1rem;
+        gap: 1.2rem;
         .like_song_link{
             height: fit-content;
             display: flex;
             flex-direction: column;
-            gap: .4rem;
+            align-items: center;
+            gap: .8rem;
             width: 100%;
+            .label_image{
+                width: 100%;
+                aspect-ratio: 1;
+                position: relative;
+                img{
+                    width: 100%;
+                    border-radius: 10px;
+                    aspect-ratio: 1;
+                    position: absolute;
+                    z-index: 99;
+                }
+                h6{
+                    position: absolute;
+                    top: 93%;
+                    left: 50%;
+                    transform: translate(-50%,0);
+                    z-index: 999;
+                    width:60px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    font-weight: 500;
+                    background: rgb(200, 0, 255);
+                    color: rgb(254, 254, 254);
+                    border-radius: 5px;
+                }
+            }
             img{
                 width: 100%;
-                min-height: 120px;
                 border-radius: 10px;
-                // max-height: 120px;
+                aspect-ratio: 1;
             }
             h4{
-                font-size: 18px;
+                font-size: 16px;
                 color: white;
                 font-weight: 500;
+            }
+            p{
+                font-size: 16px;
+                color: grey;
+                font-weight: 400;
             }
         }
     }

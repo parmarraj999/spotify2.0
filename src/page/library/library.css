@@ -6,23 +6,58 @@
 .library_container .library_collection {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1rem;
+  gap: 1.2rem;
 }
 .library_container .library_collection .like_song_link {
   height: -moz-fit-content;
   height: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.8rem;
   width: 100%;
+}
+.library_container .library_collection .like_song_link .label_image {
+  width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+}
+.library_container .library_collection .like_song_link .label_image img {
+  width: 100%;
+  border-radius: 10px;
+  aspect-ratio: 1;
+  position: absolute;
+  z-index: 99;
+}
+.library_container .library_collection .like_song_link .label_image h6 {
+  position: absolute;
+  top: 93%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 999;
+  width: 60px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgb(200, 0, 255);
+  color: rgb(254, 254, 254);
+  border-radius: 5px;
 }
 .library_container .library_collection .like_song_link img {
   width: 100%;
-  min-height: 120px;
   border-radius: 10px;
+  aspect-ratio: 1;
 }
 .library_container .library_collection .like_song_link h4 {
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   font-weight: 500;
+}
+.library_container .library_collection .like_song_link p {
+  font-size: 16px;
+  color: grey;
+  font-weight: 400;
 }/*# sourceMappingURL=library.css.map */
