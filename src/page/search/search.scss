@@ -394,14 +394,11 @@
     }
     .list_container {
         width: 100%;
-        // display: flex;
-        // gap: 1rem;
-        // flex-wrap: wrap;
         display: grid;
-        grid-template-columns: repeat(6 ,1fr);
+        grid-template-columns: repeat(7 ,1fr);
         gap: 1rem;
         .artist_cover{
-            // width: 18%;
+            // aspect-ratio: 1;
             flex-direction: column;
             display: flex;
             align-items: center;

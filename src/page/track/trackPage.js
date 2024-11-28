@@ -143,7 +143,7 @@ function TrackPage() {
 
     return (
         <div className='track_details_container' style={{ backgroundImage: `url(${data?.album?.images[0]?.url})` }} >
-            <div style={{ backdropFilter: "blur(20px)", width: "100%", height: "100%", padding: '1rem', background: "rgba(0,0,0,.7)", overflow: 'auto' }} >
+            <div className='track_detail' style={{ backdropFilter: "blur(20px)", width: "100%", height: "100%", padding: '1rem', background: "rgba(0,0,0,.7)", overflow: 'auto' }} >
                 <div className='track_detail_header' >
                     <div className='track_cover_image' >
                         <img src={data?.album?.images[0]?.url} />

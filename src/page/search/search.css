@@ -392,7 +392,7 @@
 .artist_list_container .list_container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 1rem;
 }
 .artist_list_container .list_container .artist_cover {
