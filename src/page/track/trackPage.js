@@ -8,6 +8,7 @@ import { db } from '../../firbeaseConfig/firebaseConfig';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
 import SongMenu from '../../component/menu/songMenu/songMenu';
 import PlaylistMenu from '../../component/menu/playlistMenu/playlistMenu';
+import { PlayerDataContext } from '../../provider/PlayerDataProvider';
 
 function TrackPage() {
 
@@ -16,9 +17,9 @@ function TrackPage() {
     const userId = window.localStorage.getItem('userId')
 
     const { likeSongList, getLikeSongListProvider } = useContext(LikeSongListContext)
-    console.log(likeSongList)
 
     const [data, setData] = useState();
+    console.log(data)
 
     const [currentNav, setCurrentNav] = useState('lyrics')
     const [artistArray, setArtistArray] = useState()
@@ -37,7 +38,6 @@ function TrackPage() {
         }
         const found = likeSongList.some(obj => obj.songId === data?.id);
         setIsLiked(found)
-        console.log('song found in Like list =', found)
     }
 
     useEffect(() => {
@@ -55,7 +55,6 @@ function TrackPage() {
                 Authorization: `Bearer ${access_token}`
             }
         })
-        fetch();
         setData(data)
         setArtistArray(data?.artists)
     }
@@ -63,6 +62,9 @@ function TrackPage() {
     useEffect(() => {
         getTrackDetail();
     }, [])
+    useEffect(() => {
+        fetch();
+    }, [data])
 
     const divStyle = {
         display: "flex",
@@ -114,10 +116,6 @@ function TrackPage() {
 
     // ====== disliking on click 
 
-
-    console.log(data)
-    console.log(data?.preview_url)
-
     const removeLike = async () => {
         await deleteDoc(doc(db, userId, "liked-songs", "liked-song-list", trackDocId.id))
             .then(() => {
@@ -130,18 +128,35 @@ function TrackPage() {
     const deezerOptions = {
         method: 'GET',
         url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-        params: { q: 'jatt mehkma, yo yo honey singh' },
+        params: { q: `${data?.name}, ${data?.artists?.[0]?.name}` },
         headers: {
             'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
             'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
         },
     };
 
+    const [songUrl, setSongUrl] = useState()
+
     const fetch = async () => {
         await axios(deezerOptions)
             .then((result) => {
                 console.log(result)
+                setSongUrl(result?.data?.data?.[0]?.preview)
             })
+    }
+
+    // === to play song === 
+    const { playerData, setPlayerData, setPlayerState, playMusic } = useContext(PlayerDataContext);
+    console.log(playerData)
+
+    const handlePlay = () => {
+        console.log("playing song")
+        setPlayerData({
+            songId: data?.id,
+            songName: data?.name,
+            songUrl: songUrl,
+            artistName: data?.artists?.[0]?.name,
+        })
     }
 
 
@@ -195,7 +210,7 @@ function TrackPage() {
                             <h2>{convertMillisecondsToTimeString(data?.duration_ms)}</h2>
                         </div>
                         <div className='track_functional_icons' >
-                            <div>
+                            <div onClick={handlePlay}>
                                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
                                     <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />

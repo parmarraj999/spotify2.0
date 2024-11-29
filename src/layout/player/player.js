@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './player.css'
 import { db } from '../../firbeaseConfig/firebaseConfig'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import axios from 'axios';
+import { PlayerDataContext } from '../../provider/PlayerDataProvider';
 
 function Player() {
 
@@ -20,39 +21,46 @@ function Player() {
         setAudioProgress(isNaN(progress) ? 0 : progress)
     }
 
-    const deezerOptions = {
-        method: 'GET',
-        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-        params: { q: 'jatt mehkma, yo yo honey singh' },
-        headers: {
-            'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
-            'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-        },
-    };
+    // const deezerOptions = {
+    //     method: 'GET',
+    //     url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
+    //     params: { q: 'mercy, badshah' },
+    //     headers: {
+    //         'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
+    //         'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+    //     },
+    // };
 
-    const [url, setUrl] = useState('');
-    const [duration, setDuration] = useState();
+    // const [url, setUrl] = useState('');
+    // const [duration, setDuration] = useState();
 
-    const fetch = async () => {
-        await axios(deezerOptions)
-            .then((result) => {
-                setUrl(result.data.data[0].preview)
-                setDuration(result.data.data[0].duration)
-                console.log(duration)
-            })
+    // const fetch = async () => {
+    //     await axios(deezerOptions)
+    //         .then((result) => {
+    //             setUrl(result.data.data[0].preview)
+    //             setDuration(result.data.data[0].duration)
+    //             console.log(duration)
+    //         })
+    // }
+
+    // useEffect(() => {
+    //     fetch();
+    // }, [])
+
+    const handleAudioEnd = () => {
+        setAudioProgress(0)
+        setIsPlaying(false)
     }
 
-    useEffect(() => {
-        fetch();
-    }, [])
+    const { playerData, playerState, setPlayerState } = useContext(PlayerDataContext);
 
     const handleAudioPlay = () => {
         if (currentAudio.current.paused) {
             currentAudio.current.play();
-            setIsPlaying(true)
+            setPlayerState({ isPlaying: true })
         } else {
             currentAudio.current.pause();
-            setIsPlaying(false)
+            setPlayerState({ isPlaying: false })
         }
     }
 
@@ -60,7 +68,7 @@ function Player() {
         <div className='player_container' >
             <div className='player_control_container'>
                 {
-                    isPlaying ?
+                    playerState.isPlaying ?
                         <div onClick={handleAudioPlay} >
                             <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
@@ -122,7 +130,7 @@ function Player() {
             </div>
             <div className='playing_details' >
                 <div className='playing_cover_img' >
-                    <img src='../../../../image/cover-image.png' />
+                    <img src={`${playerData.songImage}`} />
                 </div>
                 <div className='playing_names' >
                     <h4>Get Lucky</h4>
@@ -176,7 +184,7 @@ function Player() {
                     </svg>
                 </div>
             </div>
-            <audio ref={currentAudio} src={url} onTimeUpdate={handleAudioUpdate}></audio>
+            <audio ref={currentAudio} src={playerData?.songUrl} onTimeUpdate={handleAudioUpdate} onEnded={handleAudioEnd}></audio>
         </div>
     )
 }
