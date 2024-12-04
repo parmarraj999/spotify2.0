@@ -19,7 +19,7 @@ function TrackPage() {
     const { likeSongList, getLikeSongListProvider } = useContext(LikeSongListContext)
 
     const [data, setData] = useState();
-    console.log(data)
+    // console.log(data)
 
     const [currentNav, setCurrentNav] = useState('lyrics')
     const [artistArray, setArtistArray] = useState()
@@ -59,11 +59,41 @@ function TrackPage() {
         setArtistArray(data?.artists)
     }
 
+    
+    const deezerOptions = {
+        method: 'GET',
+        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
+        params: { q: `${data?.name}, ${data?.artists?.[0]?.name}` },
+        headers: {
+            'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
+            'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        },
+    };
+
+    const [songUrl, setSongUrl] = useState()
+    const [deezerData,setDeezerData] = useState([])
+
+    const fetch = async () => {
+        await axios(deezerOptions)
+            .then((result) => {
+                console.log(data)
+                console.log(result?.data)
+                if(data?.name === result?.data?.data?.[0]?.title){
+                    console.log("data found in list")
+                }
+                setDeezerData(result?.data?.data)
+                setSongUrl(result?.data?.data?.[0]?.preview)
+            })
+    }
+
+
     useEffect(() => {
         getTrackDetail();
     }, [])
     useEffect(() => {
-        fetch();
+        if(data?.name){
+            fetch();
+        }
     }, [data])
 
     const divStyle = {
@@ -125,38 +155,38 @@ function TrackPage() {
         checkLiked();
     }
 
-    const deezerOptions = {
-        method: 'GET',
-        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-        params: { q: `${data?.name}, ${data?.artists?.[0]?.name}` },
-        headers: {
-            'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
-            'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-        },
-    };
-
-    const [songUrl, setSongUrl] = useState()
-
-    const fetch = async () => {
-        await axios(deezerOptions)
-            .then((result) => {
-                console.log(result)
-                setSongUrl(result?.data?.data?.[0]?.preview)
-            })
-    }
-
     // === to play song === 
-    const { playerData, setPlayerData, setPlayerState, playMusic } = useContext(PlayerDataContext);
-    console.log(playerData)
+    const { playerData, setPlayerData, playerState, setPlayerState, audioRef } = useContext(PlayerDataContext);
+    // console.log(playerData)
+
+    // console.log(deezerData)
 
     const handlePlay = () => {
         console.log("playing song")
-        setPlayerData({
-            songId: data?.id,
-            songName: data?.name,
-            songUrl: songUrl,
-            artistName: data?.artists?.[0]?.name,
-        })
+        console.log()
+        if (playerData.songId === data?.id) {
+            if(playerData.songName === data.name){
+            audioRef.current.play();
+            setPlayerState({ isPlaying: true })
+            }
+        } else {
+            setPlayerData({
+                songId: data?.id,
+                songName: data?.name,
+                songUrl: songUrl,
+                songImage: data.album.images[0].url,
+                artistName: data?.artists?.[0]?.name,
+            })
+        }
+        if (playerData.songUrl) {
+            audioRef.current.play();
+            setPlayerState({ isPlaying: true })
+        }
+    }
+
+    const handlePause = () => {
+        audioRef.current.pause();
+        setPlayerState({ isPlaying: false })
     }
 
 
@@ -210,12 +240,24 @@ function TrackPage() {
                             <h2>{convertMillisecondsToTimeString(data?.duration_ms)}</h2>
                         </div>
                         <div className='track_functional_icons' >
-                            <div onClick={handlePlay}>
-                                <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
-                                    <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
-                                </svg>
-                            </div>
+                            {
+                                playerData.songId === data?.id && playerState.isPlaying ?
+                                    <div onClick={handlePause}>
+                                        <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
+                                            <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                                            <path d="M22.1765 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                                        </svg>
+                                    </div>
+                                    :
+
+                                    <div onClick={handlePlay}>
+                                        <svg width="45" height="45" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
+                                            <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
+                                        </svg>
+                                    </div>
+                            }
                             {
                                 isLiked ? <div onClick={removeLike}>
                                     <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">

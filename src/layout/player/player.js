@@ -4,86 +4,80 @@ import { db } from '../../firbeaseConfig/firebaseConfig'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import axios from 'axios';
 import { PlayerDataContext } from '../../provider/PlayerDataProvider';
+import { Link } from 'react-router-dom';
 
 function Player() {
 
     const [audioProgress, setAudioProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false)
-    const currentAudio = useRef();
 
     const handleAudioProgressBar = async (e) => {
         setAudioProgress(e.target.value)
-        currentAudio.current.currentTime = e.target.value * currentAudio.current.duration / 100;
+        audioRef.current.currentTime = e.target.value * audioRef.current.duration / 100;
     }
 
     const handleAudioUpdate = () => {
-        const progress = parseInt((currentAudio.current.currentTime / currentAudio.current.duration) * 100)
+        const progress = parseInt((audioRef.current.currentTime / audioRef.current.duration) * 100)
         setAudioProgress(isNaN(progress) ? 0 : progress)
     }
 
-    // const deezerOptions = {
-    //     method: 'GET',
-    //     url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-    //     params: { q: 'mercy, badshah' },
-    //     headers: {
-    //         'x-rapidapi-key': 'a7f4797df6msh7108391419fe310p1f3a35jsn55af705cc6ac',
-    //         'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-    //     },
-    // };
-
-    // const [url, setUrl] = useState('');
-    // const [duration, setDuration] = useState();
-
-    // const fetch = async () => {
-    //     await axios(deezerOptions)
-    //         .then((result) => {
-    //             setUrl(result.data.data[0].preview)
-    //             setDuration(result.data.data[0].duration)
-    //             console.log(duration)
-    //         })
-    // }
-
-    // useEffect(() => {
-    //     fetch();
-    // }, [])
-
     const handleAudioEnd = () => {
         setAudioProgress(0)
-        setIsPlaying(false)
+        setPlayerState({ isPlaying: false })
     }
 
-    const { playerData, playerState, setPlayerState } = useContext(PlayerDataContext);
+    const { playerData, playerState, setPlayerState, audioRef } = useContext(PlayerDataContext);
+    // console.log(playerData)
 
     const handleAudioPlay = () => {
-        if (currentAudio.current.paused) {
-            currentAudio.current.play();
+        if (audioRef.current.paused) {
+            audioRef.current.play();
             setPlayerState({ isPlaying: true })
         } else {
-            currentAudio.current.pause();
+            audioRef.current.pause();
             setPlayerState({ isPlaying: false })
         }
     }
+
+    const handleChangeAudio = () => {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+        setPlayerState({ isPlaying: true })
+    }
+
+    useEffect(() => {
+        handleChangeAudio();
+    }, [playerData.songUrl])
+
+    useEffect(()=>{
+        console.log(playerData.songUrl)
+    },[playerState.isPlaying])
 
     return (
         <div className='player_container' >
             <div className='player_control_container'>
                 {
-                    playerState.isPlaying ?
-                        <div onClick={handleAudioPlay} >
-                            <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
-                                <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
-                                <path d="M22.1765 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        :
-                        <div onClick={handleAudioPlay}>
-                            <svg width="45" height="45" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
-                                <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
-                            </svg>
-                        </div>
-                }
+                    playerData.songUrl ?
+                        <>
+                            {
+                                playerState.isPlaying ?
+                                    <div onClick={handleAudioPlay} >
+                                        <svg width="45" height="45" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="19.0085" cy="19.0085" r="19.0085" fill="#1ED760" />
+                                            <path d="M15.8401 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                                            <path d="M22.1765 14.2563V23.7606" stroke="black" stroke-width="3.16809" stroke-linecap="round" />
+                                        </svg>
+                                    </div>
+                                    :
+                                    <div onClick={handleAudioPlay}>
+                                        <svg width="45" height="45" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="20.2054" cy="20.2054" r="20.2054" fill="#1ED760" />
+                                            <path d="M26.328 18.8797C27.3484 19.4688 27.3484 20.9418 26.328 21.5309L18.2917 26.1707C17.2712 26.7598 15.9956 26.0234 15.9956 24.845L15.9956 15.5656C15.9956 14.3872 17.2712 13.6508 18.2917 14.2399L26.328 18.8797Z" fill="black" />
+                                        </svg>
+                                    </div>
+                            }
+                        </>
+                        : ""}
                 <div>
                     <svg width="30" height="30" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.21082 6.44092V15.9452" stroke="#898989" stroke-width="2.37606" stroke-linecap="round" />
@@ -128,15 +122,22 @@ function Player() {
 
                 </div>
             </div>
-            <div className='playing_details' >
+            <Link to={`/track/${playerData.songId}`} className='playing_details' >
                 <div className='playing_cover_img' >
-                    <img src={`${playerData.songImage}`} />
+                    <img src={playerData.songImage ? `${playerData.songImage}` : "../../../../image/default-song.jpeg"} />
                 </div>
                 <div className='playing_names' >
-                    <h4>Get Lucky</h4>
-                    <h6>Draft Punk</h6>
+                    {
+                        playerData.songUrl ?
+                            <>
+                                <h4>{playerData.songName}</h4>
+                                <h6>{playerData.artistName}</h6>
+                            </>
+                            :
+                            <h4>No Song</h4>
+                    }
                 </div>
-            </div>
+            </Link>
             <div className='player_functional_icons' >
 
                 <div>
@@ -184,7 +185,8 @@ function Player() {
                     </svg>
                 </div>
             </div>
-            <audio ref={currentAudio} src={playerData?.songUrl} onTimeUpdate={handleAudioUpdate} onEnded={handleAudioEnd}></audio>
+
+            <audio ref={audioRef} src={playerData?.songUrl} onTimeUpdate={handleAudioUpdate} onEnded={handleAudioEnd} autoPlay="false"></audio>
         </div>
     )
 }

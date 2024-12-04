@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export const PlayerDataContext = React.createContext();
 
@@ -9,15 +9,17 @@ const PlayerDataProvider = ({children}) => {
         songUrl:"",
         songName:"",
         songId: "",
+        songImage: "",
         artistName:""
     })
     const [playerState,setPlayerState] = useState({
         isPlaying:false,
     })
 
+    const audioRef = useRef();
 
     return(
-        <PlayerDataContext.Provider value={{songDetail,setSongDetail,playerData,setPlayerData, playerState,setPlayerState, playMusic}} >
+        <PlayerDataContext.Provider value={{songDetail,setSongDetail,playerData,setPlayerData, playerState,setPlayerState, audioRef}} >
             {children}
         </PlayerDataContext.Provider>
     )

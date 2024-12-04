@@ -9,13 +9,16 @@ function ArtistRelated({id}) {
   const [relatedArtist,setRelatedArtist] = useState();
 
   const getRelated = async() => {
-    const { data } = await axios.get(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`
-      }
-    })
-    // console.log(data)
-    setRelatedArtist(data.artists)
+    try {
+      const { data } = await axios.get(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      })
+      setRelatedArtist(data.artists)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
