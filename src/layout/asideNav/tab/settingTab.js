@@ -24,6 +24,7 @@ function SettingTab() {
             console.log('Sign Out Successfully')
             window.localStorage.removeItem('userId')
             window.localStorage.removeItem('isLogIn')
+            window.localStorage.removeItem('token')
             navigate('/auth')
         })
 

@@ -59,7 +59,7 @@ function TrackPage() {
         setArtistArray(data?.artists)
     }
 
-    
+
     const deezerOptions = {
         method: 'GET',
         url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
@@ -71,14 +71,14 @@ function TrackPage() {
     };
 
     const [songUrl, setSongUrl] = useState()
-    const [deezerData,setDeezerData] = useState([])
+    const [deezerData, setDeezerData] = useState([])
 
     const fetch = async () => {
         await axios(deezerOptions)
             .then((result) => {
                 console.log(data)
                 console.log(result?.data)
-                if(data?.name === result?.data?.data?.[0]?.title){
+                if (data?.name === result?.data?.data?.[0]?.title) {
                     console.log("data found in list")
                 }
                 setDeezerData(result?.data?.data)
@@ -91,7 +91,7 @@ function TrackPage() {
         getTrackDetail();
     }, [])
     useEffect(() => {
-        if(data?.name){
+        if (data?.name) {
             fetch();
         }
     }, [data])
@@ -165,18 +165,27 @@ function TrackPage() {
         console.log("playing song")
         console.log()
         if (playerData.songId === data?.id) {
-            if(playerData.songName === data.name){
-            audioRef.current.play();
-            setPlayerState({ isPlaying: true })
+            if (playerData.songName === data.name) {
+                audioRef.current.play();
+                setPlayerState({ isPlaying: true })
             }
         } else {
-            setPlayerData({
-                songId: data?.id,
-                songName: data?.name,
-                songUrl: songUrl,
-                songImage: data.album.images[0].url,
-                artistName: data?.artists?.[0]?.name,
-            })
+            if (deezerData) {
+                const collectionRef = doc(db, userId, "current-playing-songs")
+                const likeSongCollection = collection(collectionRef, "current-playing")
+                addDoc(likeSongCollection, likeSongData)
+                    .then(() => {
+                        console.log("successfully added")
+                        console.log(deezerData)
+                        setPlayerData({
+                            songId: data?.id,
+                            songName: data?.name,
+                            songUrl: songUrl,
+                            songImage: data.album.images[0].url,
+                            artistName: data?.artists?.[0]?.name,
+                        })
+                    })
+            }
         }
         if (playerData.songUrl) {
             audioRef.current.play();
