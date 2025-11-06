@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# Spotify 2.0 (UI)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A lightweight, local React UI inspired by Spotify. This project demonstrates a music-player-style interface with playlist detail pages, a responsive bottom player, and an "Activity / Friends" tab with demo data. It's intended as a front-end demo and learning project — the app integrates with the Spotify Web API and Firebase for some features.
 
-## Available Scripts
+## Key features
 
-In the project directory, you can run:
+- Modern React single-page UI (create-react-app structure)
+- Bottom music player with play/pause, progress and track info
+- Playlist detail page (fetches playlist details from Spotify Web API)
+- Friends Activity tab with demo friends (UI-only by default)
+- Responsive improvements to reduce overflow when zooming the browser on desktop
+- Small Firebase helpers included for saving liked songs / playlists
 
-### `npm start`
+## Demo friends
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The `Friends Activity` tab contains a set of demo friends added for UI/demo purposes:
+- Alex Turner — Listening to: "Do I Wanna Know?" by Arctic Monkeys
+- Sana Park — Added 5 songs to "Chill Vibes"
+- Michael B — Listening to: "Blinding Lights" by The Weeknd
+- Priya K — Liked: "Sunflower" by Post Malone
+- Daniel — Started listening to "Discover Weekly"
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+These are rendered from a local array in `src/layout/asideNav/tab/friendTab.js`. They are not persisted to your backend unless you wire them to Firestore.
 
-### `npm test`
+## Responsive & zoom fixes (desktop)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Recent edits made UI elements more resilient to browser zoom:
+- `player` styles updated to use flexible units, `clamp()`, and `min-width`/`min-height` constraints to prevent horizontal overflow.
+- `playlistDetail` layout updated to use `flex` with `min-width: 0`, responsive breakpoints and `aspect-ratio` for cover images.
+- Added `box-sizing: border-box` and smaller breakpoints so the layout stacks and scales instead of overflowing when zooming.
 
-### `npm run build`
+If you still see overflow at extreme zoom levels, try inspecting the element that causes the horizontal scroll (browser devtools -> Elements -> look for a very wide child) and adjust the `min-width`/`max-width` values for that component.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js (14+ recommended)
+- npm (or yarn)
+- A Spotify Developer application (for consuming the Spotify Web API) if you want to fetch real playlists
+- Firebase configuration if you want to use the Firestore helpers (optional)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup & run (PowerShell)
 
-### `npm run eject`
+Open a PowerShell terminal in the project root and run:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```powershell
+# install deps
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# start dev server
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The app runs at http://localhost:3000 by default.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Environment / Configuration
 
-## Learn More
+- Spotify token: This project expects an OAuth access token for Spotify to be available in `localStorage` under the key `token`. The playlist detail page and other Spotify API calls use that token.
+	- If you hit 401 errors, your token is likely expired; re-authenticate and store a fresh token in localStorage, or implement a refresh flow.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Firebase: The project includes a Firebase config file at `src/firbeaseConfig/firebaseConfig.js`. If you want Firestore features to work, update that file with your Firebase project credentials.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Common issues & troubleshooting
 
-### Code Splitting
+- `play() failed because the user didn't interact with the document first` (NotAllowedError):
+	- Browsers disallow autoplay of audio/video until the user interacts (click/tap). Make sure the user presses the play button (or perform a user-triggered action) to start playback.
+	- The code now catches and logs `play()` promise rejections and sets the player state accordingly.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- `AxiosError: Network Error` / 404 when fetching playlists:
+	- Ensure `localStorage.token` contains a valid Spotify access token with the correct scopes.
+	- Verify the playlist ID in the URL exists and is accessible (public or owned by the authenticated user).
+	- 404 means the playlist isn't found; 403 means you don't have permission.
 
-### Analyzing the Bundle Size
+- Layout overflow on zoom:
+	- New CSS changes reduce overflow, but if a custom component introduces wide fixed widths, replace them with responsive units and ensure `min-width: 0` on flex children.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Files/locations of interest
 
-### Making a Progressive Web App
+- Player UI: `src/layout/player/player.js`, `src/layout/player/player.scss`
+- Playlist detail: `src/page/playlistDetail/playlistDetail.js`, `src/page/playlistDetail/playlistdetail.css`
+- Friends Activity tab: `src/layout/asideNav/tab/friendTab.js`
+- Providers (context): `src/provider/*` (AccessTokenProvider, PlayerDataProvider, etc.)
+- Firebase config: `src/firbeaseConfig/firebaseConfig.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Contributing
 
-### Advanced Configuration
+Contributions are welcome. Suggested small improvements:
+- Convert inline styles in `friendTab.js` to CSS classes in `asideNav.css`
+- Add real avatars and persist demo friends to Firestore behind a feature flag
+- Implement Spotify refresh token flow
+- Improve accessibility (aria labels for audio controls)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+When opening a PR, please:
+- Keep changes focused and small
+- Run the app locally and verify no console errors
+- Include a short description of the change
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This repository doesn't include an explicit license file. Add one if you intend to publish or share the project widely (e.g., MIT).
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you'd like, I can:
+- Move the inline demo friends styles into `src/layout/asideNav/asideNav.css` and clean up the component,
+- Add an environment example file (e.g., `.env.example`) showing required variables,
+- Or wire the demo friends to Firestore behind a `DEMO_FRIENDS` toggle.
+
+Which of these would you like next?
