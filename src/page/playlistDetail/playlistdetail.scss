@@ -18,9 +18,14 @@
             width: 100%;
             height: 150px;
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             gap: 0.8rem;
-
+            img{
+                width: 150px;
+                height: 150px;
+                border-radius: .6rem;
+                margin-right: .5rem;
+            }
             h2 {
                 font-size: 38px;
                 height: 50px;
@@ -45,6 +50,7 @@
                 align-items: center;
                 justify-content: space-between;
                 gap: 0.8rem;
+                height: 'fit-content';
             }
         }
         .playlist_list_container {

@@ -4,8 +4,10 @@ import { db } from '../../firbeaseConfig/firebaseConfig'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import axios from 'axios';
 import { PlayerDataContext } from '../../provider/PlayerDataProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LikeSongListContext } from '../../provider/LikeSongListProvider';
+import Queue from '../asideNav/tab/queue';
+import { AsideTabContext } from '../../provider/AsideTabProvider';
 
 function Player() {
 
@@ -61,34 +63,43 @@ function Player() {
         checkLiked();
     }, [playerData])
 
-    const handleChangeAudio = () => {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play();
-        setPlayerState({ isPlaying: true })
+    const handleChangeAudio = async () => {
+        try {
+            audioRef.current.currentTime = 0;
+            const playPromise = audioRef.current.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        setPlayerState({ isPlaying: true });
+                    })
+                    .catch(error => {
+                        console.log("Playback failed:", error);
+                        setPlayerState({ isPlaying: false });
+                        // Don't auto-play if there was no user interaction
+                        if (error.name === "NotAllowedError") {
+                            console.log("Audio playback requires user interaction first");
+                        }
+                    });
+            }
+        } catch (error) {
+            console.log("Error in handleChangeAudio:", error);
+            setPlayerState({ isPlaying: false });
+        }
     }
 
     useEffect(() => {
-        handleChangeAudio();
+        if (playerData.songUrl) {
+            handleChangeAudio();
+        }
     }, [playerData.songUrl])
 
-    // useEffect(() => {
-    //     const handleKeyPress = (event) => {
-    //       if (event.keyCode === 32) {
-    //         if (audioRef.current.paused) {
-    //           audioRef.current.play();
-    //           setPlayerState({ isPlaying: true })
-    //         } else {
-    //           audioRef.current.pause();
-    //           setPlayerState({ isPlaying: false })
-    //         }
-    //       }
-    //     };
+    const { currentTab, setCurrentTab, setShowTab } = useContext(AsideTabContext);
 
-    //     window.addEventListener('keydown', handleKeyPress);
-
-    //     return () => {
-    //       window.removeEventListener('keydown', handleKeyPress);};
-    //   }, []);
+    const showQueue = (text) => {
+        setCurrentTab(text)
+        setShowTab(true)
+    }
 
     return (
         <div className='player_container' >
@@ -223,7 +234,7 @@ function Player() {
                     </svg>
                 </div>
                 <div style={{ width: '3px', height: '40px', background: '#4d5057', borderRadius: '5px' }} ></div>
-                <div>
+                <div onClick={() => showQueue("queue")}>
                     <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.4695 15.0929C12.4695 13.543 13.7259 12.2866 15.2758 12.2866H26.501C28.0509 12.2866 29.3073 13.543 29.3073 15.0929V15.0929C29.3073 16.6428 28.0509 17.8992 26.501 17.8992H15.2758C13.7259 17.8992 12.4695 16.6428 12.4695 15.0929V15.0929Z" stroke="#898989" stroke-width="2.3573" />
                         <path d="M12.4695 23.512L29.3073 23.512" stroke="#898989" stroke-width="2.3573" stroke-linecap="round" stroke-linejoin="round" />

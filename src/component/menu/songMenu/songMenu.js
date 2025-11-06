@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './songMenu.css';
 import { Link } from 'react-router-dom';
 import PlaylistMenu from '../playlistMenu/playlistMenu';
@@ -21,6 +21,22 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu 
 
     // const [showPlaylistMenu, setShowPlaylistMenu] = useState(false)
 
+    const [myObjects, setMyObjects] = useState([]);
+
+    useEffect(() => {
+        localStorage.setItem('my-objects', JSON.stringify(myObjects));
+      }, [myObjects]);
+
+      const newObject = {
+        name: "song name",
+        url:"new url",
+        songId:"0921jsaldfjo3920jj"
+      }
+
+      const addToQueue = () => {
+        setMyObjects([...myObjects, newObject]);
+      };
+
     return (
         <div className='song_menu_container' >
             <div className='song_menu_items' style={{ position: "relative" }} onClick={() => {
@@ -40,7 +56,7 @@ function SongMenu({ setShowMenu, linkData, removeLikedSong, setShowPlaylistMenu 
 
                 <h3>Remove from Liked</h3>
             </div>
-            <div className='song_menu_items' >
+            <div className='song_menu_items' onClick={addToQueue}>
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.5 7H8.66667C7.74619 7 7 7.74619 7 8.66667V8.66667C7 9.58714 7.74619 10.3333 8.66667 10.3333H11.5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" />
                     <path d="M7 13.666L17 13.666" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />

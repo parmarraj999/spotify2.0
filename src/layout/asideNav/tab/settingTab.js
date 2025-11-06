@@ -9,6 +9,8 @@ function SettingTab() {
 
     const { setCurrentTab, setShowTab } = useContext(AsideTabContext)
     const userData = useContext(UserCredentialContext).userData;
+    console.log(userData)
+    const setUserData = useContext(UserCredentialContext).setUserData;
 
     const navigate = useNavigate();
 
@@ -18,13 +20,13 @@ function SettingTab() {
     }
 
     const handleClick = async () => {
-
         await signOut(auth)
         .then(()=>{
             console.log('Sign Out Successfully')
             window.localStorage.removeItem('userId')
             window.localStorage.removeItem('isLogIn')
             window.localStorage.removeItem('token')
+            setUserData({})
             navigate('/auth')
         })
 
@@ -42,11 +44,11 @@ function SettingTab() {
             </div>
             <div className='setting_profile_section' >
               <div className='setting_profile'>
-                <img src={userData.profilePicture} />
+                <img src={userData?.profilePicture} />
               </div>
               <div>
-                <h3>{userData.name}</h3>
-                <h4>{userData.email}</h4>
+                <h3>{userData?.name}</h3>
+                <h4>{userData?.email}</h4>
               </div>
             </div>
             <button onClick={handleClick} className='log_out_button' > Log Out</button>

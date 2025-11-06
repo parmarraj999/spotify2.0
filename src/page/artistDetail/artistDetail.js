@@ -137,7 +137,8 @@ function ArtistDetail() {
               <div onClick={() => setCurrentNav("artist")} style={currentNav === 'artist' ? { color: "white", borderBottom: "2px solid #1ed760" } : {}}>Related Artist</div>
             </div>
             {
-              currentNav === "home" ? <>
+              currentNav === "home" ? 
+              <>
                 <ArtistTopTrack id={id} />
                 <ArtistAlbums id={id} />
                 <ArtistRelated id={id} />

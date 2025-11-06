@@ -1,4 +1,3 @@
-import axios from 'axios';
 import './App.css';
 import './utility.css'
 import { useContext, useEffect, useState } from 'react';
@@ -41,18 +40,24 @@ function App() {
 
   const [accessToken, setAccessToken] = useState("");
   const [userData, setUserData] = useState([])
+  console.log(userData)
 
   const userId = localStorage.getItem("userId")
   const [showProfile, setShowProfile] = useState(false)
 
   const fetchData = async () => {
+    console.log('getting data ')
     const userDocRef = doc(db, userId, "user-credentials");
     const userDocSnapshot = await getDoc(userDocRef);
     setUserData(userDocSnapshot.data())
   };
 
   useEffect(() => {
-    if (userData.profilePicture === "../../../../image/default.png") {
+      fetchData();
+  }, [])
+
+  useEffect(() => {
+    if (userData?.profilePicture === "../../../../image/default.png") {
       setShowProfile(true)
     }
   }, [userData])

@@ -11,6 +11,15 @@ function FriendNav() {
 
   const [data,setData] = useState([])
 
+  // Demo friends data (used for UI/demo purposes)
+  const [demoFriends] = useState([
+    { id: 'f1', name: 'Alex Turner', activity: 'Listening to: "Do I Wanna Know?" by Arctic Monkeys', avatar: 'AT' },
+    { id: 'f2', name: 'Sana Park', activity: 'Added 5 songs to "Chill Vibes"', avatar: 'SP' },
+    { id: 'f3', name: 'Michael B', activity: 'Listening to: "Blinding Lights" by The Weeknd', avatar: 'MB' },
+    { id: 'f4', name: 'Priya K', activity: 'Liked: "Sunflower" by Post Malone', avatar: 'PK' },
+    { id: 'f5', name: 'Daniel', activity: 'Started listening to "Discover Weekly"', avatar: 'D' },
+  ])
+
   const handleCloseTab = () => {
     setShowTab(false)
     setCurrentTab("")
@@ -52,8 +61,23 @@ function FriendNav() {
                 </div>
             </div>
         </div>
-        <button onClick={addData} >Add data</button>
-        <button onClick={getData} >get data</button>
+        {/* Demo friends list */}
+        <div className="friend_list" style={{marginTop: '1rem', overflowY: 'auto', maxHeight: '320px'}}>
+          {demoFriends.map(friend => (
+            <div key={friend.id} className="friend_item" style={{display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.6rem 0',borderBottom:'1px solid rgba(255,255,255,0.04)'}}>
+              <div className="friend_avatar" style={{width:44,height:44,background:'#1db954',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600}}>{friend.avatar}</div>
+              <div style={{minWidth:0}}>
+                <div style={{fontSize:14,color:'#fff',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{friend.name}</div>
+                <div style={{fontSize:12,color:'#b3b3b3',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'28rem'}}>{friend.activity}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* <div style={{marginTop:'1rem',display:'flex',gap:'0.5rem'}}>
+          <button onClick={addData} >Add data</button>
+          <button onClick={getData} >Get data</button>
+        </div> */}
     </div>
   )
 }

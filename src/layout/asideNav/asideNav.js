@@ -4,6 +4,7 @@ import { AsideTabContext } from '../../provider/AsideTabProvider'
 import SettingTab from './tab/settingTab'
 import NotificationTab from './tab/notificationTab'
 import { useLocation } from 'react-router-dom'
+import Queue from './tab/queue'
 
 function AsideNav() {
 
@@ -29,6 +30,10 @@ function AsideNav() {
       {
         currentTab === "notification" ?
         <NotificationTab/> : ""
+      }
+      {
+        currentTab === "queue" ?
+        <Queue/> : ""
       }
     </div>
   )

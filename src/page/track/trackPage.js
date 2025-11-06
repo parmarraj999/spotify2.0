@@ -91,6 +91,9 @@ function TrackPage() {
         getTrackDetail();
     }, [])
     useEffect(() => {
+        getTrackDetail();
+    }, [id])
+    useEffect(() => {
         if (data?.name) {
             fetch();
         }

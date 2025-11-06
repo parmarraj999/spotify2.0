@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { auth, db } from '../../firbeaseConfig/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { UserCredentialContext } from '../../provider/UserCredentialProvider';
+import { doc, getDoc } from 'firebase/firestore';
 
 function LogIn({ current, setCurrent }) {
 
@@ -9,16 +11,15 @@ function LogIn({ current, setCurrent }) {
   const [password, setPassword] = useState();
   const [error, setError] = useState('')
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId")
+  const {userData, setUserData} = useContext(UserCredentialContext);
 
   const handleLogIn = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password)
         .then(async (user) => {
-
           console.log(user)
-          
-
           navigate("/")
           localStorage.setItem("isLogIn", true)
           localStorage.setItem("userId", user.user.uid)
