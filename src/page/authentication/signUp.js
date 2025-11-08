@@ -46,12 +46,8 @@ function SignUp({ current, setCurrent }) {
 
     return (
         <div className='signup_page_container' >
-            <div>logo</div>
+             <div style={{fontSize:'3rem',color:'#1ED760',fontWeight:'700',fontFamily:'sans-serif'}}>Harryfy</div>
             <h2>Welcome To Spotify</h2>
-            {/* <button onClick={handleGoogleSign}>
-                <img style={{ width: "25px" }} src='../../../../image/google-icon.png' />
-                Continue With Google</button>
-            <div className='line' ></div> */}
             <div className='signup_form_container' >
                 <div className='form_input_items' >
                     <h4>Name</h4>

@@ -9,6 +9,7 @@ import ShowList from '../resultComponent/showList'
 import PlaylistList from '../resultComponent/playlistList'
 import AudioBookList from '../resultComponent/audioBookList'
 import ArtistList from '../resultComponent/artistList'
+import { UserCredentialContext } from '../../../provider/UserCredentialProvider'
 
 const NavForSearch = ({ currentPath, setCurrentPath }) => {
   return (
@@ -27,7 +28,8 @@ const NavForSearch = ({ currentPath, setCurrentPath }) => {
 function SearchResult() {
 
   const { searchValue } = useContext(SearchValueContext)
-  const accessToken = useContext(AccessTokenContext)
+  const { accessToken } = useContext(UserCredentialContext);
+  // const accessToken = useContext(AccessTokenContext)
 
   // data store state 
 
@@ -46,7 +48,7 @@ function SearchResult() {
   const getSongsData = async () => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${accessToken}`
       },
       params: {
         q: searchValue,
@@ -66,7 +68,7 @@ function SearchResult() {
   const getAlbumData = async () => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${accessToken}`
       },
       params: {
         q: searchValue,
@@ -86,7 +88,7 @@ function SearchResult() {
   const getArtistData = async () => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${accessToken}`
       },
       params: {
         q: searchValue,
@@ -106,7 +108,7 @@ function SearchResult() {
   const getPlaylistData = async () => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${accessToken}`
       },
       params: {
         q: searchValue,
@@ -126,7 +128,7 @@ function SearchResult() {
   const getShowData = async () => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
-        Authorization: `Bearer ${accessToken.accessToken}`
+        Authorization: `Bearer ${accessToken}`
       },
       params: {
         q: searchValue,

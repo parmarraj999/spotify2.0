@@ -12,7 +12,7 @@ function LogIn({ current, setCurrent }) {
   const [error, setError] = useState('')
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId")
-  const {userData, setUserData} = useContext(UserCredentialContext);
+  const {userData, setUserData, fetchData} = useContext(UserCredentialContext);
 
   const handleLogIn = async (e) => {
     e.preventDefault();
@@ -24,7 +24,9 @@ function LogIn({ current, setCurrent }) {
           localStorage.setItem("isLogIn", true)
           localStorage.setItem("userId", user.user.uid)
         })
-
+        .then(()=>{
+          fetchData();
+        })
     } catch (error) {
       setError(error.message);
       console.log(error)
@@ -33,7 +35,7 @@ function LogIn({ current, setCurrent }) {
 
   return (
     <div className='signup_page_container' >
-      <div>logo</div>
+      <div style={{fontSize:'3rem',color:'#1ED760',fontWeight:'700',fontFamily:'sans-serif'}}>Harryfy</div>
       <h2>Log In To Spotify</h2>
       {/* <button>
         <img style={{width:"25px"}} src='../../../../image/google-icon.png'/>

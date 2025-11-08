@@ -1,17 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './home.css'
 import HomeNav from './homeComponents/homeNav'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../../firbeaseConfig/firebaseConfig'
+import { UserCredentialContext } from '../../provider/UserCredentialProvider'
 
 function Home() {
 
   const [currentPath, setCurrentPath] = useState('all')
+  const { fetchData } = useContext(UserCredentialContext);
 
   const isLogIn = localStorage.getItem('isLogIn')
   const navigate = useNavigate();
 
-  if(!isLogIn){
+  useEffect(() => {
+    fetchData();
+  }, [isLogIn])
+
+  if (!isLogIn) {
     navigate('/auth')
   }
 
@@ -286,233 +292,256 @@ function Home() {
 
   const TopMixData = [
     {
-    "collaborative": false,
+      "collaborative": false,
       "description": "Rock and Roll music picked just for you",
-        "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIf9QdS3bOrgZ"
-    },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIf9QdS3bOrgZ",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIf9QdS3bOrgZ"
+      },
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIf9QdS3bOrgZ",
       "id": "37i9dQZF1EIf9QdS3bOrgZ",
-        "images": [
-          {
-            "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Rock%20and%20Roll/en/large",
-            "height": null,
-            "width": null
-          }
-        ],
-          "name": "Rock and Roll Mix",
-            "owner": {
-      "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
-      },
-      "href": "https://api.spotify.com/v1/users/spotify",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Rock%20and%20Roll/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Rock and Roll Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
         "id": "spotify",
-          "type": "user",
-            "uri": "spotify:user:spotify",
-              "display_name": "Spotify"
-    },
-    "public": null,
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
       "snapshot_id": "MCwwMDAwMDAwMDkyMjg3ODgxNmMzODdmNDhkMjc3OTk4OTQyMjhmZDc1",
-        "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIf9QdS3bOrgZ/tracks",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIf9QdS3bOrgZ/tracks",
         "total": 0
-    },
-    "type": "playlist",
+      },
+      "type": "playlist",
       "uri": "spotify:playlist:37i9dQZF1EIf9QdS3bOrgZ",
-        "primary_color": null
-  },
-  {
-    "collaborative": false,
-    "description": "Slow Chill music picked just for you",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIeDsGY3D7QC6"
+      "primary_color": null
     },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIeDsGY3D7QC6",
-    "id": "37i9dQZF1EIeDsGY3D7QC6",
-    "images": [
-      {
-        "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Slow%20Chill/en/large",
-        "height": null,
-        "width": null
-      }
-    ],
-    "name": "Slow Chill Mix",
-    "owner": {
+    {
+      "collaborative": false,
+      "description": "Slow Chill music picked just for you",
       "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIeDsGY3D7QC6"
       },
-      "href": "https://api.spotify.com/v1/users/spotify",
-      "id": "spotify",
-      "type": "user",
-      "uri": "spotify:user:spotify",
-      "display_name": "Spotify"
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIeDsGY3D7QC6",
+      "id": "37i9dQZF1EIeDsGY3D7QC6",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Slow%20Chill/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Slow Chill Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
+      "snapshot_id": "MCwwMDAwMDAwMDJjOWU1ZDI4ZDIzM2I4OWIzMWFhODQ4ZWU1NDQ2Mzdi",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIeDsGY3D7QC6/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EIeDsGY3D7QC6",
+      "primary_color": null
     },
-    "public": null,
-    "snapshot_id": "MCwwMDAwMDAwMDJjOWU1ZDI4ZDIzM2I4OWIzMWFhODQ4ZWU1NDQ2Mzdi",
-    "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIeDsGY3D7QC6/tracks",
-      "total": 0
-    },
-    "type": "playlist",
-    "uri": "spotify:playlist:37i9dQZF1EIeDsGY3D7QC6",
-    "primary_color": null
-  },
-  {
-    "collaborative": false,
-    "description": "Hindi Pop music picked just for you",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIcv6CMutv3XL"
-    },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIcv6CMutv3XL",
-    "id": "37i9dQZF1EIcv6CMutv3XL",
-    "images": [
-      {
-        "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Hindi%20Pop/en/large",
-        "height": null,
-        "width": null
-      }
-    ],
-    "name": "Hindi Pop Mix",
-    "owner": {
+    {
+      "collaborative": false,
+      "description": "Hindi Pop music picked just for you",
       "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIcv6CMutv3XL"
       },
-      "href": "https://api.spotify.com/v1/users/spotify",
-      "id": "spotify",
-      "type": "user",
-      "uri": "spotify:user:spotify",
-      "display_name": "Spotify"
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIcv6CMutv3XL",
+      "id": "37i9dQZF1EIcv6CMutv3XL",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Hindi%20Pop/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Hindi Pop Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
+      "snapshot_id": "MCwwMDAwMDAwMGZiMDI5ZjBlNDIzYWJmZTkyMjQyOWY1NzI3NzQ2ZmRm",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIcv6CMutv3XL/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EIcv6CMutv3XL",
+      "primary_color": null
     },
-    "public": null,
-    "snapshot_id": "MCwwMDAwMDAwMGZiMDI5ZjBlNDIzYWJmZTkyMjQyOWY1NzI3NzQ2ZmRm",
-    "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIcv6CMutv3XL/tracks",
-      "total": 0
-    },
-    "type": "playlist",
-    "uri": "spotify:playlist:37i9dQZF1EIcv6CMutv3XL",
-    "primary_color": null
-  },
-  {
-    "collaborative": false,
-    "description": "Rizz music picked just for you",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIdjWr4YEzRXS"
-    },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIdjWr4YEzRXS",
-    "id": "37i9dQZF1EIdjWr4YEzRXS",
-    "images": [
-      {
-        "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Rizz/en/large",
-        "height": null,
-        "width": null
-      }
-    ],
-    "name": "Rizz Mix",
-    "owner": {
+    {
+      "collaborative": false,
+      "description": "Rizz music picked just for you",
       "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIdjWr4YEzRXS"
       },
-      "href": "https://api.spotify.com/v1/users/spotify",
-      "id": "spotify",
-      "type": "user",
-      "uri": "spotify:user:spotify",
-      "display_name": "Spotify"
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIdjWr4YEzRXS",
+      "id": "37i9dQZF1EIdjWr4YEzRXS",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Rizz/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Rizz Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
+      "snapshot_id": "MCwwMDAwMDAwMDk2ODExMWQxZmIxZDBjZmVhN2M1YTJhMTNjZDExNzBh",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIdjWr4YEzRXS/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EIdjWr4YEzRXS",
+      "primary_color": null
     },
-    "public": null,
-    "snapshot_id": "MCwwMDAwMDAwMDk2ODExMWQxZmIxZDBjZmVhN2M1YTJhMTNjZDExNzBh",
-    "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIdjWr4YEzRXS/tracks",
-      "total": 0
-    },
-    "type": "playlist",
-    "uri": "spotify:playlist:37i9dQZF1EIdjWr4YEzRXS",
-    "primary_color": null
-  },
-  {
-    "collaborative": false,
-    "description": "Good Mood Happy music picked just for you",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIgNoWOvbnUCk"
-    },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIgNoWOvbnUCk",
-    "id": "37i9dQZF1EIgNoWOvbnUCk",
-    "images": [
-      {
-        "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Good%20Mood%20Happy/en/large",
-        "height": null,
-        "width": null
-      }
-    ],
-    "name": "Good Mood Happy Mix",
-    "owner": {
+    {
+      "collaborative": false,
+      "description": "Good Mood Happy music picked just for you",
       "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIgNoWOvbnUCk"
       },
-      "href": "https://api.spotify.com/v1/users/spotify",
-      "id": "spotify",
-      "type": "user",
-      "uri": "spotify:user:spotify",
-      "display_name": "Spotify"
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIgNoWOvbnUCk",
+      "id": "37i9dQZF1EIgNoWOvbnUCk",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Good%20Mood%20Happy/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Good Mood Happy Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
+      "snapshot_id": "MCwwMDAwMDAwMDNiMTcyNTE0OGZlMDNjMGJjNTFjNTViNjFiMDM4MzYz",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIgNoWOvbnUCk/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EIgNoWOvbnUCk",
+      "primary_color": null
     },
-    "public": null,
-    "snapshot_id": "MCwwMDAwMDAwMDNiMTcyNTE0OGZlMDNjMGJjNTFjNTViNjFiMDM4MzYz",
-    "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIgNoWOvbnUCk/tracks",
-      "total": 0
-    },
-    "type": "playlist",
-    "uri": "spotify:playlist:37i9dQZF1EIgNoWOvbnUCk",
-    "primary_color": null
-  },
-  {
-    "collaborative": false,
-    "description": "Pre Game music picked just for you",
-    "external_urls": {
-      "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIejyNjS69e66"
-    },
-    "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIejyNjS69e66",
-    "id": "37i9dQZF1EIejyNjS69e66",
-    "images": [
-      {
-        "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Pre%20Game/en/large",
-        "height": null,
-        "width": null
-      }
-    ],
-    "name": "Pre Game Mix",
-    "owner": {
+    {
+      "collaborative": false,
+      "description": "Pre Game music picked just for you",
       "external_urls": {
-        "spotify": "https://open.spotify.com/user/spotify"
+        "spotify": "https://open.spotify.com/playlist/37i9dQZF1EIejyNjS69e66"
       },
-      "href": "https://api.spotify.com/v1/users/spotify",
-      "id": "spotify",
-      "type": "user",
-      "uri": "spotify:user:spotify",
-      "display_name": "Spotify"
+      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIejyNjS69e66",
+      "id": "37i9dQZF1EIejyNjS69e66",
+      "images": [
+        {
+          "url": "https://seed-mix-image.spotifycdn.com/v6/img/desc/Pre%20Game/en/large",
+          "height": null,
+          "width": null
+        }
+      ],
+      "name": "Pre Game Mix",
+      "owner": {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/spotify"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "type": "user",
+        "uri": "spotify:user:spotify",
+        "display_name": "Spotify"
+      },
+      "public": null,
+      "snapshot_id": "MCwwMDAwMDAwMDMwMzZkYmUzZDhhMWMyMjg2MDdjOGFmNjRhMTg4NmZk",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIejyNjS69e66/tracks",
+        "total": 0
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:37i9dQZF1EIejyNjS69e66",
+      "primary_color": null
     },
-    "public": null,
-    "snapshot_id": "MCwwMDAwMDAwMDMwMzZkYmUzZDhhMWMyMjg2MDdjOGFmNjRhMTg4NmZk",
-    "tracks": {
-      "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EIejyNjS69e66/tracks",
-      "total": 0
-    },
-    "type": "playlist",
-    "uri": "spotify:playlist:37i9dQZF1EIejyNjS69e66",
-    "primary_color": null
-  },
-]
+  ]
 
 
-return (
-  <div className='home_container' >
-    <HomeNav currentPath={currentPath} setCurrentPath={setCurrentPath} />
-    <div className='home_section'>
-      <div>
-        <h2>Made For You</h2>
-        <div className='home_album_container'>
+  return (
+    <div className='home_container' >
+      <HomeNav currentPath={currentPath} setCurrentPath={setCurrentPath} />
+      <div className='home_section'>
+        <div>
+          <h2>Made For You</h2>
+          <div className='home_album_container'>
+            {
+              MadeForYouData.map((data) => {
+                return (
+                  <Link to={`/playlist/${data.id}`} className='album_cover_container'>
+                    <div className='album_image' >
+                      <img src={data.images[0].url} />
+                    </div>
+                    <div className='album_detail'>
+                      <div style={{ width: "100%", alignItems: "center", display: "flex", justifyContent: "space-between" }}>
+                        <h4>{data.name}</h4>
+                        <h5>{data.tracks.total}</h5>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })
+            }
+          </div>
+        </div>
+        <div>
+          <h2>Top Mixes</h2>
+        </div>
+        <div className='home_album_container' >
           {
-            MadeForYouData.map((data) => {
+            TopMixData.map((data) => {
               return (
                 <Link to={`/playlist/${data.id}`} className='album_cover_container'>
                   <div className='album_image' >
@@ -530,31 +559,8 @@ return (
           }
         </div>
       </div>
-      <div>
-        <h2>Top Mixes</h2>
-      </div>
-      <div className='home_album_container' >
-          {
-            TopMixData.map((data)=>{
-              return(
-                <Link to={`/playlist/${data.id}`} className='album_cover_container'>
-                  <div className='album_image' >
-                    <img src={data.images[0].url} />
-                  </div>
-                  <div className='album_detail'>
-                    <div style={{ width: "100%", alignItems: "center", display: "flex", justifyContent: "space-between" }}>
-                      <h4>{data.name}</h4>
-                      <h5>{data.tracks.total}</h5>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })
-          }
-      </div>
     </div>
-  </div>
-)
+  )
 }
 
 export default Home
